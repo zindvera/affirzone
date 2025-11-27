@@ -415,7 +415,7 @@
 
     <div class="main-container">
         <div class="brand-div">
-            <h1 class="brand-name">Affirzone <a href="#" id="store-link"
+            <h1 class="brand-name">Affirzone <a href="shop/" id="store-link"
                     style="font-size: 0.7em; margin-left: 8px; cursor: pointer;">store</a>
             </h1>
             <div id="store-popup" class="store-popup">
@@ -901,17 +901,25 @@
         document.addEventListener('DOMContentLoaded', async () => {
             const storePopup = document.getElementById('store-popup');
             const popupContent = document.getElementById('popup-content');
-            if (!storePopup || !popupContent) return;
+            const closeBtn = document.getElementById('promo-close-btn');
+
+            if (!storePopup || !popupContent || !closeBtn) return;
 
             const promoHtml = await window.checkAndGetNotification();
             if (promoHtml) {
-                popupContent.innerHTML = promoHtml;          // Append notification HTML inside popup-content
-                storePopup.style.display = 'block';          // Show the entire popup container
+                popupContent.innerHTML = promoHtml;          // Insert notification HTML inside popup-content
+                storePopup.style.display = 'block';          // Show the popup container
             } else {
                 storePopup.style.display = 'none';           // Hide popup if no notification
                 popupContent.innerHTML = '';                  // Clear any old content
             }
+
+            // Close button click event
+            closeBtn.addEventListener('click', () => {
+                storePopup.style.display = 'none';
+            });
         });
+
 
 
     </script>
