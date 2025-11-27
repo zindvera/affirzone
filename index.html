@@ -288,7 +288,7 @@
             max-width: 100%;
             min-width: 70vw;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            /* display: none; */
+            display: none;
             z-index: 1500;
         }
 
@@ -304,6 +304,35 @@
             border-bottom: 10px solid #fff;
             filter: drop-shadow(0 -1px 1px rgba(0, 0, 0, 0.1));
         }
+
+
+        .popup-header {
+            display: flex;
+            justify-content: flex-end;
+            /* Aligns close button to the right */
+            margin-bottom: 8px;
+            /* Small space below the button */
+        }
+
+        .promo-close-btn {
+            border: none;
+            background: transparent;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+            user-select: none;
+            transition: color 0.2s ease;
+        }
+
+        .promo-close-btn:hover,
+        .promo-close-btn:focus {
+            color: #ff0000;
+            outline: none;
+        }
+
 
 
 
@@ -390,9 +419,13 @@
                     style="font-size: 0.7em; margin-left: 8px; cursor: pointer;">store</a>
             </h1>
             <div id="store-popup" class="store-popup">
-                <p>Popup content here</p>
+                <div class="popup-header">
+                    <button id="promo-close-btn" class="promo-close-btn">&times;</button>
+                </div>
+                <div id="popup-content"></div>
                 <div class="triangle-top"></div>
             </div>
+
 
             <button class="navbar-toggler" type="button" id="navbar-toggler">
                 <span class="navbar-toggler-icon"></span>
@@ -460,6 +493,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+    <script src="promo_notification.js"></script>
 
     <script>
         // Get references to the theme selector and custom design elements
@@ -861,6 +896,24 @@
             loaderWrapper.style.display = 'none';
             document.body.style.overflow = 'auto';
         });
+
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const storePopup = document.getElementById('store-popup');
+            const popupContent = document.getElementById('popup-content');
+            if (!storePopup || !popupContent) return;
+
+            const promoHtml = await window.checkAndGetNotification();
+            if (promoHtml) {
+                popupContent.innerHTML = promoHtml;          // Append notification HTML inside popup-content
+                storePopup.style.display = 'block';          // Show the entire popup container
+            } else {
+                storePopup.style.display = 'none';           // Hide popup if no notification
+                popupContent.innerHTML = '';                  // Clear any old content
+            }
+        });
+
+
     </script>
 </body>
 

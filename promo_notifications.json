@@ -1,0 +1,14 @@
+[
+  {
+    "notification_id": "not1",
+    "notification_html": "<p>Welcome! Check out our latest deals.</p>"
+  },
+  {
+    "notification_id": "not2",
+    "notification_html": "<p>Exclusive offer: 20% off for first-time buyers! Welcome! Check out our latest deals.</p>"
+  },
+  {
+    "notification_id": "not3",
+    "notification_html": "<p>Free shipping on all orders today only.</p>"
+  }
+]
