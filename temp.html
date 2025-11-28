@@ -1,222 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative Journal Prompts</title>
-    <!-- Import a variety of fonts for different card styles -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&family=EB+Garamond:wght@400;700&family=Oswald:wght@300;400;700&family=Merriweather:wght@300;400;700&family=Lora:wght@400;700&family=Poppins:wght@400;600;700&family=Montserrat:wght@400;700&family=Roboto+Slab:wght@400;700&family=Indie+Flower&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <style>
-        /* General body styling for background and font */
-    
+        * {
+            box-sizing: border-box;
+        }
 
-        /* Container for each card to center and space them out */
-        .card-container {
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0px;
+            padding: 0px;
+            background: #f5f7f7;
+        }
+
+        /* Layout container to hold main-product and phone-gallery side by side on desktop/tablet, stacked on phone */
+        #layout-container {
+            display: flex;
+            max-width: 100vw;
+            margin: 40px auto 0 auto;
+            gap: 40px;
+            padding: 0 20px;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        /* main-product-container and phone-gallery width ratio 40% and 60% */
+        .main-product-container {
+            border-radius: 12px;
+
+            padding: 30px 10px;
+            box-sizing: border-box;
+            width: 40%;
+            margin: 0;
+        }
+
+        #phone-gallery {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px 20px 40px;
+            box-sizing: border-box;
+            width: 60%;
+            margin: 0;
+            overflow: visible;
+        }
+
+        /* Image Div */
+        .image-div {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .image-div img {
+            width: 15vw;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-buy-now {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .buy-now-btn {
+            background: linear-gradient(135deg, #0cabc7 0%, #0695ce 100%);
+            color: white;
+            border: none;
+            padding: 8px 0px;
+            width: 20vw;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .platform-text {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .platform-text a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .platform-text a:hover {
+            text-decoration: underline;
+        }
+
+        .open-camera-div {
+            background: white;
+            border-radius: 16px;
+            padding: 12px;
+            margin: 20px auto 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            width: 100%;
+        }
+
+        .open-camera-text {
+            text-align: left;
+            font-size: 18px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding: 0;
+        }
+
+        .open-camera-btn {
+            background-color: rgb(1, 168, 98);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(1, 168, 98, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            margin-left: auto;
+            width: fit-content;
+        }
+
+        .open-camera-btn:hover {
+            background: rgb(0, 158, 92);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(1, 168, 98, 0.4);
+            color: white;
+        }
+
+
+        /* Phone Gallery Slider */
+        .main-image-container {
+            position: relative;
+            width: 100%;
             max-width: 100%;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
             margin: 0 auto;
         }
 
-        /* Styling for the card number */
-        .card-number {
-            font-size: 2em;
-            font-weight: 700;
-            color: #d97706; /* A warm orange tone */
-            margin-bottom: 15px;
+        .main-image-container img {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            user-select: none;
+            pointer-events: none;
         }
 
-        body{
-            margin:0;
-            padding:0;
+        .arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 123, 255, 0.8);
+            border: none;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            user-select: none;
         }
-     
-        
+
+        .arrow-btn:hover {
+            background: #007bff;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        #prev-btn-phone {
+            left: 10px;
+        }
+
+        #next-btn-phone {
+            right: 10px;
+        }
+
+        .image-selector {
+            margin-top: 20px;
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #007bff #f1f1f1;
+            gap: 12px;
+            padding-bottom: 10px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .image-selector::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .image-selector::-webkit-scrollbar-thumb {
+            background: #007bff;
+            border-radius: 3px;
+        }
+
+        .image-selector img {
+            flex: 0 0 150px;
+            height: 100px;
+            object-fit: cover;
+            border: 3px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            scroll-snap-align: center;
+            user-select: none;
+        }
+
+        .image-selector img.selected {
+            border-color: #80bfff;
+            box-shadow: 0 4px 12px rgba(128, 191, 255, 0.3);
+        }
+
+        /* ============================================================================
+       DESKTOP VIEW (> 1024px)
+       ============================================================================ */
+        @media (min-width: 1025px) {
+            .main-product-container {
+                width: 40%;
+            }
+
+            #phone-gallery {
+                width: 60%;
+            }
+
+            .image-div img {
+                width: 15vw;
+            }
+
+ 
+            .buy-now-btn {
+                width: 20vw;
+            }
+        }
+
+        /* ============================================================================
+       TABLET VIEW (768px - 1024px)
+       ============================================================================ */
+        @media (max-width: 1024px) and (min-width: 768px) {
+            #layout-container {
+                flex-wrap: nowrap;
+                gap: 30px;
+            }
+
+            .main-product-container {
+                width: 40%;
+            }
+
+            #phone-gallery {
+                width: 60%;
+            }
+
+            .image-div img {
+                width: 15vw;
+            }
+
+    
+
+            .buy-now-btn {
+                width: 25vw;
+            }
+        }
+
+        /* ============================================================================
+       PHONE VIEW (< 768px)
+       ============================================================================ */
+        @media (max-width: 767px) {
+            #layout-container {
+                flex-direction: column;
+                padding: 0px;
+                max-width: 100vw;
+                gap: 20px;
+            }
+
+            .main-product-container,
+            #phone-gallery {
+                width: 100%;
+                padding: 20px 10px;
+                box-shadow: none;
+                border-radius: 0;
+                max-width: 100vw;
+            }
+
+            .main-image-container {
+                height: 50vh;
+            }
+
+            .image-div img {
+                height: 60vw;
+                width: auto;
+            }
+
+            .buy-now-btn {
+                padding: 10px 0px;
+                width: 60vw;
+                font-size: 16px;
+            }
+
+            .open-camera-div {
+                width: 100%;
+           
+                border-radius: 0;
+                padding: 12px;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .open-camera-btn {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
+
 <body>
+    <div id="layout-container">
+        <div class="main-product-container">
+            <!-- Image Div -->
+            <div class="image-div">
+                <img src="images/wall-art.png" alt="Product Image" />
+            </div>
 
-    <!-- Card 1: Subtle Ombre -->
-    <div class="card-container">
-        <h2 class="card-number">1.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(to bottom, #fcf9fa 0%, #fde4e9 100%);">
-            <h3 style="font-size: 50px; font-weight: 600; line-height: 1.75; margin-bottom: 1.5rem; color: #ac2441; font-family: 'Poppins', sans-serif;">I am a beacon of warmth and light.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">How can I share my light with others today?</h3>
+            <!-- Buy Now CTA -->
+            <div class="cta-buy-now">
+                <a href="#" class="buy-now-btn">Buy Now</a>
+            </div>
+
+            <!-- Platform Text -->
+            <div class="platform-text">
+                Available on <a href="#">Printify</a>
+            </div>
+
+            <!-- Open Camera Div -->
+            <div class="open-camera-div">
+                <div class="open-camera-text">
+                    Preview your design on camera in real-time
+                </div>
+                <a href="#" class="open-camera-btn">Open Camera</a>
+            </div>
+        </div>
+
+        <!-- Phone Gallery Container -->
+        <div id="phone-gallery">
+            <div class="main-image-container">
+                <button class="arrow-btn" id="prev-btn-phone" aria-label="Previous Image">&#8592;</button>
+                <img src="images/preview-lg-1.png" alt="Main Image" id="main-image-phone" />
+                <button class="arrow-btn" id="next-btn-phone" aria-label="Next Image">&#8594;</button>
+            </div>
+            <div class="image-selector" id="image-selector-phone">
+                <img src="images/preview-lg-1.png" alt="Thumbnail 1" data-index="0" class="selected" />
+                <img src="images/preview-lg-2.png" alt="Thumbnail 2" data-index="1" />
+                <img src="images/preview-lg-3.png" alt="Thumbnail 3" data-index="2" />
             </div>
         </div>
     </div>
-    <hr>
-    
-    <!-- Card 2: Corner Glow -->
-    <div class="card-container">
-        <h2 class="card-number">2.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: radial-gradient(circle at top left, #f1e8d3 0%, #faf5e5 80%);">
-            <h3 style="font-size: 50px; font-weight: 500; line-height: 1.75; margin-bottom: 1.5rem; font-family: 'DM Serif Text', cursive; color: #55511f;">My heart is open to receiving and giving love.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(146, 133, 11, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What act of love can I practice today?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
-    
-    <!-- Card 3: Horizontal Gradient -->
-    <div class="card-container">
-        <h2 class="card-number">3.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(to right, #fdf3e3 0%, #fcf7ef 100%);">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; font-family: 'Playfair Display', serif; color: #d97706;">My soul is radiant and full of light.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What makes me feel truly alive?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
-    
 
+    <script>
+        (function () {
+            const mainImage = document.getElementById('main-image-phone');
+            const thumbnails = document.querySelectorAll('#image-selector-phone img');
+            const selectorDiv = document.getElementById('image-selector-phone');
+            const prevBtn = document.getElementById('prev-btn-phone');
+            const nextBtn = document.getElementById('next-btn-phone');
 
-    <!-- Card 7: Inner Border -->
-    <div class="card-container">
-        <h2 class="card-number">7.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: inset 0 0 0 5px #fde7f6, inset 0 0 0 10px #ffe4c4; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background-color: #fef7f0;">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; font-family: 'Poppins', sans-serif; color: #7a4d09;">My positive energy is contagious.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">How can I spread kindness to others?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
+            let currentIndex = 0;
+            const totalImages = thumbnails.length;
 
-    <!-- Card 8: Pale Sunset -->
-    <div class="card-container">
-        <h2 class="card-number">8.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(45deg, #ffede8 0%, #fef7ec 100%);">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; font-family: 'Merriweather', serif; color: #d90634;">I am worthy of all the good things life has to offer.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What is one thing I am most proud of today?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
+            function updateMainImage(index) {
+                if (index < 0) index = totalImages - 1;
+                if (index >= totalImages) index = 0;
+                currentIndex = index;
 
-    <!-- Card 9: New Design (Warm Frame with Inset Shadow) -->
-    <div class="card-container">
-        <h2 class="card-number">9.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background-color: #fefcf5; box-shadow: inset 0 0 0 8px #f8c9b2;">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; color: #2c2c2c; font-family: 'Playfair Display', serif;">My life is full of small, beautiful blessings.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What is a small thing I am grateful for today?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
+                mainImage.src = thumbnails[index].src;
+                mainImage.alt = thumbnails[index].alt.replace('Thumbnail', 'Main Image');
 
-    <!-- Card 10: Diagonal Shift -->
-    <div class="card-container">
-        <h2 class="card-number">10.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(135deg, #fdf9f2 50%, #fefefb 50%);">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; font-family: 'Lora', serif; color: #431400;">I am at peace with my journey.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What is one step I can take towards my goal?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
+                thumbnails.forEach((thumb, i) => {
+                    thumb.classList.toggle('selected', i === index);
+                });
 
-    <!-- Card 11: New Design (Wavy Frame) -->
-    <div class="card-container">
-        <h2 class="card-number">11.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background-color: #fefcf5; box-shadow: inset 0 0 0 8px #fde4e9;">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; color: #2c2c2c; font-family: 'EB Garamond', serif;">My kindness is my greatest strength.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">How can I show kindness to myself today?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
+                const thumb = thumbnails[index];
+                const thumbCenter = thumb.offsetLeft + thumb.offsetWidth / 2;
+                const selectorCenter = selectorDiv.clientWidth / 2;
 
+                selectorDiv.scrollTo({
+                    left: thumbCenter - selectorCenter,
+                    behavior: 'smooth'
+                });
+            }
 
+            prevBtn.addEventListener('click', () => updateMainImage(currentIndex - 1));
+            nextBtn.addEventListener('click', () => updateMainImage(currentIndex + 1));
 
-    <!-- Card 13: Gentle Radiance -->
-    <div class="card-container">
-        <h2 class="card-number">13.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: radial-gradient(circle at center, #f3cfdc 0%, #fcf3e7 80%);">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; color: #2c2c2c; font-family: 'Poppins', sans-serif;">My soul is nourished by creativity.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What can I create or experience today?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
-
-
-    
-
-
-    <!-- Card 17: New Design (Gradient with Bold Border) -->
-    <div class="card-container">
-        <h2 class="card-number">17.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: inset 0 0 0 8px #ffefd1, 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(to right, #fcefe9 0%, #f8f5e8 100%);">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; color: #2c2c2c; font-family: 'Dancing Script', cursive;">I am a work in progress, and that's okay.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What is a lesson I learned from a recent mistake?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
-
-    <!-- Card 18: Gentle Sunset Gradient -->
-    <div class="card-container">
-        <h2 class="card-number">18.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(145deg, #ffefd1 0%, #fef8f0 50%, #fbdce9 100%);">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; color: #2c2c2c; font-family: 'Dancing Script', cursive;">I am grateful for this moment.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What is a feeling I want to savor?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
-
-    <!-- Card 19: Two-tone Diagonal -->
-    <div class="card-container">
-        <h2 class="card-number">19.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(45deg, #f7efe4 50%, #faf5e6 50%);">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; color: #2c2c2c; font-family: 'Lora', serif;">My mind is a garden of beautiful thoughts.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What is one positive thought I can cultivate today?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
-
-    <!-- Card 20: Layered Ombre -->
-    <div class="card-container">
-        <h2 class="card-number">20.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(to right, #fde7f6 0%, #ffefd5 100%);">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; color: #2c2c2c; font-family: 'Playfair Display', serif;">I am resilient and strong.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What is one challenge I have overcome recently?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
-
-
-
-    <!-- Card 22: Side Panel Gradient (New) -->
-    <div class="card-container">
-        <h2 class="card-number">22.</h2>
-        <div style="padding: 2.5rem; border-radius: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 252, 246, 0.3); text-align: center; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; background: linear-gradient(to right, #faf6e1 0%, #ffe4c4 100%); border-left: 8px solid #fbdce9;">
-            <h3 style="font-size: 50px; font-weight: 700; line-height: 1.75; margin-bottom: 1.5rem; color: #2c2c2c; font-family: 'Montserrat', sans-serif;">My creativity flows freely.</h3>
-            <div style="padding: 1.5rem; margin-top: 2rem; border-radius: 1.5rem; background: rgba(255, 252, 246, 0.5); border: 1px solid rgba(255, 252, 246, 0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
-                <h3 style="font-size: 1.5rem; font-weight: 400; line-height: 1.75; color: #2c2c2c; margin: 0;">What can I do to nourish my body or mind today?</h3>
-            </div>
-        </div>
-    </div>
-    <hr>
-    
-  
-
+            thumbnails.forEach((thumb, index) => {
+                thumb.addEventListener('click', () => updateMainImage(index));
+            });
+        })();
+    </script>
 </body>
+
 </html>

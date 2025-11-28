@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affirmation Stickers</title>
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    #design-list {
+      column-count: 3; /* Number of masonry columns */
+      column-gap: 1rem;
+    }
+    .design-card {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0; /* Remove padding to allow full image display */
+    }
+    img.thumbnail {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0; /* Optional: remove rounding if any */
+    }
+    /* Hide buttons instead of disabling */
+    button.hidden {
+      display: none !important;
+    }
+    /* Responsive column count */
+    /* Phone view: width 100% (less than 600px) */
+    @media (max-width: 599px) {
+      #design-list {
+        column-count: 2;
+      }
+
+    }
+
+    /* Tablet view: width 95% (600px to 1199px) */
+    @media (min-width: 600px) and (max-width: 1199px) {
+      #design-list {
+        column-count: 4;
+      }
+
+    }
+
+    /* Desktop view: width 90% (1200px and above) */
+    @media (min-width: 1200px) {
+      #design-list {
+        column-count: 4;
+      }
+
+    }
+  </style>
+</head>
+<body>
+
+   <div class="navdiv" style="margin-bottom: 0.6in;"></div>
+  <div class="container my-4">
+    <h1 class="mb-4 fs-2">Affirmation Stickers</h1><br>
+    <div id="design-list"></div>
+
+    <div id="pagination" class="d-flex justify-content-center mt-4">
+      <button id="prev-btn" class="btn btn-primary me-2">Previous</button>
+      <button id="next-btn" class="btn btn-primary">Next</button>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+   <script src="../../../nav.js"></script>
+  <script>
+    const designsPerPage = 15; // adjust as needed
+    let currentPage = 1;
+    let availableDesigns = [];
+
+    async function getPreviewImages(designNum) {
+      const images = [];
+      let n = 1;
+      while (true) {
+        const imgUrl = `list/${designNum}/images/preview-lg-${n}.png`;
+        try {
+          const res = await fetch(imgUrl, { method: 'HEAD' });
+          if (res.ok) {
+            images.push(imgUrl);
+            n++;
+          } else {
+            break;
+          }
+        } catch {
+          break;
+        }
+      }
+      return images;
+    }
+
+    async function getRandomPreviewImage(designNum) {
+      const previews = await getPreviewImages(designNum);
+      if (previews.length > 0) {
+        const randomIndex = Math.floor(Math.random() * previews.length);
+        return previews[randomIndex];
+      }
+      return `list/${designNum}/images/thumbnail.png`;
+    }
+
+    function getPageFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const page = parseInt(params.get('page'));
+      return isNaN(page) || page < 1 ? 1 : page;
+    }
+
+    async function scanDesigns(maxDesign) {
+      const found = [];
+      for (let i = maxDesign; i > 0; i--) {
+        try {
+          const res = await fetch(`list/${i}/index.html`);
+          if (res.ok) found.push(i);
+        } catch {}
+      }
+      return found;
+    }
+
+    async function renderPage(page) {
+      const container = document.getElementById('design-list');
+      container.innerHTML = '';
+
+      const totalPages = Math.ceil(availableDesigns.length / designsPerPage);
+
+      // Show/hide Previous button
+      const prevBtn = document.getElementById('prev-btn');
+      if (page <= 1) {
+        prevBtn.classList.add('hidden');
+      } else {
+        prevBtn.classList.remove('hidden');
+      }
+
+      // Show/hide Next button
+      const nextBtn = document.getElementById('next-btn');
+      if (page >= totalPages) {
+        nextBtn.classList.add('hidden');
+      } else {
+        nextBtn.classList.remove('hidden');
+      }
+
+      const startIndex = (page - 1) * designsPerPage;
+      const pageDesigns = availableDesigns.slice(startIndex, startIndex + designsPerPage);
+
+      if (pageDesigns.length === 0) {
+        container.innerHTML = '<p class="text-center">No designs found on this page.</p>';
+        return;
+      }
+
+      for (const designNum of pageDesigns) {
+        try {
+          const res = await fetch(`list/${designNum}/index.html`);
+          if (res.ok) {
+            const text = await res.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(text, 'text/html');
+            const title = doc.querySelector('title')?.innerText || `Design ${designNum}`;
+            const imgSrc = await getRandomPreviewImage(designNum);
+            container.insertAdjacentHTML('beforeend', createDesignCard(title, imgSrc, designNum));
+          }
+        } catch {}
+      }
+    }
+
+    function createDesignCard(title, imageSrc, designNum) {
+      return `
+        <div class="design-card">
+          <a class="text-decoration-none text-dark" href="list/${designNum}/index.html">
+              <img class="thumbnail img-fluid" src="${imageSrc}" alt="${title} preview" />
+              <h5 class="mt-3 text-center">${title}</h5>
+          </a>
+        </div>
+      `;
+    }
+
+    function updatePage(newPage) {
+      currentPage = newPage;
+      const url = new URL(window.location);
+      url.searchParams.set('page', newPage);
+      window.history.pushState({}, '', url);
+      renderPage(newPage);
+    }
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      if (currentPage > 1) updatePage(currentPage - 1);
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      const totalPages = Math.ceil(availableDesigns.length / designsPerPage);
+      if (currentPage < totalPages) updatePage(currentPage + 1);
+    });
+
+    window.onload = async () => {
+      currentPage = getPageFromUrl();
+      const lastDesign = 3; // Adjust this number as per your total design folders
+      availableDesigns = await scanDesigns(lastDesign);
+      updatePage(currentPage);
+    };
+  </script>
+</body>
+</html>
