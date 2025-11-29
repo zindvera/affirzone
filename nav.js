@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollNavHTML = `
   
         <div class="scroll-nav" style="width: 100vw; position: fixed; top: 0; left: 0; background: white; z-index: 1000; padding: 0.5rem 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center" style="padding-top: 5px;  padding-bottom: 5px;">
           <a href="${relativePrefix}index.html" style="text-decoration: none;">
             <img id="brandLogo" src="${relativePrefix}media/Affirzone-logo.png" alt="Affirzone Scroll Logo">
           </a>
