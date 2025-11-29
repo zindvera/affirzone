@@ -22,8 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <img id="brandLogo" src="${relativePrefix}media/Affirzone-logo.png" alt="Affirzone Scroll Logo">
           </a>
           <div class="fsearch-container flex-grow-1">
-             <a href="${relativePrefix}" id="home-link" style=" margin-left: 13px; cursor: pointer;">home</a>
-                <a href="${relativePrefix}shop/" id="store-link" style=" margin-left: 13px; cursor: pointer;">store</a>
+             <a href="${relativePrefix}" id="home-link" style="text-decoration: none;
+            font-size: 16px; margin-left: 13px; cursor: pointer;">home</a>
+                <a href="${relativePrefix}shop/" id="store-link" style="text-decoration: none;
+            font-size: 16px; margin-left: 13px; cursor: pointer;">store</a>
           </div>
         </div>
       </div>

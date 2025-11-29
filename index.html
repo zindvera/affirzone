@@ -47,10 +47,6 @@
         }
 
 
-        .brand-name a {
-            text-decoration: none;
-            font-size: 14px;
-        }
 
         .navbar-toggler {
             border: none;
@@ -611,9 +607,13 @@
 
     <div class="main-container">
         <div class="brand-div">
-            <div class="brand-name">
+            <div class="brand-name" style="
+    display: flex;
+    align-items: center;
+">
                 <img id="brandLogo" src="media/Affirzone-logo.png" alt="Affirzone Nav logo" srcset="">
-                <a href="shop/" id="store-link" style=" margin-left: 13px; cursor: pointer;">store</a>
+                <a href="shop/" id="store-link" style="  text-decoration: none;
+            font-size: 16px; margin-left: 13px; cursor: pointer;">store</a>
             </div>
 
             <div id="store-popup" class="store-popup">
