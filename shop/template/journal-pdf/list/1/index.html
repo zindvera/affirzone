@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Product Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
+    <link rel="stylesheet" href="../../../../../nav.css">
+   <style>
         * {
             box-sizing: border-box;
         }
@@ -237,7 +238,7 @@
         /* ============================================================================
        DESKTOP VIEW (> 1024px)
        ============================================================================ */
-        @media (min-width: 1025px) {
+        @media (min-width: 1200px) {
             .main-product-container {
                 width: 40%;
             }
@@ -250,7 +251,7 @@
                 width: 15vw;
             }
 
- 
+
             .buy-now-btn {
                 width: 20vw;
             }
@@ -259,7 +260,7 @@
         /* ============================================================================
        TABLET VIEW (768px - 1024px)
        ============================================================================ */
-        @media (max-width: 1024px) and (min-width: 768px) {
+        @media (min-width: 600px) and (max-width: 1199px) {
             #layout-container {
                 flex-wrap: nowrap;
                 gap: 30px;
@@ -277,7 +278,7 @@
                 width: 15vw;
             }
 
-    
+
 
             .buy-now-btn {
                 width: 25vw;
@@ -287,7 +288,9 @@
         /* ============================================================================
        PHONE VIEW (< 768px)
        ============================================================================ */
-        @media (max-width: 767px) {
+        
+  /* Phone view: width 100% (less than 600px) */
+  @media (max-width: 599px) {
             #layout-container {
                 flex-direction: column;
                 padding: 0px;
@@ -321,7 +324,7 @@
 
             .open-camera-div {
                 width: 100%;
-           
+
                 border-radius: 0;
                 padding: 12px;
                 flex-direction: column;
@@ -338,7 +341,8 @@
 </head>
 
 <body>
-    <div id="layout-container">
+    <div class="navdiv"></div>
+    <div id="layout-container" style="margin-top:1in;">
         <div class="main-product-container">
             <!-- Image Div -->
             <div class="image-div">
@@ -356,7 +360,7 @@
             </div>
 
             <!-- Open Camera Div -->
-            <div class="open-camera-div">
+            <div class="open-camera-div" id="open-camera-div">
                 <div class="open-camera-text">
                     Preview your design on camera in real-time
                 </div>
@@ -379,6 +383,8 @@
         </div>
     </div>
 
+
+    <script src="../../../../../nav.js"></script>
     <script>
         (function () {
             const mainImage = document.getElementById('main-image-phone');
@@ -412,14 +418,33 @@
                 });
             }
 
+            // NEW: Parse URL parameter and initialize with specific image
+            function initializeFromUrl() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const openParam = urlParams.get('open');
+
+                if (openParam !== null) {
+                    const targetIndex = parseInt(openParam);
+                    if (!isNaN(targetIndex) && targetIndex >= 0 && targetIndex < totalImages) {
+                        updateMainImage(targetIndex);
+                        return;
+                    }
+                }
+
+                updateMainImage(0);
+            }
+
             prevBtn.addEventListener('click', () => updateMainImage(currentIndex - 1));
             nextBtn.addEventListener('click', () => updateMainImage(currentIndex + 1));
 
             thumbnails.forEach((thumb, index) => {
                 thumb.addEventListener('click', () => updateMainImage(index));
             });
+
+            window.addEventListener('DOMContentLoaded', initializeFromUrl);
         })();
     </script>
+
 </body>
 
 </html>

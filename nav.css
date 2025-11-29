@@ -1,0 +1,44 @@
+    #brandLogo {
+        width: 90px;
+    }
+
+    .brand-name a {
+        text-decoration: none;
+        font-size:14px;
+    }
+
+
+
+    /* Mobile responsive */
+    @media (max-width: 599px) {
+        .brand-div {
+            width: 97%;
+            margin: auto;
+        }
+    }
+
+
+    /* Medium Devices (Tablets, 768px and up) */
+    @media (min-width: 600px) and (max-width: 1199px) {
+        .brand-div {
+            width: 95%;
+            margin: auto;
+        }
+
+
+    }
+
+
+
+    /* Large Devices (Desktops, 992px and up) */
+    @media (min-width: 1200px) {
+        .brand-div {
+            width: 95%;
+            margin: auto;
+        }
+
+        .main-container {
+            width: 95%;
+            margin: auto 0;
+        }
+    }
