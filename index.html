@@ -272,7 +272,7 @@
             top: 50px;
             /* Adjust based on brand-div height */
             left: 0;
-            background: #f7f7f7;
+            background: linear-gradient(to bottom, #b5e0ed 0in, #d5edf3 0.3in, #ebf4f7 0.5in, #f1f1f1 0.7in, #eff5f7 100%);
             border-radius: 8px;
             padding: 10px;
             max-width: 100%;
@@ -283,14 +283,14 @@
 
         .triangle-top {
             position: absolute;
-            top: -10px;
+            top: -9px;
             left: 130px;
             /* Align with store link */
             width: 0;
             height: 0;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
-            border-bottom: 10px solid #f7f7f7;
+            border-bottom: 10px solid #9ae2fa;
 
         }
 
@@ -343,7 +343,8 @@
             top: 100px;
             left: 50%;
             transform: translateX(-50%);
-            background: #b9f1ff;
+            background: linear-gradient(to bottom, #b5e0ed 0in, #d5edf3 0.3in, #ebf4f7 0.5in, #f1f1f1 0.7in, #eff5f7 100%);
+
             border-radius: 12px;
             padding: 15px;
             /* Extra bottom padding */
@@ -353,6 +354,22 @@
             display: none;
             overflow: visible !important;
             /* CRITICAL: Prevents clipping */
+        }
+
+        .bintro-tooltip {
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, #b5e0ed 0in, #d5edf3 0.3in, #ebf4f7 0.5in, #f1f1f1 0.7in, #eff5f7 100%);
+
+            border-radius: 12px;
+            padding: 15px;
+            min-width: 30vw;
+            max-width: 100vw;
+            pointer-events: auto;
+            display: none;
+            overflow: visible !important;
         }
 
         .intro-header {
@@ -397,7 +414,7 @@
             height: 0;
             border-left: 16px solid transparent;
             border-right: 16px solid transparent;
-            border-top: 16px solid #b9f1ff;
+            border-top: 16px solid #9ae2fa;
             z-index: 1600 !important;
         }
 
@@ -409,7 +426,7 @@
             height: 0;
             border-left: 14px solid transparent;
             border-right: 14px solid transparent;
-            border-bottom: 14px solid #b9f1ff;
+            border-bottom: 14px solid #9ae2fa;
             filter: drop-shadow(0 -2px 8px rgba(0, 0, 0, 0.15));
         }
 
@@ -421,9 +438,11 @@
             height: 0;
             border-left: 14px solid transparent;
             border-right: 14px solid transparent;
-            border-bottom: 14px solid #b9f1ff;
+            border-bottom: 14px solid #9ae2fa;
             filter: drop-shadow(0 -2px 8px rgba(0, 0, 0, 0.15));
         }
+
+
 
 
         .intro-understand-btn {
@@ -542,6 +561,11 @@
 
             .intro-3-triangle {
                 left: 88%;
+            }
+
+            .bintro-tooltip {
+                top: 150px;
+                z-index: 2;
             }
         }
 
@@ -730,6 +754,16 @@
     </div>
 
 
+    <!-- Intro Tooltip 4 -->
+    <div id="intro-4" class="bintro-tooltip">
+        <div class="intro-header">
+            <button id="intro-4-close" class="intro-close">×</button>
+        </div>
+        <div id="intro-4-content" class="intro-content"></div>
+        <div class="button-div">
+            <button id="intro-4-understand" class="intro-understand-btn">I Understand</button>
+        </div>
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -1163,6 +1197,7 @@
         });
 
 
+
         // Intro Tooltip Sequential Flow with Cookie Management
         document.addEventListener('DOMContentLoaded', () => {
             // Cookie functions
@@ -1178,18 +1213,37 @@
                 }, '');
             }
 
+            function updateIntroStatus(tooltipId, status = 'seen') {
+                const introData = getIntroData();
+                introData[tooltipId] = status;
+                setCookie('introdata', introData);
+                return introData;
+            }
+
+
             function getIntroData() {
                 try {
                     const data = getCookie('introdata');
-                    return data ? JSON.parse(data) : {
+                    let introData = data ? JSON.parse(data) : {};
+                    // Ensure all intros 1 to 4 are present with default 'not-seen' if missing
+                    for (let i = 1; i <= 4; i++) {
+                        const tooltipId = `intro-${i}`;
+                        if (!(tooltipId in introData)) {
+                            introData[tooltipId] = 'not-seen';
+                        }
+                    }
+                    return introData;
+                } catch {
+                    // Fallback: return all intros as not-seen
+                    return {
                         'intro-1': 'not-seen',
                         'intro-2': 'not-seen',
-                        'intro-3': 'not-seen'
+                        'intro-3': 'not-seen',
+                        'intro-4': 'not-seen'
                     };
-                } catch {
-                    return { 'intro-1': 'not-seen', 'intro-2': 'not-seen', 'intro-3': 'not-seen' };
                 }
             }
+
 
             function updateIntroStatus(tooltipId, status = 'seen') {
                 const introData = getIntroData();
@@ -1200,24 +1254,33 @@
 
             function showNextTooltip(currentNum) {
                 const nextNum = currentNum + 1;
-                if (nextNum <= 3) {
-                    setTimeout(() => {
-                        window.showIntroTooltip(nextNum, getDefaultContent(nextNum));
-                    }, 2000); // 2 second delay
+                if (nextNum <= 4) {  // Updated max intro to 4
+                    const delay = (currentNum === 3) ? 5000 : 2000;  // 5s after intro-3, else 2s
+                    setTimeout(() => window.showIntroTooltip(nextNum, getDefaultContent(nextNum)), delay);
                 }
             }
 
+
+
+
             function getDefaultContent(num) {
-                const contents = {
-                    1: '<strong>Welcome to Affirzone!</strong><br>Your daily affirmation companion.',
-                    2: '<strong>Features:</strong><br>• 3 themes • 5 designs • Journal prompts • Save preferences',
-                    3: '<strong>How to use:</strong><br>1. Pick theme/design<br>2. Click Change for new affirmation<br>3. Toggle Save preferences'
-                };
-                return contents[num] || '';
+                switch (num) {
+                    case 1:
+                        return "<strong>Welcome to Affirzone!</strong><br>Your daily affirmation companion.";
+                    case 2:
+                        return "<strong>Features</strong><br>3 themes, 5 designs, Journal prompts, Save preferences...";
+                    case 3:
+                        return "<strong>How to use</strong><br>1. Pick theme/design<br>2. Click Change for new affirmation<br>3. Toggle Save preferences";
+                    case 4:
+                        return "<strong>Bookmark Us!</strong><br>Add this website to your bookmarks for quick access!";  // Added content
+                    default:
+                        return "";
+                }
             }
 
-            // Handle all 3 tooltips
-            for (let i = 1; i <= 3; i++) {
+            // console.log('Intro data on load:', getIntroData()); 
+            // Handle all 4 tooltips
+            for (let i = 1; i <= 4; i++) {
                 const tooltipId = `intro-${i}`;
                 const tooltip = document.getElementById(tooltipId);
                 const closeBtn = document.getElementById(`${tooltipId}-close`);
@@ -1257,8 +1320,31 @@
             };
 
             // Auto-start sequence on first visit (call this in your main script)
-            // window.startIntroSequence();
+            window.startIntroSequence();
         });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Existing listeners for intro-1 to intro-3 assumed here...
+
+            const intro4Close = document.getElementById('intro-4-close');
+            const intro4Understand = document.getElementById('intro-4-understand');
+            const intro4Tooltip = document.getElementById('intro-4');
+
+            intro4Close?.addEventListener('click', () => {
+                updateIntroStatus('intro-4', 'seen');
+                if (intro4Tooltip) intro4Tooltip.style.display = 'none';
+                showNextTooltip(4);
+            });
+
+            intro4Understand?.addEventListener('click', () => {
+                updateIntroStatus('intro-4', 'seen');
+                if (intro4Tooltip) intro4Tooltip.style.display = 'none';
+                showNextTooltip(4);
+            });
+        });
+
+
 
         document.addEventListener('DOMContentLoaded', () => {
             // Cookie functions
@@ -1295,7 +1381,7 @@
                 if (!introData) introData = initIntroCookie();
 
                 // Mark current as seen, reset later ones to not-seen
-                for (let i = 1; i <= 3; i++) {
+                for (let i = 1; i <= 4; i++) {
                     introData[`intro-${i}`] = (i <= tooltipNum) ? 'seen' : 'not-seen';
                 }
                 setCookie('introdata', introData);
@@ -1322,11 +1408,12 @@
             const contents = {
                 1: '<p>Here you can see Affirmation & Journal Prompt.</p>',
                 2: '<p>Here you can change Affirmation & Journal Prompt.</p>',
-                3: '<p>Here you can change Theme, Design & Prompt Settings.</p>'
+                3: '<p>Here you can change Theme, Design & Prompt Settings.</p>',
+                4: '<strong>Bookmark Us!</strong><br>Add this website to your bookmarks for quick access!'
             };
 
             // Event listeners - FIXED LOGIC
-            for (let i = 1; i <= 3; i++) {
+            for (let i = 1; i <= 4; i++) {
                 const id = `intro-${i}`;
 
                 // Close button
@@ -1353,7 +1440,7 @@
                 initIntroCookie();
                 const introData = getIntroData();
 
-                for (let i = 1; i <= 3; i++) {
+                for (let i = 1; i <= 4; i++) {
                     const tooltipId = `intro-${i}`;
                     if (introData && introData[tooltipId] === 'not-seen') {
                         showTooltip(tooltipId, contents[i]);
