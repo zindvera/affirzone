@@ -1,41 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Affirmation Journal Prompts PDF For Annotation</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../media/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../media/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../media/favicon-180x180.png">
   <!-- Bootstrap CSS CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="../../../nav.css">
   <style>
-        body{
-      padding:0px;
-      margin:0px;
+    body {
+      padding: 0px;
+      margin: 0px;
       background-color: #f1f1f1;
     }
-    
+
     #design-list {
-      column-count: 3; /* Number of masonry columns */
+      column-count: 3;
+      /* Number of masonry columns */
       column-gap: 1rem;
     }
+
     .design-card {
       break-inside: avoid;
       margin-bottom: 1rem;
       background: transparent;
       border: none;
       box-shadow: none;
-      padding: 0; /* Remove padding to allow full image display */
+      padding: 0;
+      /* Remove padding to allow full image display */
     }
+
     img.thumbnail {
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 0; /* Optional: remove rounding if any */
+      border-radius: 0;
+      /* Optional: remove rounding if any */
     }
+
     /* Hide buttons instead of disabling */
     button.hidden {
       display: none !important;
     }
+
     /* Responsive column count */
     /* Phone view: width 100% (less than 600px) */
     @media (max-width: 599px) {
@@ -62,9 +73,10 @@
     }
   </style>
 </head>
+
 <body>
 
-   <div class="navdiv" ></div>
+  <div class="navdiv"></div>
   <div class="container mb-4" style="margin-top: 0.8in;">
     <h1 class="mb-4 fs-2">Affirmation Journal Prompts PDF For Annotation</h1><br>
     <div id="design-list"></div>
@@ -76,7 +88,7 @@
   </div>
 
   <script src="config.js"></script>
-   <script src="../../../nav.js"></script>
+  <script src="../../../nav.js"></script>
   <script>
     const designsPerPage = 15; // adjust as needed
     let currentPage = 1;
@@ -123,7 +135,7 @@
         try {
           const res = await fetch(`list/${i}/index.html`);
           if (res.ok) found.push(i);
-        } catch {}
+        } catch { }
       }
       return found;
     }
@@ -169,7 +181,7 @@
             const imgSrc = await getRandomPreviewImage(designNum);
             container.insertAdjacentHTML('beforeend', createDesignCard(title, imgSrc, designNum));
           }
-        } catch {}
+        } catch { }
       }
     }
 
@@ -209,4 +221,5 @@
     };
   </script>
 </body>
+
 </html>
