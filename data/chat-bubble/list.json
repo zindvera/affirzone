@@ -1,0 +1,23 @@
+[
+  {
+    "title": "8 Journal Prompts for Self-Discovery",
+    "query": "self-discovery",
+    "file": "8-journal-prompts-for-self-discovery.json",
+    "type": "list",
+    "tags": [
+      "Self Confidence",
+      "Inner peace"
+    ],
+    "pinterest_img": ""
+  },
+  {
+    "title": "Career Growth: Affirmation & Prompt Combo",
+    "query": "career-growth",
+    "file": "career-growth-affirmation-prompt-combo.json",
+    "type": "combo",
+    "tags": [
+      "Career Growth",
+      "Self Confidence"
+    ]
+  }
+]

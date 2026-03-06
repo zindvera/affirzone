@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Growth: Affirmation & Prompt Combo | Affirzone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-base: #f7f7f7; 
+            --glass-white: #ffffff;
+            --text-main: #111111;
+            --text-sub: #444444; 
+            --text-muted: #888888;
+            --theme-blue-card: #eef7ff; 
+            --pinterest-red: #e60023;
+            --bubble-bg: #ffffff;
+            --border-accent: rgba(0,0,0,0.08); 
+            --radius-bubble: 20px;
+            --radius-container: 32px;
+            --radius-card: 22px;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            background-image: radial-gradient(circle at 0 120px, #e3f2fd 0%, transparent 20%),
+                              radial-gradient(circle at 100% 100%, #fdeaea 0%, transparent 15%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            margin: 0; padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- STICKY HEADER --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            padding: 12px 0;
+            width: 100%;
+        }
+
+        .header-inner {
+            width: 100%; max-width: 850px; margin: 0 auto; padding: 0 20px;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .logo { 
+            display: flex;
+            align-items: center;
+            margin: 0;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 38px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container { 
+            width: 100%; max-width: 850px; margin: 0 auto; padding: 30px 12px 100px; flex: 1;
+        }
+
+        /* --- SEARCH AREA --- */
+        .search-area { position: relative; margin-bottom: 40px; }
+        .search-area input {
+            width: 100%; padding: 18px 24px 18px 54px; border-radius: 18px;
+            border: 1px solid rgba(0,0,0,0.06); background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02); font-size: 1.05rem; outline: none; 
+            color: var(--text-main);
+        }
+        .search-area i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #bbb; }
+
+        /* --- CONTENT CARD --- */
+        .content-card {
+            background-color: var(--theme-blue-card);
+            border-radius: var(--radius-container);
+            padding: 60px 45px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255,255,255,0.8);
+            display: flex; flex-direction: column;
+        }
+
+        .hero-section { margin-bottom: 50px; align-self: flex-start; }
+        .hero-bubble {
+            background-color: #fff; padding: 22px 28px; border-radius: var(--radius-bubble);
+            position: relative; filter: drop-shadow(0 1.5px 0 var(--border-accent));
+        }
+        .hero-bubble h2 { margin: 0; font-size: 1.6rem; font-weight: 800; line-height: 1.3; letter-spacing: -0.03em; }
+        .hero-bubble::after {
+            content: ''; position: absolute; bottom: -13px; left: 35px;
+            width: 0; height: 0; border-left: 14px solid transparent;
+            border-right: 14px solid transparent; border-top: 14px solid #fff;
+            z-index: 1;
+        }
+
+        .intro-text { font-size: 1.2rem; line-height: 1.8; color: var(--text-sub); margin-bottom: 50px; font-weight: 400; max-width: 700px; }
+
+        .combo-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 55px; }
+
+        .combo-item {
+            background-color: #fff; padding: 40px 35px; border-radius: var(--radius-card);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02); display: flex; flex-direction: column;
+            gap: 20px; border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .affirmation-text { font-size: 1.35rem; line-height: 1.45; color: var(--text-main); font-weight: 700; margin: 0; }
+        .prompt-text { font-size: 1.15rem; line-height: 1.75; color: var(--text-sub); margin: 0; padding-top: 18px; border-top: 1px solid #f8f8f8; }
+
+        /* --- ACTION AREA --- */
+        .action-area { margin-top: 50px; display: flex; justify-content: center; }
+
+        .btn-pinterest {
+            background: var(--pinterest-red); border: none; padding: 18px 36px;
+            border-radius: 50px; color: #ffffff; font-weight: 800; font-size: 1.05rem;
+            display: flex; align-items: center; gap: 12px; cursor: pointer;
+            box-shadow: 0 12px 30px rgba(230, 0, 35, 0.2); transition: transform 0.2s;
+            text-decoration: none;
+        }
+        .btn-pinterest:active { transform: scale(0.95); }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #ffffff; border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 60px 20px; margin-top: auto;
+        }
+        .footer-inner { max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; list-style: none; padding: 0; margin: 0; }
+        .footer-links a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; }
+
+        /* --- MOBILE REFINEMENT --- */
+        @media (max-width: 600px) {
+            .container { padding: 20px 0 60px; }
+            
+            /* Give search area and intro text side margins to avoid body edges */
+            .search-area { margin: 0 15px 30px 15px; }
+            .hero-section { padding: 0 15px; }
+            .intro-text { padding: 0 15px; font-size: 1.1rem; margin-bottom: 40px; }
+            
+            .content-card {
+                padding: 45px 0; 
+                border-radius: 0; 
+                background-color: var(--theme-blue-card);
+                border-left: none;
+                border-right: none;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            }
+
+            .hero-bubble h2 { font-size: 1.45rem; }
+            
+            .combo-item { 
+                padding: 30px 15px; 
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+                gap: 15px;
+            }
+
+            .affirmation-text { font-size: 1.25rem; }
+            .prompt-text { font-size: 1.05rem; }
+            .combo-list { gap: 40px; }
+            
+            header { padding: 8px 0; }
+            .logo img { height: 32px; }
+
+            .action-area { padding: 0 15px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="/" class="logo">
+                <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo">
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- SEARCH BAR -->
+        <div class="search-area">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search prompts & affirmations..." onkeypress="if(event.key==='Enter') window.location.reload()">
+        </div>
+        
+        <!-- MAIN CONTENT CARD -->
+        <main class="content-card">
+            
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-bubble">
+                    <h2 id="pageTitle">Career Growth: Affirmation & Prompt Combo</h2>
+                </div>
+            </section>
+
+            <p class="intro-text">
+                Success is built on both belief and reflection. Use the affirmation to state your intention, then use the journal prompt to explore actionable steps.
+            </p>
+
+            <!-- Combo List -->
+            <ul class="combo-list">
+                <li class="combo-item">
+                    <div class="combo-content">
+                        <p class="affirmation-text">"I am deserving of professional abundance and limitless success."</p>
+                        <p class="prompt-text">What is the next major milestone you want to achieve? What is one specific action you can take this week to move toward it?</p>
+                    </div>
+                </li>
+                <li class="combo-item">
+                    <div class="combo-content">
+                        <p class="affirmation-text">"My unique skills and voice create immense value in my industry."</p>
+                        <p class="prompt-text">List three skills you possess that set you apart. How can you leverage these skills more effectively in your current role?</p>
+                    </div>
+                </li>
+                <li class="combo-item">
+                    <div class="combo-content">
+                        <p class="affirmation-text">"Every challenge is a stepping stone toward a more resilient version of me."</p>
+                        <p class="prompt-text">Reflect on a recent career setback. What did it teach you about your strength, and how has it prepared you for future opportunities?</p>
+                    </div>
+                </li>
+            </ul>
+        </main>
+
+        <div class="action-area">
+            <button class="btn-pinterest" onclick="saveToPinterest()">
+                <i class="fa-brands fa-pinterest"></i> Save On Pinterest
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <ul class="footer-links">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms</a></li>
+            </ul>
+            <div class="copyright">&copy; 2024 Affirzone. Crafted for mindful discovery.</div>
+        </div>
+    </footer>
+
+    <script>
+        function saveToPinterest() {
+            const pageUrl = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.getElementById('pageTitle').innerText);
+            const imageUrl = encodeURIComponent('https://affirzone.store/media/Affirzone-logo.png');
+
+            const pinterestUrl = `https://www.pinterest.com/pin/create/button/?url=${pageUrl}&media=${imageUrl}&description=${title}`;
+            
+            const width = 600;
+            const height = 700;
+            const left = (window.innerWidth / 2) - (width / 2);
+            const top = (window.innerHeight / 2) - (height / 2);
+
+            window.open(pinterestUrl, 'PinterestShare', `width=${width},height=${height},top=${top},left=${left},scrollbars=yes`);
+        }
+    </script>
+</body>
+</html>

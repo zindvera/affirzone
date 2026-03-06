@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovery | Affirzone</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-base: #f7f7f7; 
+            --glass-white: #ffffff;
+            --text-main: #111111;
+            --text-sub: #4b4b4b; 
+            --text-muted: #888888;
+            --theme-blue-card: #eef7ff; 
+            --border-accent: rgba(0,0,0,0.08); 
+            --radius-bubble: 22px;
+            --radius-container: 32px;
+            --radius-card: 22px;
+            --pinterest-red: #e60023;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            background-image: radial-gradient(circle at 0 120px, #e3f2fd 0%, transparent 20%),
+                              radial-gradient(circle at 100% 100%, #fdeaea 0%, transparent 15%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            margin: 0; padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- STICKY HEADER --- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            padding: 8px 0;
+            width: 100%;
+        }
+
+        .header-inner {
+            width: 100%; max-width: 850px; margin: 0 auto; padding: 0 25px;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .logo img { height: 30px; width: auto; object-fit: contain; }
+
+        /* --- MAIN CONTAINER --- */
+        .container { 
+            width: 100%; max-width: 850px; margin: 0 auto; padding: 30px 12px 100px; flex: 1;
+        }
+
+        /* --- CONTENT CARD --- */
+        .content-card {
+            background-color: var(--theme-blue-card);
+            border-radius: var(--radius-container);
+            padding: 60px 45px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255,255,255,0.8);
+            display: none;
+            flex-direction: column;
+        }
+
+        .hero-section { margin-bottom: 50px; align-self: flex-start; }
+        .hero-bubble {
+            background-color: #fff; padding: 22px 28px; border-radius: var(--radius-bubble);
+            position: relative; filter: drop-shadow(0 1.5px 0 var(--border-accent));
+        }
+        .hero-bubble h2 { margin: 0; font-size: 1.7rem; font-weight: 800; line-height: 1.3; letter-spacing: -0.03em; }
+        .hero-bubble::after {
+            content: ''; position: absolute; bottom: -13px; left: 35px;
+            width: 0; height: 0; border-left: 14px solid transparent;
+            border-right: 14px solid transparent; border-top: 14px solid #fff;
+            z-index: 1;
+        }
+
+        .intro-text { font-size: 1.2rem; line-height: 1.8; color: var(--text-sub); margin-bottom: 55px; }
+
+        /* Template: List */
+        .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 55px; }
+        .prompt-item { display: flex; gap: 16px; align-items: flex-start; }
+        .prompt-number { font-size: 1.2rem; font-weight: 800; color: #b0b0b0; min-width: 24px; flex-shrink: 0; }
+        .journal-text { font-size: 1.3rem; line-height: 1.75; color: var(--text-main); font-weight: 500; margin: 0; }
+
+        /* Template: Combo */
+        .combo-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 55px; }
+        .combo-item {
+            background-color: #fff; padding: 40px 35px; border-radius: var(--radius-card);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02); display: flex; flex-direction: column;
+            gap: 20px; border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .affirmation-text { font-size: 1.35rem; line-height: 1.45; color: var(--text-main); font-weight: 700; margin: 0; }
+        .prompt-text { font-size: 1.15rem; line-height: 1.75; color: var(--text-sub); margin: 0; padding-top: 18px; border-top: 1px solid #f8f8f8; }
+
+        /* Work In Progress / Error */
+        .wip-container {
+            text-align: center; padding: 100px 20px; border-radius: var(--radius-container);
+            background: rgba(255, 255, 255, 0.5); border: 1px dashed var(--text-muted);
+        }
+        .wip-container i { font-size: 3rem; color: var(--text-muted); margin-bottom: 20px; display: block; }
+        .wip-container h2 { font-size: 1.5rem; font-weight: 700; color: var(--text-sub); margin-bottom: 10px; }
+
+        /* Action Area */
+        .action-area { margin-top: 60px; display: none; justify-content: center; }
+        .btn-pinterest {
+            background: var(--pinterest-red); border: none; padding: 18px 36px;
+            border-radius: 50px; color: #ffffff; font-weight: 800; font-size: 1.05rem;
+            display: flex; align-items: center; gap: 12px; cursor: pointer;
+            box-shadow: 0 12px 30px rgba(230, 0, 35, 0.2); transition: transform 0.2s;
+            text-decoration: none;
+        }
+
+        footer {
+            background: #ffffff; border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 60px 20px; margin-top: auto;
+        }
+        .footer-inner { max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        .footer-links { display: flex; gap: 25px; list-style: none; padding: 0; margin: 0; }
+        .footer-links a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 0 60px; }
+            .content-card { padding: 45px 0; border-radius: 0; border-left: none; border-right: none; }
+            .hero-section, .intro-text { padding: 0 15px; }
+            .hero-bubble h2 { font-size: 1.5rem; }
+            .prompt-list { padding: 0 15px; gap: 40px; }
+            .journal-text { font-size: 1.15rem; }
+            .combo-item { border-radius: 0; padding: 30px 15px; border-left: none; border-right: none; }
+            .affirmation-text { font-size: 1.25rem; }
+            .prompt-text { font-size: 1.05rem; }
+            .logo img { height: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="/" class="logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo"></a>
+        </div>
+    </header>
+
+    <div class="container" id="mainContainer">
+        <div id="statusArea" class="wip-container">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <h2>Loading content...</h2>
+            <p>Gathering mindful discovery for you.</p>
+        </div>
+        
+        <main class="content-card" id="contentCard">
+            <section class="hero-section">
+                <div class="hero-bubble"><h2 id="pageTitle"></h2></div>
+            </section>
+            <p class="intro-text" id="pageIntro"></p>
+            <div id="renderArea"></div>
+            <div class="action-area" id="actionArea">
+                <button class="btn-pinterest" onclick="saveToPinterest()">
+                    <i class="fa-brands fa-pinterest"></i> Save On Pinterest
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <ul class="footer-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="search.html">Topics</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Terms</a></li>
+            </ul>
+            <div class="copyright">&copy; 2024 Affirzone. Crafted for mindful discovery.</div>
+        </div>
+    </footer>
+
+    <script>
+        let pinTitle = "";
+        let pinDescription = "";
+        let pinImage = "";
+
+        function showWIP(message = "Website data is under Work In Progress.") {
+            const statusArea = document.getElementById('statusArea');
+            statusArea.innerHTML = `<i class="fa-solid fa-compass-drafting"></i><h2>Work In Progress</h2><p>${message}</p>`;
+            document.getElementById('contentCard').style.display = 'none';
+        }
+
+        async function initShowPage() {
+            const params = new URLSearchParams(window.location.search);
+            const queryTitle = params.get('title')?.replace(/\+/g, ' ');
+            
+            if (!queryTitle) return showWIP("No topic specified.");
+
+            try {
+                const res = await fetch('data/chat-bubble/list.json');
+                const registry = await res.json();
+                const meta = registry.find(item => item.title === queryTitle || item.query === queryTitle);
+                
+                if (!meta) return showWIP("The requested topic could not be found.");
+
+                const contentRes = await fetch(`data/prompts/${meta.file}`);
+                const data = await contentRes.json();
+
+                // State assignment from JSON
+                pinTitle = data.title;
+                pinDescription = data.intro;
+                pinImage = meta.pinterest_img || "";
+
+                // 1. Core UI Population
+                document.getElementById('pageTitle').innerText = pinTitle;
+                document.getElementById('pageIntro').innerText = pinDescription;
+                document.title = `${pinTitle} | Affirzone`;
+
+                const renderArea = document.getElementById('renderArea');
+                if (meta.type === 'list') {
+                    renderArea.innerHTML = `<ul class="prompt-list">${data.items.map((text, i) => `<li class="prompt-item"><span class="prompt-number">${i + 1}.</span><p class="journal-text">${text}</p></li>`).join('')}</ul>`;
+                } else if (meta.type === 'combo') {
+                    renderArea.innerHTML = `<div class="combo-list">${data.items.map(item => `<div class="combo-item"><p class="affirmation-text">"${item.affirmation}"</p><p class="prompt-text">${item.prompt}</p></div>`).join('')}</div>`;
+                }
+
+                // Handle Pinterest Button visibility (Method A handles data passing)
+                if (pinImage.trim() !== "") {
+                    document.getElementById('actionArea').style.display = 'flex';
+                }
+
+                document.getElementById('statusArea').style.display = 'none';
+                document.getElementById('contentCard').style.display = 'flex';
+
+            } catch (err) {
+                console.error(err);
+                showWIP();
+            }
+        }
+
+        function saveToPinterest() {
+            const currentLoc = window.location;
+            const cleanUrl = currentLoc.origin + currentLoc.pathname + currentLoc.search.replace(/\+/g, '%20');
+            const pageUrl = encodeURIComponent(cleanUrl);
+            
+            let absoluteImage = pinImage;
+            if (pinImage && !pinImage.startsWith('http')) {
+                absoluteImage = currentLoc.origin + (pinImage.startsWith('/') ? '' : '/') + pinImage;
+            }
+            const sharedImage = encodeURIComponent(absoluteImage);
+            const sharedDescription = encodeURIComponent(`${pinTitle} - ${pinDescription}`);
+            const pinterestUrl = `https://www.pinterest.com/pin/create/button/?url=${pageUrl}&media=${sharedImage}&description=${sharedDescription}`;
+            
+            window.open(pinterestUrl, 'PinterestShare', 'width=600,height=700,scrollbars=yes');
+        }
+
+        window.onload = initShowPage;
+    </script>
+</body>
+</html>
