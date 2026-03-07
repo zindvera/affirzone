@@ -307,12 +307,12 @@
             const btn = document.getElementById('readMoreBtn');
             const words = fullDescription.split(' ');
 
-            if (words.length <= 12 || isExpanded) {
+            if (words.length <= 9 || isExpanded) {
                 introEl.innerText = fullDescription;
-                btn.style.display = isExpanded && words.length > 12 ? "inline" : "none";
+                btn.style.display = isExpanded && words.length > 9 ? "inline" : "none";
                 if (isExpanded) btn.innerText = " Show Less";
             } else {
-                introEl.innerText = words.slice(0, 12).join(' ') + "...";
+                introEl.innerText = words.slice(0, 9).join(' ') + "...";
                 btn.style.display = "inline";
                 btn.innerText = "Read More";
             }

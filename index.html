@@ -215,12 +215,6 @@
         .affirmation-text { font-size: 1.3rem; font-weight: 700; color: var(--text-main); line-height: 1.4; margin-bottom: 12px; }
         .combo-prompt { font-size: 1.1rem; color: var(--text-sub); line-height: 1.6; padding-top: 15px; border-top: 1px solid #f2f2f2; margin: 0; }
 
-        .prompt-blur {
-            position: relative; max-height: 110px; overflow: hidden;
-            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-        }
-
         .footer-fade-overlay {
             margin-top: -60px; padding: 80px 30px 25px; position: relative; z-index: 2;
             background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.6) 30%, white 65%, white 100%);
@@ -251,7 +245,6 @@
         }
         .page-btn:hover { border-color: var(--brand-blue); color: var(--brand-blue); transform: translateY(-2px); }
         .page-btn:active { transform: scale(0.96); }
-        .page-btn.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
 
         @media (max-width: 1024px) {
             .scroll-arrow { display: none; }
@@ -398,7 +391,7 @@
                 const res = await fetch(`${BASE_URL}data/chat-bubble/list.json`);
                 fullRegistry = await res.json();
                 
-                // Parse page from URL
+                // Parse state from URL
                 const urlParams = new URLSearchParams(window.location.search);
                 currentPage = parseInt(urlParams.get('page')) || 1;
 
@@ -425,6 +418,7 @@
             const flow = document.getElementById('responseFlow');
             const pagination = document.getElementById('paginationControls');
             const label = document.getElementById('listHeaderLabel');
+            
             flow.innerHTML = ""; 
             pagination.innerHTML = "";
 
@@ -436,6 +430,16 @@
                 : fullRegistry;
 
             label.innerText = currentFilter ? currentFilter : "Latest";
+
+            // If no items found for this prompt type
+            if (filteredItems.length === 0) {
+                flow.innerHTML = `
+                    <div style="text-align:center; padding: 60px 20px; color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">
+                        No Prompts available in ${currentFilter || 'this type'}
+                    </div>
+                `;
+                return;
+            }
 
             // 2. Paginate
             const totalPages = Math.ceil(filteredItems.length / CARDS_PER_PAGE);
@@ -494,18 +498,38 @@
             }
         }
 
+        // SMOOTH NAVIGATION: Updates state and URL without reload
         function navigateToPage(pageNumber) {
+            currentPage = pageNumber;
+            
+            // Update URL without reload
             const url = new URL(window.location);
             url.searchParams.set('page', pageNumber);
-            window.location.href = url.href;
+            window.history.pushState({}, '', url);
+            
+            // Smooth scroll back to top of list
+            const scrollAnchor = document.getElementById('mainControls');
+            window.scrollTo({
+                top: scrollAnchor.offsetTop - 10,
+                behavior: 'smooth'
+            });
+
+            renderRegistry();
         }
 
+        // SMOOTH FILTERING: Updates state without reload
         function handlePillClick(el, tag) {
             setCookie(CATEGORY_COOKIE, tag);
-            // Reset to page 1 on filter change
+            currentFilter = tag;
+            currentPage = 1; // Always reset to page 1 on new filter
+            
+            // Sync URL
             const url = new URL(window.location);
             url.searchParams.set('page', '1');
-            window.location.href = url.href;
+            window.history.pushState({}, '', url);
+
+            updatePillUI();
+            renderRegistry();
         }
 
         function performSearchRedirect() {
@@ -517,6 +541,13 @@
             const scrollAmount = container.clientWidth / 2;
             container.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
         }
+
+        // Listen for back/forward browser buttons to keep UI in sync
+        window.addEventListener('popstate', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            currentPage = parseInt(urlParams.get('page')) || 1;
+            renderRegistry();
+        });
 
         // STICKY HEADER TRIGGER LOGIC
         window.addEventListener('scroll', () => {
