@@ -53,7 +53,7 @@
         }
         .logo img { height: 28px; width: auto; object-fit: contain; }
 
-        /* Search Box UI */
+        /* Compact Search Box */
         .search-area-box {
             position: relative;
             width: 180px; 
@@ -93,7 +93,7 @@
             display: flex; flex-direction: column;
         }
 
-        /* --- LOADER & ERROR --- */
+        /* Loader & Error states */
         #statusArea {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             flex: 1; min-height: 300px; text-align: center;
@@ -108,7 +108,7 @@
 
         /* --- CONTENT CARD --- */
         .content-card {
-            background-color: var(--theme-blue-card);
+            background-color: #f2f2f2; /* Fallback Color */
             border-radius: var(--radius-container);
             padding: 60px 45px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
@@ -130,19 +130,18 @@
             z-index: 1;
         }
 
-        .intro-text { font-size: 1.05rem; line-height: 1.7; color: var(--text-sub); margin-bottom: 50px; }
+        .intro-text { font-size: 1.15rem; line-height: 1.7; color: var(--text-sub); margin-bottom: 50px; }
         .read-more-link {
             color: var(--brand-blue); cursor: pointer; font-weight: 600; 
             text-decoration: underline; margin-left: 5px;
         }
 
-        /* Template: List */
+        /* Templates */
         .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 45px; }
         .prompt-item { display: flex; gap: 16px; align-items: flex-start; }
         .prompt-number { font-size: 1.2rem; font-weight: 800; color: #b0b0b0; min-width: 24px; flex-shrink: 0; }
         .journal-text { font-size: 1.25rem; line-height: 1.7; color: var(--text-main); font-weight: 500; margin: 0; }
 
-        /* Template: Combo */
         .combo-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 45px; }
         .combo-item {
             background-color: #fff; padding: 40px 35px; border-radius: var(--radius-card);
@@ -153,7 +152,6 @@
         .affirmation-text { font-size: 1.35rem; line-height: 1.45; color: var(--text-main); font-weight: 700; margin: 0; }
         .prompt-text { font-size: 1.15rem; line-height: 1.75; color: var(--text-sub); margin: 0; padding-top: 18px; border-top: 1px solid #f8f8f8; }
 
-        /* Action Area */
         .action-area { margin-top: 60px; display: none; justify-content: center; }
         .btn-pinterest {
             background: var(--pinterest-red); border: none; padding: 18px 36px;
@@ -258,17 +256,31 @@
 
         async function initShowPage() {
             const params = new URLSearchParams(window.location.search);
-            const queryTitle = params.get('title')?.replace(/\+/g, ' ');
+            const rawTitle = params.get('title');
             
-            if (!queryTitle) return showNotFound();
+            if (!rawTitle) return showNotFound();
+            
+            // Clean title for comparison
+            const queryTitle = rawTitle.trim().toLowerCase();
 
             try {
-                const res = await fetch('data/chat-bubble/list.json');
+                // Use relative path for better compatibility and to avoid CORS issues
+                const res = await fetch('data/topics/list.json');
                 const registry = await res.json();
-                const meta = registry.find(item => item.title === queryTitle || item.query === queryTitle);
+                
+                // Case-insensitive lookup for title or query fields
+                const meta = registry.find(item => 
+                    (item.title && item.title.toLowerCase().trim() === queryTitle) || 
+                    (item.query && item.query.toLowerCase().trim() === queryTitle)
+                );
                 
                 if (!meta) return showNotFound();
 
+                // Apply Dynamic Color or default light grey
+                const contentCard = document.getElementById('contentCard');
+                contentCard.style.backgroundColor = meta.color && meta.color.trim() !== "" ? meta.color : "#f2f2f2";
+
+                // Fetch the actual content JSON using relative path
                 const contentRes = await fetch(`data/prompts/${meta.file}`);
                 const data = await contentRes.json();
 
@@ -289,7 +301,7 @@
                     renderArea.innerHTML = `<div class="combo-list">${data.items.map(item => `<div class="combo-item"><p class="affirmation-text">"${item.affirmation}"</p><p class="prompt-text">${item.prompt}</p></div>`).join('')}</div>`;
                 }
 
-                if (pinImage.trim() !== "") {
+                if (pinImage && pinImage.trim() !== "") {
                     document.getElementById('actionArea').style.display = 'flex';
                 }
 
@@ -297,7 +309,7 @@
                 document.getElementById('contentCard').style.display = 'flex';
 
             } catch (err) {
-                console.error(err);
+                console.error("Initialization error:", err);
                 showNotFound();
             }
         }
@@ -307,12 +319,12 @@
             const btn = document.getElementById('readMoreBtn');
             const words = fullDescription.split(' ');
 
-            if (words.length <= 9 || isExpanded) {
+            if (words.length <= 8 || isExpanded) {
                 introEl.innerText = fullDescription;
-                btn.style.display = isExpanded && words.length > 9 ? "inline" : "none";
+                btn.style.display = isExpanded && words.length > 8 ? "inline" : "none";
                 if (isExpanded) btn.innerText = " Show Less";
             } else {
-                introEl.innerText = words.slice(0, 9).join(' ') + "...";
+                introEl.innerText = words.slice(0, 8).join(' ') + "...";
                 btn.style.display = "inline";
                 btn.innerText = "Read More";
             }
@@ -330,7 +342,9 @@
             
             let absoluteImage = pinImage;
             if (pinImage && !pinImage.startsWith('http')) {
-                absoluteImage = currentLoc.origin + (pinImage.startsWith('/') ? '' : '/') + pinImage;
+                // Create a clean root-relative fallback
+                const origin = "https://affirzone.store/";
+                absoluteImage = origin + (pinImage.startsWith('/') ? pinImage.substring(1) : pinImage);
             }
             const sharedImage = encodeURIComponent(absoluteImage);
             const sharedDescription = encodeURIComponent(`${pinTitle} - ${fullDescription}`);

@@ -231,10 +231,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .thread-rose { background-color: var(--thread-rose); border-color: var(--border-rose); }
-        .thread-blue { background-color: var(--thread-blue); border-color: var(--border-blue); }
-        .thread-mint { background-color: var(--thread-mint); border-color: var(--border-mint); }
-
         .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0 0 5px 0; line-height: 1.2; }
         .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 30px; } 
         .prompt-item { display: flex; gap: 14px; align-items: flex-start; }
@@ -367,12 +363,10 @@
         const BASE_URL = "https://affirzone.store/";
         let registry = [];
 
-        // Synchronize main input value to sticky display
         function syncStickyInput(source) {
             document.getElementById('stickySearchInput').value = source.value;
         }
 
-        // Scroll back to main search UI
         function scrollToMainSearch() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setTimeout(() => {
@@ -409,7 +403,7 @@
 
         async function loadRegistry() {
             try {
-                const res = await fetch(`${BASE_URL}data/chat-bubble/list.json`);
+                const res = await fetch(`data/topics/list.json`);
                 registry = await res.json();
                 
                 const params = new URLSearchParams(window.location.search);
@@ -446,38 +440,36 @@
             }
 
             list.innerHTML = ""; 
-            const themes = ['rose', 'blue', 'mint'];
 
             for (let i = 0; i < limitedResults.length; i++) {
                 const item = limitedResults[i];
-                const theme = themes[i % themes.length];
-                
                 try {
-                    const promptRes = await fetch(`${BASE_URL}data/prompts/${item.file}`);
+                    const promptRes = await fetch(`data/prompts/${item.file}`);
                     const promptData = await promptRes.json();
                     
+                    // DYNAMIC COLOR LOGIC
+                    const cardBg = item.color && item.color.trim() !== "" ? item.color : "#f2f2f2";
+
                     const card = document.createElement('article');
-                    card.className = `thread-container thread-${theme}`;
+                    card.className = `thread-container`;
+                    card.style.backgroundColor = cardBg;
+                    card.style.borderColor = cardBg === "#f2f2f2" ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.04)";
+
                     card.onclick = () => window.location.href = `show.html?title=${encodeURIComponent(item.title).replace(/%20/g, '+')}`;
 
                     let contentHtml = `<h2 class="card-title">${item.title}</h2>`;
                     
                     if (item.type === 'list') {
-                        const displayItems = promptData.items.slice(0, 4);
-                        contentHtml += `
-                            <ul class="prompt-list">${displayItems.map((p, idx) => `
-                                <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
-                                    <span class="prompt-number">${idx+1}.</span>
-                                    <p class="item-text">${p}</p>
-                                </li>`).join('')}</ul>`;
+                        contentHtml += `<ul class="prompt-list">${promptData.items.slice(0, 4).map((p, idx) => `
+                            <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
+                                <span class="prompt-number">${idx+1}.</span><p class="item-text">${p}</p>
+                            </li>`).join('')}</ul>`;
                     } else {
-                        const displayItems = promptData.items.slice(0, 3);
-                        contentHtml += `
-                            <div class="prompt-list">${displayItems.map((p, idx) => `
-                                <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
-                                    <p class="affirmation-text">"${p.affirmation}"</p>
-                                    <p class="combo-prompt">${p.prompt}</p>
-                                </div>`).join('')}</div>`;
+                        contentHtml += `<div class="prompt-list">${promptData.items.slice(0, 3).map((p, idx) => `
+                            <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
+                                <p class="affirmation-text">"${p.affirmation}"</p>
+                                <p class="combo-prompt">${p.prompt}</p>
+                            </div>`).join('')}</div>`;
                     }
 
                     contentHtml += `
@@ -489,13 +481,10 @@
                     
                     card.innerHTML = contentHtml;
                     list.appendChild(card);
-                } catch (err) {
-                    console.warn("Skipping item:", item.file);
-                }
+                } catch (err) {}
             }
         }
 
-        // STICKY HEADER TRIGGER LOGIC
         window.addEventListener('scroll', () => {
             const stickyHeader = document.getElementById('globalStickyHeader');
             const mainSearchWrapper = document.getElementById('mainSearchWrapper');

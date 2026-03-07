@@ -8,7 +8,8 @@
       "Self Confidence",
       "Inner peace"
     ],
-    "pinterest_img": ""
+    "pinterest_img": "",
+    "color": "#fff3f3"
   },
   {
     "title": "Career Growth: Affirmation & Prompt Combo",
@@ -18,6 +19,7 @@
     "tags": [
       "Career Growth",
       "Self Confidence"
-    ]
+    ],
+    "color": "#f0f7ff"
   }
 ]

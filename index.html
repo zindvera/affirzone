@@ -14,12 +14,6 @@
             --text-main: #111111;
             --text-sub: #4b4b4b; 
             --text-muted: #888888;
-            --thread-rose: #fff3f3;
-            --thread-blue: #f0f7ff;
-            --thread-mint: #e9f7ef; 
-            --border-rose: #fce4e4;
-            --border-blue: #e3effb;
-            --border-mint: #dcf2e6;
             --radius-container: 32px;
             --radius-card: 22px;
             --brand-blue: #2563eb;
@@ -65,7 +59,7 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             display: none; 
             flex-direction: column;
-            padding: 10px 0 0; 
+            padding: 6px 0 0; 
             animation: slideDown 0.3s ease;
         }
 
@@ -198,10 +192,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .thread-rose { background-color: var(--thread-rose); border-color: var(--border-rose); }
-        .thread-blue { background-color: var(--thread-blue); border-color: var(--border-blue); }
-        .thread-mint { background-color: var(--thread-mint); border-color: var(--border-mint); }
-
         .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0 0 5px 0; line-height: 1.2; }
         .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 30px; } 
         .prompt-item { display: flex; gap: 14px; align-items: flex-start; }
@@ -214,6 +204,12 @@
         }
         .affirmation-text { font-size: 1.3rem; font-weight: 700; color: var(--text-main); line-height: 1.4; margin-bottom: 12px; }
         .combo-prompt { font-size: 1.1rem; color: var(--text-sub); line-height: 1.6; padding-top: 15px; border-top: 1px solid #f2f2f2; margin: 0; }
+
+        .prompt-blur {
+            position: relative; max-height: 110px; overflow: hidden;
+            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+        }
 
         .footer-fade-overlay {
             margin-top: -60px; padding: 80px 30px 25px; position: relative; z-index: 2;
@@ -229,7 +225,6 @@
             font-size: 0.9rem;
         }
 
-        /* PAGINATION BUTTONS */
         .pagination-container {
             display: flex; justify-content: center; gap: 20px;
             margin: 60px 0 20px; padding: 0 12px;
@@ -388,10 +383,10 @@
                 const stickyTags = document.getElementById('stickyMoodTags');
                 stickyTags.innerHTML = mainTags.innerHTML;
 
-                const res = await fetch(`${BASE_URL}data/chat-bubble/list.json`);
+                // Path updated to 'topics'
+                const res = await fetch(`data/topics/list.json`);
                 fullRegistry = await res.json();
                 
-                // Parse state from URL
                 const urlParams = new URLSearchParams(window.location.search);
                 currentPage = parseInt(urlParams.get('page')) || 1;
 
@@ -422,8 +417,6 @@
             flow.innerHTML = ""; 
             pagination.innerHTML = "";
 
-            const themes = ['rose', 'blue', 'mint'];
-
             // 1. Filter
             let filteredItems = currentFilter 
                 ? fullRegistry.filter(i => i.tags && i.tags.some(t => t.toLowerCase() === currentFilter.toLowerCase()))
@@ -431,11 +424,10 @@
 
             label.innerText = currentFilter ? currentFilter : "Latest";
 
-            // If no items found for this prompt type
             if (filteredItems.length === 0) {
                 flow.innerHTML = `
                     <div style="text-align:center; padding: 60px 20px; color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">
-                        No Prompts available in ${currentFilter || 'this type'}
+                        [No Prompts available on this ${currentFilter || 'type'}]
                     </div>
                 `;
                 return;
@@ -454,10 +446,15 @@
                 try {
                     const promptRes = await fetch(`${BASE_URL}data/prompts/${item.file}`);
                     const promptData = await promptRes.json();
-                    const theme = themes[i % themes.length];
                     
+                    // NEW DYNAMIC COLOR LOGIC
+                    const cardBg = item.color && item.color.trim() !== "" ? item.color : "#f2f2f2";
+
                     const card = document.createElement('article');
-                    card.className = `thread-container thread-${theme}`;
+                    card.className = `thread-container`;
+                    card.style.backgroundColor = cardBg;
+                    card.style.borderColor = cardBg === "#f2f2f2" ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.04)";
+
                     card.onclick = () => window.location.href = `show.html?title=${encodeURIComponent(item.title).replace(/%20/g, '+')}`;
 
                     let content = `<h2 class="card-title">${item.title}</h2>`;
@@ -479,7 +476,7 @@
                 } catch(e) {}
             }
 
-            // 4. Render Pagination Controls
+            // 4. Pagination Controls
             if (totalPages > 1) {
                 if (currentPage > 1) {
                     const prevBtn = document.createElement('button');
@@ -498,36 +495,23 @@
             }
         }
 
-        // SMOOTH NAVIGATION: Updates state and URL without reload
         function navigateToPage(pageNumber) {
             currentPage = pageNumber;
-            
-            // Update URL without reload
             const url = new URL(window.location);
             url.searchParams.set('page', pageNumber);
             window.history.pushState({}, '', url);
-            
-            // Smooth scroll back to top of list
             const scrollAnchor = document.getElementById('mainControls');
-            window.scrollTo({
-                top: scrollAnchor.offsetTop - 10,
-                behavior: 'smooth'
-            });
-
+            window.scrollTo({ top: scrollAnchor.offsetTop - 10, behavior: 'smooth' });
             renderRegistry();
         }
 
-        // SMOOTH FILTERING: Updates state without reload
         function handlePillClick(el, tag) {
             setCookie(CATEGORY_COOKIE, tag);
             currentFilter = tag;
-            currentPage = 1; // Always reset to page 1 on new filter
-            
-            // Sync URL
+            currentPage = 1;
             const url = new URL(window.location);
             url.searchParams.set('page', '1');
             window.history.pushState({}, '', url);
-
             updatePillUI();
             renderRegistry();
         }
@@ -542,24 +526,18 @@
             container.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
         }
 
-        // Listen for back/forward browser buttons to keep UI in sync
         window.addEventListener('popstate', () => {
             const urlParams = new URLSearchParams(window.location.search);
             currentPage = parseInt(urlParams.get('page')) || 1;
             renderRegistry();
         });
 
-        // STICKY HEADER TRIGGER LOGIC
         window.addEventListener('scroll', () => {
             const stickyHeader = document.getElementById('globalStickyHeader');
             const mainControls = document.getElementById('mainControls');
             const triggerPoint = mainControls.offsetTop + mainControls.offsetHeight - 10;
-
-            if (window.scrollY > triggerPoint) {
-                stickyHeader.style.display = 'flex';
-            } else {
-                stickyHeader.style.display = 'none';
-            }
+            if (window.scrollY > triggerPoint) stickyHeader.style.display = 'flex';
+            else stickyHeader.style.display = 'none';
         });
 
         window.addEventListener('load', init);
