@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Topics | Affirzone</title>
+    <title>Search | Affirzone</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -14,11 +14,17 @@
             --text-main: #111111;
             --text-sub: #4b4b4b; 
             --text-muted: #888888;
-            --user-bubble-bg: #eceef2;
-            --border-accent: rgba(0,0,0,0.1); 
-            --radius-bubble: 22px;
-            --radius-container: 32px;
             --brand-blue: #2563eb;
+            --radius-card: 22px;
+            --radius-input: 18px;
+            --radius-container: 32px;
+
+            --thread-rose: #fff3f3;
+            --thread-blue: #f0f7ff;
+            --thread-mint: #e9f7ef; 
+            --border-rose: #fce4e4;
+            --border-blue: #e3effb;
+            --border-mint: #dcf2e6;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -35,398 +41,474 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            align-items: center;
         }
 
-        /* --- STICKY HEADER --- */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.85);
+        /* --- GLOBAL STICKY HEADER --- */
+        .global-sticky-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-            padding: 8px 0;
+            z-index: 2000;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            display: none; 
+            padding: 10px 0;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .sticky-content-row {
+            display: flex; 
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px; 
+            margin: 0 auto; 
+            width: 100%; 
+            padding: 0 20px;
+        }
+
+        .sticky-logo img { height: 24px; width: auto; }
+
+        .sticky-search-box {
+            position: relative;
+            width: 240px; 
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .sticky-search-box input {
             width: 100%;
+            height: 48px;
+            padding: 0 50px 0 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(0,0,0,0.08);
+            background: #fff;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
         }
 
-        .header-inner {
-            width: 100%; max-width: 850px; margin: 0 auto; padding: 0 25px;
-            display: flex; justify-content: center; align-items: center;
+        .sticky-search-box .search-btn-icon {
+            position: absolute;
+            right: 0; top: 0; bottom: 0;
+            width: 50px;
+            background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%);
+            color: #2563eb;
+            border: none;
+            border-radius: 0 14px 14px 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
         }
 
-        .logo img { height: 30px; width: auto; object-fit: contain; }
-
-        /* --- MAIN CONTAINER --- */
         .container { 
-            width: 100%; max-width: 850px; margin: 0 auto; padding: 60px 12px 100px; flex: 1;
+            width: 100%; 
+            max-width: 850px; 
+            margin: 0 auto; 
+            padding: 80px 12px 100px; 
+            display: flex;
+            flex-direction: column;
         }
 
-        .headline-wrapper { text-align: center; margin-bottom: 40px; padding: 0 10px; }
-        .main-headline {
-            font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.15em; color: var(--text-muted); margin: 0;
+        /* --- LOGO --- */
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+        .big-logo {
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        .big-logo:hover { transform: scale(1.02); }
+        .big-logo img {
+            height: 60px;
+            width: auto;
+            display: block;
         }
 
-        /* --- BIG SEARCH BOX --- */
-        .search-section {
-            width: 100%; max-width: 700px; margin: 0 auto 50px; text-align: center;
+        /* --- HEADING --- */
+        .search-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 35px;
+            color: var(--text-main);
+            line-height: 1.4;
         }
 
-        .big-search-area { position: relative; display: flex; align-items: center; }
-        .big-search-area input {
-            width: 100%; padding: 24px 140px 24px 70px; border-radius: 24px;
-            border: 1px solid rgba(0,0,0,0.08); background: #ffffff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04); font-size: 1.2rem; outline: none; 
-            color: var(--text-main); transition: all 0.3s ease;
+        /* --- SEARCH BOX --- */
+        .search-wrapper {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            position: relative;
         }
-        .big-search-area input:focus { border-color: var(--brand-blue); box-shadow: 0 10px 40px rgba(37, 99, 235, 0.1); }
-        .big-search-area i.fa-magnifying-glass { position: absolute; left: 28px; top: 50%; transform: translateY(-50%); color: #aaa; font-size: 1.4rem; }
+
+        .search-input-area {
+            position: relative;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .search-input-area input {
+            width: 100%;
+            padding: 22px 85px 22px 30px;
+            border-radius: var(--radius-input);
+            border: 1px solid rgba(0,0,0,0.08);
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            font-size: 1.15rem;
+            outline: none;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+        }
+
+        .search-input-area input:focus {
+            border-color: var(--brand-blue);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.08);
+        }
 
         .search-btn {
             position: absolute;
-            right: 12px;
-            background: var(--brand-blue);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 1rem;
+            right: 0; top: 0; bottom: 0;
+            width: 70px;
+            background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%);
+            color: #2563eb;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            border-radius: 0 var(--radius-input) var(--radius-input) 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
+            font-size: 1.3rem;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-        }
-        .search-btn:hover { background: #1d4ed8; transform: translateY(-1px); }
-        .search-btn:active { transform: translateY(0); }
-
-        /* --- MOOD SLIDER --- */
-        .mood-slider-container {
-            position: relative; margin-bottom: 60px; display: flex; align-items: center;
         }
 
-        .mood-tags {
-            display: flex; gap: 14px; overflow-x: auto; padding: 10px 0;
-            scrollbar-width: none; scroll-behavior: smooth; width: 100%;
-            /* Ensure smooth scrolling works correctly */
-            scroll-snap-type: x proximity;
-        }
-        .mood-tags::-webkit-scrollbar { display: none; }
+        .search-btn:active { transform: scale(0.98); }
 
-        .mood-pill {
-            background: #fff; padding: 14px 28px; border-radius: 50px;
-            font-size: 1rem; font-weight: 600; color: var(--text-sub);
-            border: 1px solid rgba(255, 255, 255, 0.5); white-space: nowrap; cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03); filter: drop-shadow(0 1px 0 var(--border-accent));
-            transition: all 0.2s ease;
-            scroll-snap-align: center;
-        }
-
-        /* ACTIVE TAG STATE */
-        .mood-pill.active-pill {
-            background: #e2e8f0; 
-            color: var(--text-main);
-            border-color: #cbd5e1;
-            box-shadow: none; 
-            filter: none;
+        /* --- RESULTS HEADER --- */
+        .list-header {
+            display: none; 
+            align-items: center;
+            gap: 8px;
+            padding: 0 12px;
+            margin-bottom: 25px;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .mood-pill:active { transform: scale(0.96); filter: brightness(0.98); }
-
-        .scroll-arrow {
-            position: absolute; width: 48px; height: 48px; background: #e5e7eb;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer; z-index: 10;
-            border: none; transition: opacity 0.3s, visibility 0.3s; color: #4b5563;
-        }
-        .arrow-left { left: -24px; visibility: hidden; opacity: 0; }
-        .arrow-right { right: -24px; }
-
-        /* --- TOPIC LIST (CHAT BUBBLES) --- */
-        .topic-list-container {
-            display: flex; flex-direction: column; align-items: flex-end; gap: 20px;
+        /* --- HOMEPAGE CARD UI --- */
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
         }
 
-        .topic-bubble {
-            padding: 18px 26px; border-radius: var(--radius-bubble);
-            max-width: 85%; color: var(--text-main); font-weight: 600;
-            font-size: 1.1rem; text-decoration: none; position: relative;
-            line-height: 1.4; background-color: var(--user-bubble-bg);
-            border-bottom-right-radius: 4px;
-            filter: drop-shadow(0 1.5px 0 var(--border-accent));
-            transition: transform 0.2s ease, filter 0.2s ease;
+        .thread-container {
+            padding: 40px 30px 0; 
+            border-radius: var(--radius-container); 
+            display: flex; 
+            flex-direction: column; 
+            gap: 30px; 
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            overflow: hidden;
+            animation: fadeIn 0.4s ease forwards;
         }
 
-        .topic-bubble::after {
-            content: ''; position: absolute; bottom: 0; right: -12px;
-            width: 0; height: 0; border-left: 16px solid var(--user-bubble-bg);
-            border-top: 16px solid transparent;
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .thread-rose { background-color: var(--thread-rose); border-color: var(--border-rose); }
+        .thread-blue { background-color: var(--thread-blue); border-color: var(--border-blue); }
+        .thread-mint { background-color: var(--thread-mint); border-color: var(--border-mint); }
+
+        .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0 0 5px 0; line-height: 1.2; }
+        .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 30px; } 
+        .prompt-item { display: flex; gap: 14px; align-items: flex-start; }
+        .prompt-number { font-size: 1.1rem; font-weight: 800; color: #b0b0b0; min-width: 20px; flex-shrink: 0; margin-top: 2px; }
+        .item-text { font-size: 1.25rem; line-height: 1.6; color: var(--text-main); font-weight: 500; margin: 0; }
+
+        .combo-item {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: var(--radius-card);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .affirmation-text { font-size: 1.3rem; font-weight: 700; color: var(--text-main); line-height: 1.4; margin-bottom: 12px; }
+        .combo-prompt { font-size: 1.1rem; color: var(--text-sub); line-height: 1.6; padding-top: 15px; border-top: 1px solid #f2f2f2; margin: 0; }
+
+        .prompt-blur {
+            position: relative; max-height: 110px; overflow: hidden;
+            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
         }
 
-        .topic-bubble:hover { transform: translateY(-2px); filter: brightness(0.98) drop-shadow(0 4px 8px rgba(0,0,0,0.05)); }
-
-        .no-results { width: 100%; text-align: center; padding: 60px 20px; color: var(--text-muted); font-weight: 500; }
-
-        .wip-container {
-            text-align: center; padding: 60px 20px; border-radius: var(--radius-container);
-            background: rgba(255, 255, 255, 0.5); border: 1px dashed var(--text-muted);
-            width: 100%;
+        .footer-fade-overlay {
+            margin-top: -60px; padding: 80px 30px 25px; position: relative; z-index: 2;
+            background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.6) 30%, white 65%, white 100%);
+            border-radius: 0 0 var(--radius-container) var(--radius-container);
+            pointer-events: none; width: calc(100% + 60px); margin-left: -30px; 
         }
 
-        /* --- FOOTER --- */
+        .gradient-link {
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+            background: linear-gradient(90deg, #2563eb 70%, #e11d48 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: 0.9rem;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
         footer {
-            background: #ffffff; border-top: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 60px 20px; margin-top: auto;
+            width: 100%;
+            background: #ffffff;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 60px 20px;
+            margin-top: auto;
         }
-        .footer-inner { max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; list-style: none; padding: 0; margin: 0; }
+        .footer-inner {
+            max-width: 850px; margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+        }
+        .footer-links { display: flex; gap: 25px; list-style: none; padding: 0; margin: 0; }
         .footer-links a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; }
+        .copyright { font-size: 0.8rem; color: #bbb; }
 
-        /* --- MOBILE REFINEMENT --- */
         @media (max-width: 600px) {
-            .container { padding: 40px 0 80px; }
-            .headline-wrapper { margin-bottom: 20px; padding: 0 15px; }
-            .search-section { margin: 0 15px 40px; }
-            .big-search-area input { padding: 18px 110px 18px 55px; font-size: 1.05rem; border-radius: 18px; }
-            .big-search-area i.fa-magnifying-glass { left: 22px; font-size: 1.2rem; }
-            .search-btn { padding: 8px 16px; font-size: 0.9rem; right: 8px; }
-            
-            .mood-slider-container { padding: 0 15px; margin-bottom: 40px; }
-            .scroll-arrow { display: none; }
-            
-            .mood-pill {
-                padding: 14px 26px; 
-                font-size: 1.1rem;
-                box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-            }
-            
-            .topic-list-container { padding: 0 15px; }
-            .topic-bubble { font-size: 1.05rem; padding: 15px 22px; }
-
-            header { padding: 8px 0; }
-            .logo img { height: 26px; }
+            .container { padding-top: 60px; }
+            .big-logo img { height: 45px; }
+            .search-title { font-size: 1.25rem; }
+            .search-input-area input { padding: 18px 75px 18px 25px; font-size: 1.05rem; }
+            .search-btn { width: 60px; font-size: 1.1rem; }
+            .thread-container { padding: 35px 20px 0; border-radius: 0; border-left: none; border-right: none; }
+            .footer-fade-overlay { width: calc(100% + 40px); margin-left: -20px; }
+            .sticky-search-box { width: 140px; }
+            .sticky-search-box input { height: 40px; border-radius: 10px; font-size: 0.85rem; }
+            .sticky-search-box .search-btn-icon { width: 36px; border-radius: 0 10px 10px 0; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-inner">
-            <a href="/" class="logo">
+    <!-- GLOBAL STICKY HEADER -->
+    <div id="globalStickyHeader" class="global-sticky-header">
+      <div class="sticky-content-row">
+        <a href="index.html" class="sticky-logo">
+          <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" />
+        </a>
+        <div class="sticky-search-box" onclick="scrollToMainSearch()">
+            <input type="text" id="stickySearchInput" placeholder="Search..." readonly />
+            <div class="search-btn-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <div class="logo-wrapper">
+            <a href="index.html" class="big-logo">
                 <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo">
             </a>
         </div>
-    </header>
 
-    <div class="container">
-        
-        <div class="headline-wrapper">
-            <h1 class="main-headline">Explore All Topics</h1>
+        <h1 class="search-title">Search Affirmation &amp; Journal Prompt</h1>
+
+        <div class="search-wrapper" id="mainSearchWrapper">
+            <div class="search-input-area">
+                <input type="text" id="searchInput" placeholder="Enter keywords..." oninput="syncStickyInput(this)" onkeydown="if(event.key==='Enter') handleSearch()" autocomplete="off">
+                <button class="search-btn" onclick="handleSearch()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
         </div>
 
-        <section class="search-section">
-            <div class="big-search-area">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="What are you looking for?" id="mainSearch" onkeypress="handleKeyPress(event)">
-                <button class="search-btn" onclick="handleFilter()">Search</button>
-            </div>
-        </section>
-
-        <div class="mood-slider-container">
-            <div class="scroll-arrow arrow-left" onclick="scrollPills(-1)"><i class="fa-solid fa-chevron-left"></i></div>
-            
-            <div class="mood-tags" id="moodTags">
-                <div class="mood-pill" onclick="selectTag('Gratitude', this)">Gratitude</div>
-                <div class="mood-pill" onclick="selectTag('Self Confidence', this)">Self Confidence</div>
-                <div class="mood-pill" onclick="selectTag('Career Growth', this)">Career Growth</div>
-                <div class="mood-pill" onclick="selectTag('Self Discovery', this)">Self Discovery</div>
-                <div class="mood-pill" onclick="selectTag('Inner Peace', this)">Inner Peace</div>
-                <div class="mood-pill" onclick="selectTag('Motivation', this)">Motivation</div>
-                <div class="mood-pill" onclick="selectTag('Productivity', this)">Productivity</div>
-                <div class="mood-pill" onclick="selectTag('Mindfulness', this)">Mindfulness</div>
-            </div>
-
-            <div class="scroll-arrow arrow-right" onclick="scrollPills(1)"><i class="fa-solid fa-chevron-right"></i></div>
+        <div class="list-header" id="resultsHeader">
+            <span>Search Result</span>
+            <i class="fa-solid fa-chevron-down"></i>
         </div>
 
-        <main class="topic-list-container" id="topicContainer">
-            <!-- Dynamically populated -->
+        <main class="results-container" id="resultsList">
+            <!-- Dynamic Results -->
         </main>
-
     </div>
 
     <footer>
         <div class="footer-inner">
             <ul class="footer-links">
-                <li><a href="/">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="#">Privacy</a></li>
                 <li><a href="#">Terms</a></li>
             </ul>
-            <div class="copyright">&copy; 2024 Affirzone. Crafted for mindful discovery.</div>
+            <div class="copyright">&copy; 2024 Affirzone. Mindful discovery for everyday life.</div>
         </div>
     </footer>
 
     <script>
-        let allTopics = [];
-        let activeTag = null;
+        const BASE_URL = "https://affirzone.store/";
+        let registry = [];
+
+        // Synchronize main input value to sticky display
+        function syncStickyInput(source) {
+            document.getElementById('stickySearchInput').value = source.value;
+        }
+
+        // Scroll back to main search UI
+        function scrollToMainSearch() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => {
+                document.getElementById('searchInput').focus();
+            }, 600);
+        }
 
         function getLevenshteinDistance(a, b) {
             const matrix = Array.from({ length: b.length + 1 }, (_, i) => [i]);
             for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-
             for (let i = 1; i <= b.length; i++) {
                 for (let j = 1; j <= a.length; j++) {
-                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1,
-                            matrix[i][j - 1] + 1,
-                            matrix[i - 1][j] + 1
-                        );
-                    }
+                    matrix[i][j] = b.charAt(i - 1) === a.charAt(j - 1) 
+                        ? matrix[i - 1][j - 1] 
+                        : Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
                 }
             }
             return matrix[b.length][a.length];
         }
 
         function fuzzyMatch(title, query) {
-            const normalizedTitle = title.toLowerCase();
-            const normalizedQuery = query.toLowerCase().trim();
-
-            if (!normalizedQuery) return true;
-            if (normalizedTitle.includes(normalizedQuery)) return true;
-
-            const queryWords = normalizedQuery.split(/\s+/);
-            const titleWords = normalizedTitle.split(/\s+/);
-
-            return queryWords.every(qWord => {
-                if (qWord.length < 3) return normalizedTitle.includes(qWord);
-                const tolerance = qWord.length > 5 ? 2 : 1;
-                return titleWords.some(tWord => {
-                    if (tWord.includes(qWord)) return true;
-                    const distance = getLevenshteinDistance(qWord, tWord);
-                    return distance <= tolerance;
-                });
+            const t = title.toLowerCase();
+            const q = query.toLowerCase().trim();
+            if (!q) return false;
+            if (t.includes(q)) return true;
+            const words = t.split(/\s+/);
+            const qWords = q.split(/\s+/);
+            return qWords.every(qw => {
+                if (qw.length < 3) return t.includes(qw);
+                const tol = qw.length > 5 ? 2 : 1;
+                return words.some(tw => getLevenshteinDistance(qw, tw) <= tol || tw.includes(qw));
             });
         }
 
-        async function loadDirectory() {
-            const container = document.getElementById('topicContainer');
+        async function loadRegistry() {
             try {
-                const res = await fetch('data/chat-bubble/list.json');
-                if (!res.ok) throw new Error();
-                allTopics = await res.json();
+                const res = await fetch(`${BASE_URL}data/chat-bubble/list.json`);
+                registry = await res.json();
                 
-                // --- PARAMETER CATCH LOGIC ---
                 const params = new URLSearchParams(window.location.search);
-                const filterParam = params.get('filter');
-                
-                if (filterParam) {
-                    const pills = document.querySelectorAll('.mood-pill');
-                    pills.forEach(pill => {
-                        if (pill.innerText.toLowerCase() === filterParam.toLowerCase()) {
-                            activeTag = pill.innerText;
-                            pill.classList.add('active-pill');
-                            
-                            // AUTO-SCROLL LOGIC: Scroll horizontal slider to centered selected pill
-                            setTimeout(() => {
-                                pill.scrollIntoView({ 
-                                    behavior: 'smooth', 
-                                    inline: 'center', 
-                                    block: 'nearest' 
-                                });
-                            }, 300); // Small delay to ensure render is complete
-                        }
-                    });
+                const qParam = params.get('q');
+                if (qParam) {
+                    document.getElementById('searchInput').value = qParam;
+                    document.getElementById('stickySearchInput').value = qParam;
+                    handleSearch();
                 }
-                
-                handleFilter(); 
-            } catch (e) {
-                container.innerHTML = `
-                    <div class="wip-container">
-                        <i class="fa-solid fa-compass-drafting"></i>
-                        <h2>Work In Progress</h2>
-                        <p>Our topic registry is currently being updated. Please check back shortly.</p>
-                    </div>
-                `;
+            } catch (err) {
+                console.error("Registry load failed", err);
             }
         }
 
-        function renderTopics(list) {
-            const container = document.getElementById('topicContainer');
-            if (list.length === 0) {
-                container.innerHTML = `<div class="no-results">No topics found matching your search.</div>`;
+        async function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            const list = document.getElementById('resultsList');
+            const header = document.getElementById('resultsHeader');
+            
+            if (!query) {
+                list.innerHTML = "";
+                header.style.display = "none";
                 return;
             }
 
-            container.innerHTML = list.map(item => `
-                <a href="show.html?title=${encodeURIComponent(item.title).replace(/%20/g, '+')}" class="topic-bubble">
-                    ${item.title}
-                </a>
-            `).join('');
-        }
-
-        function selectTag(tagName, element) {
-            document.querySelectorAll('.mood-pill').forEach(p => p.classList.remove('active-pill'));
-
-            if (activeTag === tagName) {
-                activeTag = null; 
-            } else {
-                activeTag = tagName;
-                element.classList.add('active-pill');
-                // Scroll to center on manual click as well
-                element.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            }
-
-            handleFilter();
-        }
-
-        function handleKeyPress(e) {
-            if (e.key === 'Enter') {
-                handleFilter();
-            }
-        }
-
-        function handleFilter() {
-            const searchText = document.getElementById('mainSearch').value;
+            const filtered = registry.filter(item => fuzzyMatch(item.title, query));
+            const limitedResults = filtered.slice(0, 10);
             
-            const filtered = allTopics.filter(item => {
-                const matchesSearch = fuzzyMatch(item.title, searchText);
-                const matchesTag = activeTag 
-                    ? (item.tags && item.tags.some(t => t.toLowerCase() === activeTag.toLowerCase())) 
-                    : true;
-                return matchesSearch && matchesTag;
-            });
+            header.style.display = "flex";
+            
+            if (limitedResults.length === 0) {
+                list.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
+                return;
+            }
 
-            renderTopics(filtered);
+            list.innerHTML = ""; 
+            const themes = ['rose', 'blue', 'mint'];
+
+            for (let i = 0; i < limitedResults.length; i++) {
+                const item = limitedResults[i];
+                const theme = themes[i % themes.length];
+                
+                try {
+                    const promptRes = await fetch(`${BASE_URL}data/prompts/${item.file}`);
+                    const promptData = await promptRes.json();
+                    
+                    const card = document.createElement('article');
+                    card.className = `thread-container thread-${theme}`;
+                    card.onclick = () => window.location.href = `show.html?title=${encodeURIComponent(item.title).replace(/%20/g, '+')}`;
+
+                    let contentHtml = `<h2 class="card-title">${item.title}</h2>`;
+                    
+                    if (item.type === 'list') {
+                        const displayItems = promptData.items.slice(0, 4);
+                        contentHtml += `
+                            <ul class="prompt-list">${displayItems.map((p, idx) => `
+                                <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
+                                    <span class="prompt-number">${idx+1}.</span>
+                                    <p class="item-text">${p}</p>
+                                </li>`).join('')}</ul>`;
+                    } else {
+                        const displayItems = promptData.items.slice(0, 3);
+                        contentHtml += `
+                            <div class="prompt-list">${displayItems.map((p, idx) => `
+                                <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
+                                    <p class="affirmation-text">"${p.affirmation}"</p>
+                                    <p class="combo-prompt">${p.prompt}</p>
+                                </div>`).join('')}</div>`;
+                    }
+
+                    contentHtml += `
+                        <div class="footer-fade-overlay">
+                            <div style="text-align: right;"> 
+                                <span class="gradient-link">Show More <i class="fa-solid fa-arrow-right"></i></span>
+                            </div>
+                        </div>`;
+                    
+                    card.innerHTML = contentHtml;
+                    list.appendChild(card);
+                } catch (err) {
+                    console.warn("Skipping item:", item.file);
+                }
+            }
         }
 
-        function scrollPills(direction) {
-            const moodTags = document.getElementById('moodTags');
-            const scrollAmount = moodTags.clientWidth / 2;
-            moodTags.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
-        }
+        // STICKY HEADER TRIGGER LOGIC
+        window.addEventListener('scroll', () => {
+            const stickyHeader = document.getElementById('globalStickyHeader');
+            const mainSearchWrapper = document.getElementById('mainSearchWrapper');
+            const triggerPoint = mainSearchWrapper.offsetTop + mainSearchWrapper.offsetHeight;
 
-        const moodTagsEl = document.getElementById('moodTags');
-        const arrowLeft = document.querySelector('.arrow-left');
-        const arrowRight = document.querySelector('.arrow-right');
-
-        function updateArrows() {
-            const scrollLeft = moodTagsEl.scrollLeft;
-            const maxScroll = moodTagsEl.scrollWidth - moodTagsEl.clientWidth;
-            arrowLeft.style.visibility = scrollLeft <= 5 ? 'hidden' : 'visible';
-            arrowLeft.style.opacity = scrollLeft <= 5 ? '0' : '1';
-            arrowRight.style.visibility = scrollLeft >= maxScroll - 5 ? 'hidden' : 'visible';
-            arrowRight.style.opacity = scrollLeft >= maxScroll - 5 ? '0' : '1';
-        }
-
-        moodTagsEl.addEventListener('scroll', updateArrows);
-        window.addEventListener('load', () => {
-            loadDirectory();
-            updateArrows();
+            if (window.scrollY > triggerPoint) {
+                stickyHeader.style.display = 'block';
+            } else {
+                stickyHeader.style.display = 'none';
+            }
         });
-        window.addEventListener('resize', updateArrows);
+
+        window.addEventListener('load', loadRegistry);
     </script>
 </body>
 </html>

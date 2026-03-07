@@ -20,6 +20,7 @@
             --radius-bubble: 22px;
             --radius-container: 32px;
             --radius-card: 22px;
+            --brand-blue: #2563eb;
             --pinterest-red: #e60023;
         }
 
@@ -40,28 +41,70 @@
 
         /* --- STICKY HEADER --- */
         header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            position: sticky; top: 0; z-index: 1000;
             background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-            padding: 8px 0;
-            width: 100%;
+            padding: 8px 0; width: 100%;
         }
-
         .header-inner {
             width: 100%; max-width: 850px; margin: 0 auto; padding: 0 25px;
-            display: flex; justify-content: center; align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo img { height: 28px; width: auto; object-fit: contain; }
+
+        /* Search Box UI */
+        .search-area-box {
+            position: relative;
+            width: 180px; 
+            cursor: pointer;
+            flex-shrink: 0;
         }
 
-        .logo img { height: 30px; width: auto; object-fit: contain; }
+        .search-area-box input {
+            width: 100%;
+            height: 44px;
+            padding: 0 45px 0 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.08);
+            background: #fff;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .search-area-box .search-btn-icon {
+            position: absolute;
+            right: 0; top: 0; bottom: 0;
+            width: 40px;
+            background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%);
+            color: #2563eb;
+            border: none;
+            border-radius: 0 12px 12px 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+        }
 
         /* --- MAIN CONTAINER --- */
         .container { 
             width: 100%; max-width: 850px; margin: 0 auto; padding: 30px 12px 100px; flex: 1;
+            display: flex; flex-direction: column;
         }
+
+        /* --- LOADER & ERROR --- */
+        #statusArea {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            flex: 1; min-height: 300px; text-align: center;
+        }
+        .spinner {
+            width: 40px; height: 40px; border: 3px solid rgba(0,0,0,0.1);
+            border-top-color: var(--brand-blue); border-radius: 50%;
+            animation: spin 0.8s linear infinite; margin-bottom: 15px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .page-not-found { font-size: 1.5rem; font-weight: 700; color: var(--text-sub); }
 
         /* --- CONTENT CARD --- */
         .content-card {
@@ -74,7 +117,7 @@
             flex-direction: column;
         }
 
-        .hero-section { margin-bottom: 50px; align-self: flex-start; }
+        .hero-section { margin-bottom: 40px; align-self: flex-start; }
         .hero-bubble {
             background-color: #fff; padding: 22px 28px; border-radius: var(--radius-bubble);
             position: relative; filter: drop-shadow(0 1.5px 0 var(--border-accent));
@@ -87,31 +130,28 @@
             z-index: 1;
         }
 
-        .intro-text { font-size: 1.2rem; line-height: 1.8; color: var(--text-sub); margin-bottom: 55px; }
+        .intro-text { font-size: 1.05rem; line-height: 1.7; color: var(--text-sub); margin-bottom: 50px; }
+        .read-more-link {
+            color: var(--brand-blue); cursor: pointer; font-weight: 600; 
+            text-decoration: underline; margin-left: 5px;
+        }
 
         /* Template: List */
-        .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 55px; }
+        .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 45px; }
         .prompt-item { display: flex; gap: 16px; align-items: flex-start; }
         .prompt-number { font-size: 1.2rem; font-weight: 800; color: #b0b0b0; min-width: 24px; flex-shrink: 0; }
-        .journal-text { font-size: 1.3rem; line-height: 1.75; color: var(--text-main); font-weight: 500; margin: 0; }
+        .journal-text { font-size: 1.25rem; line-height: 1.7; color: var(--text-main); font-weight: 500; margin: 0; }
 
         /* Template: Combo */
-        .combo-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 55px; }
+        .combo-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 45px; }
         .combo-item {
             background-color: #fff; padding: 40px 35px; border-radius: var(--radius-card);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02); display: flex; flex-direction: column;
             gap: 20px; border: 1px solid rgba(255, 255, 255, 0.5);
+            margin-left: 10px; margin-right: 10px; 
         }
         .affirmation-text { font-size: 1.35rem; line-height: 1.45; color: var(--text-main); font-weight: 700; margin: 0; }
         .prompt-text { font-size: 1.15rem; line-height: 1.75; color: var(--text-sub); margin: 0; padding-top: 18px; border-top: 1px solid #f8f8f8; }
-
-        /* Work In Progress / Error */
-        .wip-container {
-            text-align: center; padding: 100px 20px; border-radius: var(--radius-container);
-            background: rgba(255, 255, 255, 0.5); border: 1px dashed var(--text-muted);
-        }
-        .wip-container i { font-size: 3rem; color: var(--text-muted); margin-bottom: 20px; display: block; }
-        .wip-container h2 { font-size: 1.5rem; font-weight: 700; color: var(--text-sub); margin-bottom: 10px; }
 
         /* Action Area */
         .action-area { margin-top: 60px; display: none; justify-content: center; }
@@ -132,16 +172,21 @@
         .footer-links a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; }
 
         @media (max-width: 600px) {
+            .header-inner { padding: 0 15px; }
+            .search-area-box { width: 130px; }
+            .search-area-box input { height: 40px; font-size: 0.85rem; }
+            .search-area-box .search-btn-icon { width: 36px; }
+
             .container { padding: 20px 0 60px; }
             .content-card { padding: 45px 0; border-radius: 0; border-left: none; border-right: none; }
             .hero-section, .intro-text { padding: 0 15px; }
             .hero-bubble h2 { font-size: 1.5rem; }
-            .prompt-list { padding: 0 15px; gap: 40px; }
+            .prompt-list { padding: 0 15px; gap: 35px; }
             .journal-text { font-size: 1.15rem; }
-            .combo-item { border-radius: 0; padding: 30px 15px; border-left: none; border-right: none; }
-            .affirmation-text { font-size: 1.25rem; }
+            .combo-item { border-radius: 18px; padding: 30px 15px; margin-left: 10px; margin-right: 10px; }
+            .affirmation-text { font-size: 1.2rem; }
             .prompt-text { font-size: 1.05rem; }
-            .logo img { height: 26px; }
+            .logo img { height: 24px; }
         }
     </style>
 </head>
@@ -149,22 +194,30 @@
 
     <header>
         <div class="header-inner">
-            <a href="/" class="logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo"></a>
+            <a href="index.html" class="logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo"></a>
+            
+            <div class="search-area-box" onclick="performSearchRedirect()">
+                <input type="text" placeholder="Search..." readonly />
+                <div class="search-btn-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
         </div>
     </header>
 
     <div class="container" id="mainContainer">
-        <div id="statusArea" class="wip-container">
-            <i class="fa-solid fa-spinner fa-spin"></i>
-            <h2>Loading content...</h2>
-            <p>Gathering mindful discovery for you.</p>
+        <div id="statusArea">
+            <div class="spinner"></div>
         </div>
         
         <main class="content-card" id="contentCard">
             <section class="hero-section">
                 <div class="hero-bubble"><h2 id="pageTitle"></h2></div>
             </section>
-            <p class="intro-text" id="pageIntro"></p>
+            <div class="intro-text" id="pageIntroContainer">
+                <span id="pageIntro"></span>
+                <span id="readMoreBtn" class="read-more-link" onclick="toggleReadMore()">Read More</span>
+            </div>
             <div id="renderArea"></div>
             <div class="action-area" id="actionArea">
                 <button class="btn-pinterest" onclick="saveToPinterest()">
@@ -177,7 +230,7 @@
     <footer>
         <div class="footer-inner">
             <ul class="footer-links">
-                <li><a href="/">Home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="search.html">Topics</a></li>
                 <li><a href="#">Privacy</a></li>
                 <li><a href="#">Terms</a></li>
@@ -190,10 +243,16 @@
         let pinTitle = "";
         let pinDescription = "";
         let pinImage = "";
+        let fullDescription = "";
+        let isExpanded = false;
 
-        function showWIP(message = "Website data is under Work In Progress.") {
+        function performSearchRedirect() {
+            window.location.href = `search.html`;
+        }
+
+        function showNotFound() {
             const statusArea = document.getElementById('statusArea');
-            statusArea.innerHTML = `<i class="fa-solid fa-compass-drafting"></i><h2>Work In Progress</h2><p>${message}</p>`;
+            statusArea.innerHTML = `<div class="page-not-found">Page Not Found</div>`;
             document.getElementById('contentCard').style.display = 'none';
         }
 
@@ -201,27 +260,27 @@
             const params = new URLSearchParams(window.location.search);
             const queryTitle = params.get('title')?.replace(/\+/g, ' ');
             
-            if (!queryTitle) return showWIP("No topic specified.");
+            if (!queryTitle) return showNotFound();
 
             try {
                 const res = await fetch('data/chat-bubble/list.json');
                 const registry = await res.json();
                 const meta = registry.find(item => item.title === queryTitle || item.query === queryTitle);
                 
-                if (!meta) return showWIP("The requested topic could not be found.");
+                if (!meta) return showNotFound();
 
                 const contentRes = await fetch(`data/prompts/${meta.file}`);
                 const data = await contentRes.json();
 
-                // State assignment from JSON
                 pinTitle = data.title;
-                pinDescription = data.intro;
+                fullDescription = data.intro || "";
+                pinDescription = fullDescription;
                 pinImage = meta.pinterest_img || "";
 
-                // 1. Core UI Population
                 document.getElementById('pageTitle').innerText = pinTitle;
-                document.getElementById('pageIntro').innerText = pinDescription;
                 document.title = `${pinTitle} | Affirzone`;
+
+                updateIntroUI();
 
                 const renderArea = document.getElementById('renderArea');
                 if (meta.type === 'list') {
@@ -230,7 +289,6 @@
                     renderArea.innerHTML = `<div class="combo-list">${data.items.map(item => `<div class="combo-item"><p class="affirmation-text">"${item.affirmation}"</p><p class="prompt-text">${item.prompt}</p></div>`).join('')}</div>`;
                 }
 
-                // Handle Pinterest Button visibility (Method A handles data passing)
                 if (pinImage.trim() !== "") {
                     document.getElementById('actionArea').style.display = 'flex';
                 }
@@ -240,8 +298,29 @@
 
             } catch (err) {
                 console.error(err);
-                showWIP();
+                showNotFound();
             }
+        }
+
+        function updateIntroUI() {
+            const introEl = document.getElementById('pageIntro');
+            const btn = document.getElementById('readMoreBtn');
+            const words = fullDescription.split(' ');
+
+            if (words.length <= 12 || isExpanded) {
+                introEl.innerText = fullDescription;
+                btn.style.display = isExpanded && words.length > 12 ? "inline" : "none";
+                if (isExpanded) btn.innerText = " Show Less";
+            } else {
+                introEl.innerText = words.slice(0, 12).join(' ') + "...";
+                btn.style.display = "inline";
+                btn.innerText = "Read More";
+            }
+        }
+
+        function toggleReadMore() {
+            isExpanded = !isExpanded;
+            updateIntroUI();
         }
 
         function saveToPinterest() {
@@ -254,7 +333,7 @@
                 absoluteImage = currentLoc.origin + (pinImage.startsWith('/') ? '' : '/') + pinImage;
             }
             const sharedImage = encodeURIComponent(absoluteImage);
-            const sharedDescription = encodeURIComponent(`${pinTitle} - ${pinDescription}`);
+            const sharedDescription = encodeURIComponent(`${pinTitle} - ${fullDescription}`);
             const pinterestUrl = `https://www.pinterest.com/pin/create/button/?url=${pageUrl}&media=${sharedImage}&description=${sharedDescription}`;
             
             window.open(pinterestUrl, 'PinterestShare', 'width=600,height=700,scrollbars=yes');
