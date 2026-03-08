@@ -18,13 +18,6 @@
             --radius-card: 22px;
             --radius-input: 18px;
             --radius-container: 32px;
-
-            --thread-rose: #fff3f3;
-            --thread-blue: #f0f7ff;
-            --thread-mint: #e9f7ef; 
-            --border-rose: #fce4e4;
-            --border-blue: #e3effb;
-            --border-mint: #dcf2e6;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -37,7 +30,6 @@
             background-attachment: fixed;
             color: var(--text-main);
             margin: 0; padding: 0;
-            letter-spacing: -0.01em;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -115,35 +107,25 @@
             flex-direction: column;
         }
 
-        /* --- LOGO --- */
         .logo-wrapper {
             display: flex;
             justify-content: center;
             width: 100%;
             margin-bottom: 40px;
         }
-        .big-logo {
-            text-decoration: none;
-            transition: transform 0.3s ease;
-        }
-        .big-logo:hover { transform: scale(1.02); }
         .big-logo img {
             height: 60px;
             width: auto;
-            display: block;
         }
 
-        /* --- HEADING --- */
         .search-title {
             font-size: 1.5rem;
             font-weight: 500;
             text-align: center;
             margin-bottom: 35px;
             color: var(--text-main);
-            line-height: 1.4;
         }
 
-        /* --- SEARCH BOX --- */
         .search-wrapper {
             width: 100%;
             max-width: 700px;
@@ -167,12 +149,6 @@
             font-size: 1.15rem;
             outline: none;
             color: var(--text-main);
-            transition: all 0.3s ease;
-        }
-
-        .search-input-area input:focus {
-            border-color: var(--brand-blue);
-            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.08);
         }
 
         .search-btn {
@@ -188,12 +164,8 @@
             justify-content: center;
             cursor: pointer;
             font-size: 1.3rem;
-            transition: all 0.2s ease;
         }
 
-        .search-btn:active { transform: scale(0.98); }
-
-        /* --- RESULTS HEADER --- */
         .list-header {
             display: none; 
             align-items: center;
@@ -204,10 +176,8 @@
             font-weight: 700;
             font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
 
-        /* --- HOMEPAGE CARD UI --- */
         .results-container {
             display: flex;
             flex-direction: column;
@@ -226,25 +196,22 @@
             cursor: pointer;
             transition: transform 0.2s ease;
             overflow: hidden;
-            animation: fadeIn 0.4s ease forwards;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0 0 5px 0; line-height: 1.2; }
+        .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0 0 5px 0; }
         .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 30px; } 
         .prompt-item { display: flex; gap: 14px; align-items: flex-start; }
-        .prompt-number { font-size: 1.1rem; font-weight: 800; color: #b0b0b0; min-width: 20px; flex-shrink: 0; margin-top: 2px; }
+        .prompt-number { font-size: 1.1rem; font-weight: 800; color: #b0b0b0; min-width: 20px; }
         .item-text { font-size: 1.25rem; line-height: 1.6; color: var(--text-main); font-weight: 500; margin: 0; }
 
         .combo-item {
             background-color: #fff;
             padding: 30px;
             border-radius: var(--radius-card);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
         }
-        .affirmation-text { font-size: 1.3rem; font-weight: 700; color: var(--text-main); line-height: 1.4; margin-bottom: 12px; }
+        .affirmation-text { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; line-height: 1.4; }
         .combo-prompt { font-size: 1.1rem; color: var(--text-sub); line-height: 1.6; padding-top: 15px; border-top: 1px solid #f2f2f2; margin: 0; }
 
         .prompt-blur {
@@ -261,161 +228,76 @@
         }
 
         .gradient-link {
-            font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+            font-weight: 800; text-transform: uppercase;
             background: linear-gradient(90deg, #2563eb 70%, #e11d48 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             font-size: 0.9rem;
         }
 
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        footer {
-            width: 100%;
-            background: #ffffff;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 60px 20px;
-            margin-top: auto;
-        }
-        .footer-inner {
-            max-width: 850px; margin: 0 auto;
-            display: flex; flex-direction: column; align-items: center; gap: 20px;
-        }
-        .footer-links { display: flex; gap: 25px; list-style: none; padding: 0; margin: 0; }
-        .footer-links a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; }
-        .copyright { font-size: 0.8rem; color: #bbb; }
+        footer { padding: 60px 20px; border-top: 1px solid #eee; margin-top: auto; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 20px; list-style: none; padding: 0; }
+        .footer-links a { color: #888; text-decoration: none; font-size: 0.9rem; }
 
         @media (max-width: 600px) {
-            .container { padding-top: 60px; }
-            .big-logo img { height: 45px; }
-            .search-title { font-size: 1.25rem; }
-            .search-input-area input { padding: 18px 75px 18px 25px; font-size: 1.05rem; }
-            .search-btn { width: 60px; font-size: 1.1rem; }
             .thread-container { padding: 35px 20px 0; border-radius: 0; border-left: none; border-right: none; }
-            .footer-fade-overlay { width: calc(100% + 40px); margin-left: -20px; }
-            .sticky-search-box { width: 140px; }
-            .sticky-search-box input { height: 40px; border-radius: 10px; font-size: 0.85rem; }
-            .sticky-search-box .search-btn-icon { width: 36px; border-radius: 0 10px 10px 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- GLOBAL STICKY HEADER -->
     <div id="globalStickyHeader" class="global-sticky-header">
       <div class="sticky-content-row">
-        <a href="index.html" class="sticky-logo">
-          <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" />
-        </a>
+        <a href="index.html" class="sticky-logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Logo" /></a>
         <div class="sticky-search-box" onclick="scrollToMainSearch()">
             <input type="text" id="stickySearchInput" placeholder="Search..." readonly />
-            <div class="search-btn-icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
+            <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
         </div>
       </div>
     </div>
 
     <div class="container">
-        <div class="logo-wrapper">
-            <a href="index.html" class="big-logo">
-                <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo">
-            </a>
-        </div>
-
+        <div class="logo-wrapper"><a href="index.html" class="big-logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Logo"></a></div>
         <h1 class="search-title">Search Affirmation &amp; Journal Prompt</h1>
 
         <div class="search-wrapper" id="mainSearchWrapper">
             <div class="search-input-area">
                 <input type="text" id="searchInput" placeholder="Enter keywords..." oninput="syncStickyInput(this)" onkeydown="if(event.key==='Enter') handleSearch()" autocomplete="off">
-                <button class="search-btn" onclick="handleSearch()">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
+                <button class="search-btn" onclick="handleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
 
-        <div class="list-header" id="resultsHeader">
-            <span>Search Result</span>
-            <i class="fa-solid fa-chevron-down"></i>
-        </div>
-
-        <main class="results-container" id="resultsList">
-            <!-- Dynamic Results -->
-        </main>
+        <div class="list-header" id="resultsHeader"><span>Search Result</span> <i class="fa-solid fa-chevron-down"></i></div>
+        <main class="results-container" id="resultsList"></main>
     </div>
 
     <footer>
-        <div class="footer-inner">
-            <ul class="footer-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#">Privacy</a></li>
-                <li><a href="#">Terms</a></li>
-            </ul>
-            <div class="copyright">&copy; 2024 Affirzone. Mindful discovery for everyday life.</div>
-        </div>
+        <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">Privacy</a></li>
+        </ul>
+        <div style="color: #bbb; font-size: 0.8rem;">&copy; 2024 Affirzone.</div>
     </footer>
 
     <script>
-        const BASE_URL = "https://affirzone.store/";
         let registry = [];
 
-        function syncStickyInput(source) {
-            document.getElementById('stickySearchInput').value = source.value;
-        }
-
-        function scrollToMainSearch() {
+        function syncStickyInput(source) { document.getElementById('stickySearchInput').value = source.value; }
+        function scrollToMainSearch() { 
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            setTimeout(() => {
-                document.getElementById('searchInput').focus();
-            }, 600);
-        }
-
-        function getLevenshteinDistance(a, b) {
-            const matrix = Array.from({ length: b.length + 1 }, (_, i) => [i]);
-            for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    matrix[i][j] = b.charAt(i - 1) === a.charAt(j - 1) 
-                        ? matrix[i - 1][j - 1] 
-                        : Math.min(matrix[i - 1][j - 1] + 1, matrix[i][j - 1] + 1, matrix[i - 1][j] + 1);
-                }
-            }
-            return matrix[b.length][a.length];
-        }
-
-        function fuzzyMatch(title, query) {
-            const t = title.toLowerCase();
-            const q = query.toLowerCase().trim();
-            if (!q) return false;
-            if (t.includes(q)) return true;
-            const words = t.split(/\s+/);
-            const qWords = q.split(/\s+/);
-            return qWords.every(qw => {
-                if (qw.length < 3) return t.includes(qw);
-                const tol = qw.length > 5 ? 2 : 1;
-                return words.some(tw => getLevenshteinDistance(qw, tw) <= tol || tw.includes(qw));
-            });
+            setTimeout(() => document.getElementById('searchInput').focus(), 600);
         }
 
         async function loadRegistry() {
             try {
                 const res = await fetch(`data/topics/list.json`);
                 registry = await res.json();
-                
-                const params = new URLSearchParams(window.location.search);
-                const qParam = params.get('q');
+                const qParam = new URLSearchParams(window.location.search).get('q');
                 if (qParam) {
                     document.getElementById('searchInput').value = qParam;
                     document.getElementById('stickySearchInput').value = qParam;
                     handleSearch();
                 }
-            } catch (err) {
-                console.error("Registry load failed", err);
-            }
+            } catch (err) { console.error("Registry load failed", err); }
         }
 
         async function handleSearch() {
@@ -423,53 +305,106 @@
             const list = document.getElementById('resultsList');
             const header = document.getElementById('resultsHeader');
             
-            if (!query) {
-                list.innerHTML = "";
-                header.style.display = "none";
-                return;
+            if (!query) { 
+                list.innerHTML = ""; 
+                header.style.display = "none"; 
+                return; 
             }
 
-            const filtered = registry.filter(item => fuzzyMatch(item.title, query));
-            const limitedResults = filtered.slice(0, 10);
+            const q = query.toLowerCase();
+            const ignoreWords = ["for", "the", "and", "with", "from", "your", "this", "that", "how", "what", "where", "into"];
+            const utilityWords = ["prompt", "prompts", "affirmation", "affirmations"];
             
+            // Filter out short words and basic grammar words
+            const searchWords = q.split(/\s+/).filter(word => word.length > 2 && !ignoreWords.includes(word));
+
+            /**
+             * Relevance Ranking Logic
+             * 1. Calculate a score for each item based on query overlap
+             * 2. Give high weight to unique topic words (career, clarity, growth)
+             * 3. Give low weight to generic terms (prompt, affirmation)
+             * 4. Sort results by total score
+             */
+            const scoredResults = registry.map(item => {
+                const targetText = (item.title || item.query || item.id || "").toLowerCase();
+                let score = 0;
+
+                // Exact phrase match (Highest Priority)
+                if (targetText.includes(q)) {
+                    score += 50;
+                }
+
+                // Word-by-word density matching
+                searchWords.forEach(word => {
+                    if (targetText.includes(word)) {
+                        if (utilityWords.includes(word)) {
+                            // Low weight for generic functional terms
+                            score += 5;
+                        } else {
+                            // High weight for specific content keywords
+                            score += 25;
+                        }
+                    }
+                });
+
+                return { item, score };
+            })
+            .filter(res => res.score > 0)
+            .sort((a, b) => b.score - a.score);
+
             header.style.display = "flex";
             
-            if (limitedResults.length === 0) {
-                list.innerHTML = `<div class="no-results">No results found for "${query}"</div>`;
+            if (scoredResults.length === 0) {
+                list.innerHTML = `<div style="text-align:center; padding: 40px; color: #888;">No results found for "${query}"</div>`;
                 return;
             }
 
             list.innerHTML = ""; 
 
-            for (let i = 0; i < limitedResults.length; i++) {
-                const item = limitedResults[i];
+            // Load top 7 matches by relevance
+            for (const res of scoredResults.slice(0, 7)) {
+                const item = res.item;
+                if (!item.file) continue;
+
                 try {
                     const promptRes = await fetch(`data/prompts/${item.file}`);
                     const promptData = await promptRes.json();
                     
-                    // DYNAMIC COLOR LOGIC
-                    const cardBg = item.color && item.color.trim() !== "" ? item.color : "#f2f2f2";
+                    const displayTitle = item.title || promptData.title || item.query || item.id || "Mindful Session";
+                    const cardBg = item.color || "#f2f2f2";
+                    
+                    const itemsArr = promptData.items || [];
+                    const isCombo = itemsArr.length > 0 && typeof itemsArr[0] === 'object' && itemsArr[0].affirmation;
 
                     const card = document.createElement('article');
                     card.className = `thread-container`;
                     card.style.backgroundColor = cardBg;
-                    card.style.borderColor = cardBg === "#f2f2f2" ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.04)";
+                    card.onclick = () => window.location.href = `show.html?title=${encodeURIComponent(displayTitle)}`;
 
-                    card.onclick = () => window.location.href = `show.html?title=${encodeURIComponent(item.title).replace(/%20/g, '+')}`;
+                    let contentHtml = `<h2 class="card-title">${displayTitle}</h2>`;
 
-                    let contentHtml = `<h2 class="card-title">${item.title}</h2>`;
-                    
-                    if (item.type === 'list') {
-                        contentHtml += `<ul class="prompt-list">${promptData.items.slice(0, 4).map((p, idx) => `
-                            <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
-                                <span class="prompt-number">${idx+1}.</span><p class="item-text">${p}</p>
-                            </li>`).join('')}</ul>`;
+                    if (!isCombo) {
+                        contentHtml += `<ul class="prompt-list">`;
+                        itemsArr.slice(0, 4).forEach((p, idx) => {
+                            const text = typeof p === 'string' ? p : "Explore more prompts...";
+                            contentHtml += `
+                                <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
+                                    <span class="prompt-number">${idx+1}.</span><p class="item-text">${text}</p>
+                                </li>`;
+                        });
+                        contentHtml += `</ul>`;
                     } else {
-                        contentHtml += `<div class="prompt-list">${promptData.items.slice(0, 3).map((p, idx) => `
-                            <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
-                                <p class="affirmation-text">"${p.affirmation}"</p>
-                                <p class="combo-prompt">${p.prompt}</p>
-                            </div>`).join('')}</div>`;
+                        contentHtml += `<div class="prompt-list">`;
+                        itemsArr.slice(0, 3).forEach((p, idx) => {
+                            const aff = p.affirmation || "I am growing daily.";
+                            const pr = p.prompt || "How did you grow today?";
+                            contentHtml += `
+                                <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
+                                    <p class="affirmation-text">"${aff}"</p>
+                                    <p class="combo-prompt">${pr}</p>
+                                </div>`;
+                        });
+                        contentHtml += `</div>`;
                     }
 
                     contentHtml += `
@@ -481,23 +416,21 @@
                     
                     card.innerHTML = contentHtml;
                     list.appendChild(card);
-                } catch (err) {}
+                } catch (err) { 
+                    console.warn(`Could not load prompt data from: ${item.file}`, err); 
+                }
             }
         }
 
         window.addEventListener('scroll', () => {
             const stickyHeader = document.getElementById('globalStickyHeader');
             const mainSearchWrapper = document.getElementById('mainSearchWrapper');
+            if (!mainSearchWrapper) return;
             const triggerPoint = mainSearchWrapper.offsetTop + mainSearchWrapper.offsetHeight;
-
-            if (window.scrollY > triggerPoint) {
-                stickyHeader.style.display = 'block';
-            } else {
-                stickyHeader.style.display = 'none';
-            }
+            stickyHeader.style.display = window.scrollY > triggerPoint ? 'block' : 'none';
         });
 
-        window.addEventListener('load', loadRegistry);
+        window.onload = loadRegistry;
     </script>
 </body>
 </html>

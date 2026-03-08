@@ -1,0 +1,27 @@
+[
+  {
+    "id": "mental-clarity-special",
+    "target-title": ["15-daily-affirmations-for-mental-clarity.json"],
+    "html": "<div class='ad-text'><i class='fa-solid fa-sparkles'></i><span>Deepen your clarity with our exclusive mental wellness printable guide.</span></div><div class='ad-actions'><a href='#' style='background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); color: #4338ca; border: 1px solid rgba(67, 56, 202, 0.1); padding: 10px 24px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; text-decoration: none; display: inline-block; transition: transform 0.2s;'>Get Special Guide</a></div>"
+  },
+  {
+    "id": "digital-pdf-standard",
+    "target-type": ["prompt-list", "combo-list"],
+    "html": "<div class='ad-text'><i class='fa-solid fa-pen-nib'></i><span>Want to save these prompts? Get the annotatable digital PDF for GoodNotes.</span></div><div class='ad-actions'><a href='#' style='font-size: 0.9rem; font-weight: 700; color: #4b4b4b; text-decoration: underline; cursor: pointer; margin-right: 15px;'>Preview</a><a href='#' style='background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #059669; border: 1px solid rgba(5, 150, 105, 0.1); padding: 10px 24px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; text-decoration: none; display: inline-block;'>Get PDF</a></div>"
+  },
+  {
+    "id": "physical-journal-soft",
+    "target-type": ["affirmation-list", "prompt-list"],
+    "html": "<div class='ad-text'><i class='fa-solid fa-book-open'></i><span>Experience deep reflection with our soft-touch guided journal.</span></div><div class='ad-actions'><a href='#' style='background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%); color: #d97706; border: 1px solid rgba(217, 119, 6, 0.1); padding: 10px 24px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; text-decoration: none; display: inline-block;'>Shop Journal</a></div>"
+  },
+  {
+    "id": "physical-desk-cards",
+    "target-type": ["affirmation-list"],
+    "html": "<div class='ad-text'><i class='fa-solid fa-layer-group'></i><span>Keep these affirmations close. Get the printed card deck for your desk.</span></div><div class='ad-actions'><a href='#' style='background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); color: #7c3aed; border: 1px solid rgba(124, 58, 237, 0.1); padding: 10px 24px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; text-decoration: none; display: inline-block;'>View Cards</a></div>"
+  },
+  {
+    "id": "mindfulness-bundle-visual",
+    "target-type": ["prompt-list"],
+    "html": "<style>.ad-layout-side { display: flex; align-items: center; gap: 20px; } .ad-img-box { flex: 0 0 25%; } .ad-info-box { flex: 0 0 75%; } @media (max-width: 600px) { .ad-layout-side { flex-direction: column; text-align: center; } .ad-img-box, .ad-info-box { flex: 0 0 100%; width: 100%; } .ad-actions { justify-content: center !important; } }</style><div class='ad-layout-side'><div class='ad-img-box'><img src='https://images.pexels.com/photos/6320078/pexels-photo-6320078.jpeg?auto=compress&cs=tinysrgb&w=300' alt='Mindfulness Journal' style='width: 100%; height: auto; aspect-ratio: 1/1; object-fit: cover; border-radius: 12px;'></div><div class='ad-info-box'><p style='font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #2563eb; margin: 0;'>Limited Offer</p><h3 style='margin: 0; font-size: 1.15rem; font-weight: 800; line-height: 1.2; color: #111;'>The Mindfulness Bundle</h3><p style='font-size: 0.95rem; color: #4b4b4b; margin: 8px 0; line-height: 1.5;'>Unlock 365 days of self-discovery with our most popular guided prompt collection.</p><div class='ad-actions' style='display: flex; justify-content: flex-end;'><a href='#' style='background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%); color: #2563eb; border: 1px solid rgba(37, 99, 235, 0.1); padding: 10px 24px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; text-decoration: none; display: inline-block;'>Get the Bundle</a></div></div></div>"
+  }
+]

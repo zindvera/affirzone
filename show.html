@@ -15,7 +15,6 @@
             --text-main: #111111;
             --text-sub: #4b4b4b; 
             --text-muted: #888888;
-            --theme-blue-card: #eef7ff; 
             --border-accent: rgba(0,0,0,0.08); 
             --radius-bubble: 22px;
             --radius-container: 32px;
@@ -39,7 +38,6 @@
             flex-direction: column;
         }
 
-        /* --- STICKY HEADER --- */
         header {
             position: sticky; top: 0; z-index: 1000;
             background: rgba(255, 255, 255, 0.85);
@@ -53,47 +51,27 @@
         }
         .logo img { height: 28px; width: auto; object-fit: contain; }
 
-        /* Compact Search Box */
         .search-area-box {
-            position: relative;
-            width: 180px; 
-            cursor: pointer;
-            flex-shrink: 0;
+            position: relative; width: 180px; cursor: pointer; flex-shrink: 0;
         }
-
         .search-area-box input {
-            width: 100%;
-            height: 44px;
-            padding: 0 45px 0 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(0,0,0,0.08);
-            background: #fff;
-            font-size: 0.9rem;
-            color: var(--text-main);
-            outline: none;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            width: 100%; height: 44px; padding: 0 45px 0 15px;
+            border-radius: 12px; border: 1px solid rgba(0,0,0,0.08);
+            background: #fff; font-size: 0.9rem; color: var(--text-main);
+            outline: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
-
         .search-area-box .search-btn-icon {
-            position: absolute;
-            right: 0; top: 0; bottom: 0;
-            width: 40px;
-            background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%);
-            color: #2563eb;
-            border: none;
-            border-radius: 0 12px 12px 0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem;
+            position: absolute; right: 0; top: 0; bottom: 0;
+            width: 40px; background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%);
+            color: #2563eb; border: none; border-radius: 0 12px 12px 0;
+            display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
         }
 
-        /* --- MAIN CONTAINER --- */
         .container { 
-            width: 100%; max-width: 850px; margin: 0 auto; padding: 30px 12px 100px; flex: 1;
+            width: 100%; max-width: 850px; margin: 0 auto; padding: 30px 2px 100px; flex: 1;
             display: flex; flex-direction: column;
         }
 
-        /* Loader & Error states */
         #statusArea {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             flex: 1; min-height: 300px; text-align: center;
@@ -106,15 +84,10 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         .page-not-found { font-size: 1.5rem; font-weight: 700; color: var(--text-sub); }
 
-        /* --- CONTENT CARD --- */
         .content-card {
-            background-color: #f2f2f2; /* Fallback Color */
-            border-radius: var(--radius-container);
-            padding: 60px 45px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255,255,255,0.8);
-            display: none;
-            flex-direction: column;
+            background-color: #f2f2f2; border-radius: var(--radius-container);
+            padding: 60px 45px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255,255,255,0.8); display: none; flex-direction: column;
         }
 
         .hero-section { margin-bottom: 40px; align-self: flex-start; }
@@ -122,21 +95,19 @@
             background-color: #fff; padding: 22px 28px; border-radius: var(--radius-bubble);
             position: relative; filter: drop-shadow(0 1.5px 0 var(--border-accent));
         }
-        .hero-bubble h2 { margin: 0; font-size: 1.7rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.03em; }
+        .hero-bubble h2 { margin: 0; font-size: 1.7rem; font-weight: 800; line-height: 1.3; letter-spacing: -0.03em; }
         .hero-bubble::after {
             content: ''; position: absolute; bottom: -13px; left: 35px;
             width: 0; height: 0; border-left: 14px solid transparent;
-            border-right: 14px solid transparent; border-top: 14px solid #fff;
-            z-index: 1;
+            border-right: 14px solid transparent; border-top: 14px solid #fff; z-index: 1;
         }
 
-        .intro-text { font-size: 1.05rem; line-height: 1.7; color: var(--text-sub); margin-bottom: 50px; }
+        .intro-text { font-size: 1.15rem; line-height: 1.7; color: var(--text-sub); margin-bottom: 50px; }
         .read-more-link {
-            color: var(--brand-blue); cursor: pointer; font-weight: 400; 
+            color: var(--brand-blue); cursor: pointer; font-weight: 600; 
             text-decoration: underline; margin-left: 5px;
         }
 
-        /* Templates */
         .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 45px; }
         .prompt-item { display: flex; gap: 16px; align-items: flex-start; }
         .prompt-number { font-size: 1.2rem; font-weight: 800; color: #b0b0b0; min-width: 24px; flex-shrink: 0; }
@@ -146,45 +117,46 @@
         .combo-item {
             background-color: #fff; padding: 40px 35px; border-radius: var(--radius-card);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02); display: flex; flex-direction: column;
-            gap: 20px; border: 1px solid rgba(255, 255, 255, 0.5);
-            margin-left: 10px; margin-right: 10px; 
+            gap: 20px; border: 1px solid rgba(255, 255, 255, 0.5); margin: 0 10px;
         }
         .affirmation-text { font-size: 1.35rem; line-height: 1.45; color: var(--text-main); font-weight: 700; margin: 0; }
         .prompt-text { font-size: 1.15rem; line-height: 1.75; color: var(--text-sub); margin: 0; padding-top: 18px; border-top: 1px solid #f8f8f8; }
 
-        .action-area { margin-top: 60px; display: none; justify-content: center; }
-        .btn-pinterest {
-            background: var(--pinterest-red); border: none; padding: 18px 36px;
-            border-radius: 50px; color: #ffffff; font-weight: 800; font-size: 1.05rem;
-            display: flex; align-items: center; gap: 12px; cursor: pointer;
-            box-shadow: 0 12px 30px rgba(230, 0, 35, 0.2); transition: transform 0.2s;
-            text-decoration: none;
+        /* --- REFINED AD RECOMMENDATION BOX --- */
+        .ad-recommendation {
+            position: relative;
+            border-radius: 18px;
+            padding: 35px; 
+            margin: 50px 0; 
+            /* Internal subtle glows only, simple solid border */
+            background: 
+                radial-gradient(circle at top left, rgba(37, 99, 235, 0.04) 0%, transparent 20%),
+                radial-gradient(circle at bottom right, rgba(225, 29, 72, 0.04) 0%, transparent 20%),
+                #fcfcfc;
+            border: 1px solid rgba(0, 0, 0, 0.05); 
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
         }
-
-        footer {
-            background: #ffffff; border-top: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 60px 20px; margin-top: auto;
+        
+        .ad-text { 
+            font-size: 1.05rem; line-height: 1.6; color: var(--text-main); 
+            font-weight: 500; display: flex; gap: 12px; align-items: flex-start;
         }
-        .footer-inner { max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-        .footer-links { display: flex; gap: 25px; list-style: none; padding: 0; margin: 0; }
-        .footer-links a { text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; }
+        .ad-text i { color: var(--brand-blue); margin-top: 4px; font-size: 1rem; }
+        
+        /* Ad Actions styling - Layout only */
+        .ad-actions { 
+            display: flex; align-items: center; justify-content: flex-end; gap: 20px; 
+        }
 
         @media (max-width: 600px) {
-            .header-inner { padding: 0 15px; }
-            .search-area-box { width: 130px; }
-            .search-area-box input { height: 40px; font-size: 0.85rem; }
-            .search-area-box .search-btn-icon { width: 36px; }
-
-            .container { padding: 20px 0 60px; }
-            .content-card { padding: 45px 0; border-radius: 0; border-left: none; border-right: none; }
+            .content-card { padding: 45px 0; border-radius: 0; }
             .hero-section, .intro-text { padding: 0 15px; }
-            .hero-bubble h2 { font-size: 1.5rem; }
-            .prompt-list { padding: 0 15px; gap: 35px; }
-            .journal-text { font-size: 1.15rem; }
-            .combo-item { border-radius: 18px; padding: 30px 15px; margin-left: 10px; margin-right: 10px; }
-            .affirmation-text { font-size: 1.2rem; }
-            .prompt-text { font-size: 1.05rem; }
-            .logo img { height: 24px; }
+            .prompt-list { padding: 0 15px; }
+            .ad-recommendation { margin: 35px 0px; padding: 25px 20px; }
+            .ad-actions { justify-content: space-between; width: 100%; }
         }
     </style>
 </head>
@@ -193,21 +165,15 @@
     <header>
         <div class="header-inner">
             <a href="index.html" class="logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo"></a>
-            
             <div class="search-area-box" onclick="performSearchRedirect()">
                 <input type="text" placeholder="Search..." readonly />
-                <div class="search-btn-icon">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
+                <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
             </div>
         </div>
     </header>
 
     <div class="container" id="mainContainer">
-        <div id="statusArea">
-            <div class="spinner"></div>
-        </div>
-        
+        <div id="statusArea"><div class="spinner"></div></div>
         <main class="content-card" id="contentCard">
             <section class="hero-section">
                 <div class="hero-bubble"><h2 id="pageTitle"></h2></div>
@@ -216,9 +182,11 @@
                 <span id="pageIntro"></span>
                 <span id="readMoreBtn" class="read-more-link" onclick="toggleReadMore()">Read More</span>
             </div>
+            
             <div id="renderArea"></div>
-            <div class="action-area" id="actionArea">
-                <button class="btn-pinterest" onclick="saveToPinterest()">
+
+            <div class="action-area" id="actionArea" style="margin-top: 60px; display: none; justify-content: center;">
+                <button class="btn-pinterest" style="background: var(--pinterest-red); border: none; padding: 18px 36px; border-radius: 50px; color: #ffffff; font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 12px; cursor: pointer; box-shadow: 0 12px 30px rgba(230, 0, 35, 0.2); transition: transform 0.2s;" onclick="saveToPinterest()">
                     <i class="fa-brands fa-pinterest"></i> Save On Pinterest
                 </button>
             </div>
@@ -226,133 +194,175 @@
     </div>
 
     <footer>
-        <div class="footer-inner">
-            <ul class="footer-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="search.html">Topics</a></li>
-                <li><a href="#">Privacy</a></li>
-                <li><a href="#">Terms</a></li>
+        <div class="footer-inner" style="max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 30px; padding: 60px 20px;">
+            <ul style="display: flex; gap: 25px; list-style: none; padding: 0; margin: 0;">
+                <li><a href="index.html" style="text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Home</a></li>
+                <li><a href="search.html" style="text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Topics</a></li>
+                <li><a href="#" style="text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Privacy</a></li>
             </ul>
-            <div class="copyright">&copy; 2024 Affirzone. Crafted for mindful discovery.</div>
+            <div style="font-size: 0.8rem; color: #bbb;">&copy; 2024 Affirzone. Crafted for mindful discovery.</div>
         </div>
     </footer>
 
     <script>
-        let pinTitle = "";
-        let pinDescription = "";
-        let pinImage = "";
-        let fullDescription = "";
-        let isExpanded = false;
+        let pinTitle = "", fullDescription = "", isExpanded = false;
+        let globalAdCatalog = [];
+        const COOKIE_NAME = 'affirzone_seen_ads';
 
-        function performSearchRedirect() {
-            window.location.href = `search.html`;
+        // --- COOKIE HELPER FUNCTIONS ---
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (JSON.stringify(value) || "") + expires + "; path=/; SameSite=Lax";
         }
 
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) {
+                    try {
+                        return JSON.parse(c.substring(nameEQ.length, c.length));
+                    } catch (e) {
+                        return [];
+                    }
+                }
+            }
+            return [];
+        }
+
+        function performSearchRedirect() { window.location.href = `search.html`; }
         function showNotFound() {
-            const statusArea = document.getElementById('statusArea');
-            statusArea.innerHTML = `<div class="page-not-found">Page Not Found</div>`;
+            document.getElementById('statusArea').innerHTML = `<div class="page-not-found">Page Not Found</div>`;
             document.getElementById('contentCard').style.display = 'none';
+        }
+
+        // Selection Logic using COOKIE STORAGE
+        function getUnseenAd(targetType, targetFile) {
+            if (globalAdCatalog.length === 0) return "";
+
+            let seen = getCookie(COOKIE_NAME) || [];
+            
+            // 1. Prioritize ads specific to this title
+            let titleAds = globalAdCatalog.filter(ad => 
+                ad["target-title"] && Array.isArray(ad["target-title"]) && ad["target-title"].includes(targetFile)
+            );
+
+            // 2. Fallback to ads matching this content type
+            let typeAds = globalAdCatalog.filter(ad => 
+                ad["target-type"] && Array.isArray(ad["target-type"]) && ad["target-type"].includes(targetType)
+            );
+
+            // Merge pools, prioritizing specific title ads
+            let pool = titleAds.length > 0 ? titleAds : typeAds;
+            
+            // Filter pool for rotation based on cookies
+            let unseenPool = pool.filter(ad => !seen.includes(ad.id));
+            
+            if (unseenPool.length === 0 && pool.length > 0) {
+                // Reset cookie tracking for this relevant pool if all were seen
+                seen = seen.filter(id => !pool.find(a => a.id === id));
+                setCookie(COOKIE_NAME, seen, 30); // Persist for 30 days
+                unseenPool = pool;
+            }
+
+            if (unseenPool.length === 0) return ""; 
+
+            const selected = unseenPool[Math.floor(Math.random() * unseenPool.length)];
+            seen.push(selected.id);
+            setCookie(COOKIE_NAME, seen, 30); // Save the updated seen list to cookies
+
+            return `<div class="ad-recommendation">${selected.html}</div>`;
         }
 
         async function initShowPage() {
             const params = new URLSearchParams(window.location.search);
             const rawTitle = params.get('title');
-            
             if (!rawTitle) return showNotFound();
-            
-            // Clean title for comparison
             const queryTitle = rawTitle.trim().toLowerCase();
 
             try {
-                // Use relative path for better compatibility and to avoid CORS issues
+                // Fetch product list (Ads)
+                const adsRes = await fetch('data/products/list.json');
+                globalAdCatalog = await adsRes.json();
+
+                // Fetch topic registry
                 const res = await fetch('data/topics/list.json');
                 const registry = await res.json();
                 
-                // Case-insensitive lookup for title or query fields
+                // Find meta data
                 const meta = registry.find(item => 
                     (item.title && item.title.toLowerCase().trim() === queryTitle) || 
                     (item.query && item.query.toLowerCase().trim() === queryTitle)
                 );
-                
                 if (!meta) return showNotFound();
 
-                // Apply Dynamic Color or default light grey
-                const contentCard = document.getElementById('contentCard');
-                contentCard.style.backgroundColor = meta.color && meta.color.trim() !== "" ? meta.color : "#f2f2f2";
-
-                // Fetch the actual content JSON using relative path
+                document.getElementById('contentCard').style.backgroundColor = meta.color || "#f2f2f2";
                 const contentRes = await fetch(`data/prompts/${meta.file}`);
                 const data = await contentRes.json();
 
                 pinTitle = data.title;
                 fullDescription = data.intro || "";
-                pinDescription = fullDescription;
-                pinImage = meta.pinterest_img || "";
-
                 document.getElementById('pageTitle').innerText = pinTitle;
                 document.title = `${pinTitle} | Affirzone`;
-
                 updateIntroUI();
 
                 const renderArea = document.getElementById('renderArea');
-                if (meta.type === 'list') {
-                    renderArea.innerHTML = `<ul class="prompt-list">${data.items.map((text, i) => `<li class="prompt-item"><span class="prompt-number">${i + 1}.</span><p class="journal-text">${text}</p></li>`).join('')}</ul>`;
-                } else if (meta.type === 'combo') {
-                    renderArea.innerHTML = `<div class="combo-list">${data.items.map(item => `<div class="combo-item"><p class="affirmation-text">"${item.affirmation}"</p><p class="prompt-text">${item.prompt}</p></div>`).join('')}</div>`;
+                let html = "";
+                
+                // Normalize content type for ad matching
+                const contentType = meta.type || 'list'; 
+                const normalizedType = (contentType === 'list') ? 'prompt-list' : (contentType === 'combo' ? 'combo-list' : contentType);
+                const currentFile = meta.file;
+
+                if (normalizedType.includes('list') && !normalizedType.includes('combo')) {
+                    html += `<ul class="prompt-list">`;
+                    data.items.forEach((text, i) => {
+                        html += `<li class="prompt-item"><span class="prompt-number">${i + 1}.</span><p class="journal-text">${text}</p></li>`;
+                        // Inject ad after 5th item
+                        if (i === 4) {
+                            html += `</ul>${getUnseenAd(normalizedType, currentFile)}<ul class="prompt-list">`;
+                        }
+                    });
+                    html += `</ul>`;
+                } else if (normalizedType.includes('combo')) {
+                    html += `<div class="combo-list">`;
+                    data.items.forEach((item, i) => {
+                        html += `<div class="combo-item"><p class="affirmation-text">"${item.affirmation}"</p><p class="prompt-text">${item.prompt}</p></div>`;
+                        // Inject ad after 3rd combo card (index 2)
+                        // This is the optimal placement for UX grouping and Ad Conversion
+                        if (i === 2) html += getUnseenAd(normalizedType, currentFile);
+                    });
+                    html += `</div>`;
                 }
 
-                if (pinImage && pinImage.trim() !== "") {
-                    document.getElementById('actionArea').style.display = 'flex';
-                }
-
+                renderArea.innerHTML = html;
+                if (meta.pinterest_img) document.getElementById('actionArea').style.display = 'flex';
                 document.getElementById('statusArea').style.display = 'none';
                 document.getElementById('contentCard').style.display = 'flex';
-
-            } catch (err) {
-                console.error("Initialization error:", err);
-                showNotFound();
-            }
+            } catch (err) { console.error("Load failed:", err); showNotFound(); }
         }
 
         function updateIntroUI() {
-            const introEl = document.getElementById('pageIntro');
-            const btn = document.getElementById('readMoreBtn');
-            const words = fullDescription.split(' ');
-
-            if (words.length <= 8 || isExpanded) {
+            const introEl = document.getElementById('pageIntro'), btn = document.getElementById('readMoreBtn');
+            const words = (fullDescription || "").split(' ');
+            if (words.length <= 10 || isExpanded) {
                 introEl.innerText = fullDescription;
-                btn.style.display = isExpanded && words.length > 8 ? "inline" : "none";
+                btn.style.display = isExpanded && words.length > 10 ? "inline" : "none";
                 if (isExpanded) btn.innerText = " Show Less";
             } else {
-                introEl.innerText = words.slice(0, 8).join(' ') + "...";
-                btn.style.display = "inline";
-                btn.innerText = "Read More";
+                introEl.innerText = words.slice(0, 10).join(' ') + "...";
+                btn.style.display = "inline"; btn.innerText = "Read More";
             }
         }
 
-        function toggleReadMore() {
-            isExpanded = !isExpanded;
-            updateIntroUI();
-        }
-
-        function saveToPinterest() {
-            const currentLoc = window.location;
-            const cleanUrl = currentLoc.origin + currentLoc.pathname + currentLoc.search.replace(/\+/g, '%20');
-            const pageUrl = encodeURIComponent(cleanUrl);
-            
-            let absoluteImage = pinImage;
-            if (pinImage && !pinImage.startsWith('http')) {
-                // Create a clean root-relative fallback
-                const origin = "https://affirzone.store/";
-                absoluteImage = origin + (pinImage.startsWith('/') ? pinImage.substring(1) : pinImage);
-            }
-            const sharedImage = encodeURIComponent(absoluteImage);
-            const sharedDescription = encodeURIComponent(`${pinTitle} - ${fullDescription}`);
-            const pinterestUrl = `https://www.pinterest.com/pin/create/button/?url=${pageUrl}&media=${sharedImage}&description=${sharedDescription}`;
-            
-            window.open(pinterestUrl, 'PinterestShare', 'width=600,height=700,scrollbars=yes');
-        }
-
+        function toggleReadMore() { isExpanded = !isExpanded; updateIntroUI(); }
         window.onload = initShowPage;
     </script>
 </body>

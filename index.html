@@ -192,7 +192,7 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card-title { font-size: 1.5rem; font-weight: 600; color: var(--text-main); margin: 0 0 5px 0; line-height: 1.2; }
+        .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0 0 5px 0; line-height: 1.2; }
         .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 30px; } 
         .prompt-item { display: flex; gap: 14px; align-items: flex-start; }
         .prompt-number { font-size: 1.1rem; font-weight: 800; color: #b0b0b0; min-width: 20px; flex-shrink: 0; margin-top: 2px; }
@@ -257,7 +257,7 @@
             .chat-flow { gap: 60px; padding: 0; }
             .thread-container { padding: 35px 20px 0; border-radius: 0; border-left: none; border-right: none; }
             .footer-fade-overlay { width: calc(100% + 40px); margin-left: -20px; }
-            .mood-pill { padding: 10px 16px; font-size: 0.85rem; }
+            .mood-pill { padding: 12px 16px; font-size: 0.85rem; }
             .sticky-content-row { justify-content: space-between; padding: 0 12px 4px; gap: 8px; }
             .sticky-logo { order: 1; flex: 1; }
             .search-area-box { order: 2; width: 120px; }
@@ -356,15 +356,13 @@
     </div>
 
     <script>
-        const BASE_URL = "https://affirzone.store/";
         const CATEGORY_COOKIE = "affirzone_category";
-        const CARDS_PER_PAGE = 6;
+        const CARDS_PER_PAGE = 7;
         
         let fullRegistry = [];
         let currentFilter = "";
         let currentPage = 1;
 
-        // Cookie Helpers
         function setCookie(name, value, days = 30) {
             const d = new Date();
             d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -378,7 +376,6 @@
 
         async function init() {
             try {
-                // Populate sticky mood tags
                 const mainTags = document.getElementById('mainMoodTags');
                 const stickyTags = document.getElementById('stickyMoodTags');
                 stickyTags.innerHTML = mainTags.innerHTML;
@@ -393,7 +390,7 @@
                 currentFilter = getCookie(CATEGORY_COOKIE) || "";
                 updatePillUI();
                 renderRegistry();
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("Initialization Error:", e); }
         }
 
         function updatePillUI() {
@@ -417,7 +414,6 @@
             flow.innerHTML = ""; 
             pagination.innerHTML = "";
 
-            // 1. Filter
             let filteredItems = currentFilter 
                 ? fullRegistry.filter(i => i.tags && i.tags.some(t => t.toLowerCase() === currentFilter.toLowerCase()))
                 : fullRegistry;
@@ -427,27 +423,25 @@
             if (filteredItems.length === 0) {
                 flow.innerHTML = `
                     <div style="text-align:center; padding: 60px 20px; color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">
-                        [No Prompts available on this ${currentFilter || 'type'}]
+                        [No content available for "${currentFilter || 'all'}"]
                     </div>
                 `;
                 return;
             }
 
-            // 2. Paginate
             const totalPages = Math.ceil(filteredItems.length / CARDS_PER_PAGE);
             if (currentPage > totalPages) currentPage = totalPages || 1;
             
             const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
             const itemsToRender = filteredItems.slice(startIndex, startIndex + CARDS_PER_PAGE);
 
-            // 3. Render Cards
             for (let i = 0; i < itemsToRender.length; i++) {
                 const item = itemsToRender[i];
                 try {
-                    const promptRes = await fetch(`${BASE_URL}data/prompts/${item.file}`);
+                    // USE RELATIVE PATHS for reliability
+                    const promptRes = await fetch(`data/prompts/${item.file}`);
                     const promptData = await promptRes.json();
                     
-                    // NEW DYNAMIC COLOR LOGIC
                     const cardBg = item.color && item.color.trim() !== "" ? item.color : "#f2f2f2";
 
                     const card = document.createElement('article');
@@ -458,12 +452,17 @@
                     card.onclick = () => window.location.href = `show.html?title=${encodeURIComponent(item.title).replace(/%20/g, '+')}`;
 
                     let content = `<h2 class="card-title">${item.title}</h2>`;
-                    if (item.type === 'list') {
+                    
+                    // Robust type check including potential typos or legacy types
+                    const isListType = (item.type || "").includes('list') && !(item.type || "").includes('combo');
+                    const isComboType = (item.type || "").includes('combo');
+
+                    if (isListType) {
                         content += `<ul class="prompt-list">${promptData.items.slice(0, 4).map((p, idx) => `
                             <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
                                 <span class="prompt-number">${idx+1}.</span><p class="item-text">${p}</p>
                             </li>`).join('')}</ul>`;
-                    } else {
+                    } else if (isComboType) {
                         content += `<div class="prompt-list">${promptData.items.slice(0, 3).map((p, idx) => `
                             <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
                                 <p class="affirmation-text">"${p.affirmation}"</p>
@@ -473,10 +472,9 @@
                     content += `<div class="footer-fade-overlay"><div style="text-align:right;"><span class="gradient-link">Show More <i class="fa-solid fa-arrow-right"></i></span></div></div>`;
                     card.innerHTML = content;
                     flow.appendChild(card);
-                } catch(e) {}
+                } catch(e) { console.error(`Error loading file ${item.file}:`, e); }
             }
 
-            // 4. Pagination Controls
             if (totalPages > 1) {
                 if (currentPage > 1) {
                     const prevBtn = document.createElement('button');
