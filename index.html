@@ -1,34 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Affirzone | Discovery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
         :root {
-            --bg-base: #f7f7f7; 
+            --bg-base: #f7f7f7;
             --glass-white: #ffffff;
             --text-main: #111111;
-            --text-sub: #4b4b4b; 
+            --text-sub: #4b4b4b;
             --text-muted: #888888;
             --radius-container: 32px;
             --radius-card: 22px;
             --brand-blue: #2563eb;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-base);
             background-image: radial-gradient(circle at 0 120px, #e3f2fd 0%, transparent 20%),
-                              radial-gradient(circle at 100% 100%, #fdeaea 0%, transparent 15%);
+                radial-gradient(circle at 100% 100%, #fdeaea 0%, transparent 15%);
             background-attachment: fixed;
             color: var(--text-main);
-            margin: 0; padding: 0;
+            margin: 0;
+            padding: 0;
             letter-spacing: -0.01em;
             min-height: 100vh;
             display: flex;
@@ -37,54 +42,79 @@
 
         header {
             background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-            padding: 8px 0; width: 100%;
+            padding: 8px 0;
+            width: 100%;
         }
 
         .header-inner {
-            width: 100%; max-width: 850px; margin: 0 auto;
-            padding: 0 25px; display: flex; justify-content: center; align-items: center;
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .logo img { height: 30px; width: auto; object-fit: contain; }
+        .logo img {
+            height: 30px;
+            width: auto;
+            object-fit: contain;
+        }
 
         /* GLOBAL STICKY HEADER */
         .global-sticky-header {
-            position: fixed; top: 0; left: 0; right: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(15px);
             z-index: 2000;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            display: none; 
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            display: none;
             flex-direction: column;
-            padding: 6px 0 0; 
+            padding: 6px 0 0;
             animation: slideDown 0.3s ease;
         }
 
         @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
         }
 
         .sticky-content-row {
-            display: flex; 
+            display: flex;
             align-items: center;
             flex-wrap: wrap;
-            max-width: 1400px; 
-            margin: 0 auto; 
-            width: 100%; 
-            padding: 0 15px 5px; 
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 15px 5px;
             gap: 15px;
         }
 
-        .sticky-logo { order: 1; }
-        .sticky-logo img { height: 24px; width: auto; }
+        .sticky-logo {
+            order: 1;
+        }
+
+        .sticky-logo img {
+            height: 24px;
+            width: auto;
+        }
 
         .search-area-box {
             position: relative;
-            width: 240px; 
+            width: 240px;
             cursor: pointer;
             flex-shrink: 0;
             order: 3;
@@ -92,43 +122,67 @@
 
         .search-area-box input {
             width: 100%;
-            height: 48px; 
+            height: 48px;
             padding: 0 50px 0 20px;
             border-radius: 14px;
-            border: 1px solid rgba(0,0,0,0.08);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             background: #fff;
             font-size: 0.95rem;
             color: var(--text-main);
             outline: none;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
         }
 
         .search-area-box .search-btn-icon {
             position: absolute;
-            right: 0; top: 0; bottom: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
             width: 50px;
             background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%);
             color: #2563eb;
             border: none;
             border-radius: 0 14px 14px 0;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1rem;
         }
 
-        .container { 
-            width: 100%; max-width: 850px; margin: 0 auto; 
-            padding: 30px 0 60px; flex: 1;
+        .container {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px 0 60px;
+            flex: 1;
         }
 
-        .headline-wrapper { text-align: center; margin-bottom: 25px; padding: 0 10px; }
+        .headline-wrapper {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+
         .main-headline {
-            font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
-            letter-spacing: 0.15em; color: var(--text-muted); margin: 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin: 0;
         }
 
-        .controls-wrapper { padding: 15px 12px 10px; margin-bottom: 20px; }
-        .main-search-container { display: flex; justify-content: center; margin-bottom: 20px; }
+        .controls-wrapper {
+            padding: 15px 12px 10px;
+            margin-bottom: 20px;
+        }
+
+        .main-search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
 
         .mood-slider-container {
             position: relative;
@@ -140,225 +194,446 @@
         }
 
         .mood-tags {
-            display: flex; gap: 12px; overflow-x: auto;
-            padding: 8px 10px; scrollbar-width: none;
-            scroll-behavior: smooth; width: 100%;
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 8px 10px;
+            scrollbar-width: none;
+            scroll-behavior: smooth;
+            width: 100%;
         }
-        .mood-tags::-webkit-scrollbar { display: none; }
+
+        .mood-tags::-webkit-scrollbar {
+            display: none;
+        }
 
         .mood-pill {
-            background: #fff; padding: 12px 24px; border-radius: 50px;
-            font-size: 0.95rem; font-weight: 600; color: var(--text-sub);
-            border: 1px solid rgba(0, 0, 0, 0.04); white-space: nowrap;
-            cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            transition: all 0.3s ease; user-select: none;
+            background: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            white-space: nowrap;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            user-select: none;
         }
 
         .mood-pill.active {
             background: linear-gradient(135deg, #dcf0ff 0%, #e5fff5 100%);
-            color: var(--text-main); border: 1px solid rgba(0, 0, 0, 0.06);
+            color: var(--text-main);
+            border: 1px solid rgba(0, 0, 0, 0.06);
             font-weight: 700;
         }
 
         .scroll-arrow {
-            width: 36px; height: 36px; background: #eeeeee; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer;
-            z-index: 10; border: 1px solid rgba(0,0,0,0.05);
-            color: var(--text-muted); transition: all 0.2s; flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            background: #eeeeee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+            z-index: 10;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--text-muted);
+            transition: all 0.2s;
+            flex-shrink: 0;
         }
-        .scroll-arrow:hover { color: var(--brand-blue); background: #e5e5e5; }
-        .arrow-left { margin-right: 10px; }
-        .arrow-right { margin-left: 10px; }
+
+        .scroll-arrow:hover {
+            color: var(--brand-blue);
+            background: #e5e5e5;
+        }
+
+        .arrow-left {
+            margin-right: 10px;
+        }
+
+        .arrow-right {
+            margin-left: 10px;
+        }
 
         .list-header {
-            display: flex; align-items: center; gap: 8px;
-            padding: 0 12px; margin-bottom: 25px;
-            color: var(--text-muted); font-weight: 700;
-            font-size: 0.9rem; text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 12px;
+            margin-bottom: 25px;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        .chat-flow { display: flex; flex-direction: column; gap: 80px; padding: 0 12px; }
+        .chat-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+            padding: 0 12px;
+        }
 
         .thread-container {
-            padding: 40px 30px 0; border-radius: var(--radius-container); 
-            display: flex; flex-direction: column; gap: 30px; 
+            padding: 40px 30px 0;
+            border-radius: var(--radius-container);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
             border: 1px solid rgba(0, 0, 0, 0.05);
             box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
-            text-decoration: none; cursor: pointer; transition: transform 0.2s ease;
-            overflow: hidden; animation: fadeIn 0.4s ease forwards;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            overflow: hidden;
+            animation: fadeIn 0.4s ease forwards;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
 
-        .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0 0 5px 0; line-height: 1.2; }
-        .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 30px; } 
-        .prompt-item { display: flex; gap: 14px; align-items: flex-start; }
-        .prompt-number { font-size: 1.1rem; font-weight: 800; color: #b0b0b0; min-width: 20px; flex-shrink: 0; margin-top: 2px; }
-        .item-text { font-size: 1.25rem; line-height: 1.6; color: var(--text-main); font-weight: 500; margin: 0; }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0 0 5px 0;
+            line-height: 1.2;
+        }
+
+        .prompt-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .prompt-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .prompt-number {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #b0b0b0;
+            min-width: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .item-text {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            font-weight: 500;
+            margin: 0;
+        }
 
         .combo-item {
-            background-color: #fff; padding: 30px; border-radius: var(--radius-card);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02); border: 1px solid rgba(255, 255, 255, 0.5);
+            background-color: #fff;
+            padding: 30px;
+            border-radius: var(--radius-card);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
-        .affirmation-text { font-size: 1.3rem; font-weight: 700; color: var(--text-main); line-height: 1.4; margin-bottom: 12px; }
-        .combo-prompt { font-size: 1.1rem; color: var(--text-sub); line-height: 1.6; padding-top: 15px; border-top: 1px solid #f2f2f2; margin: 0; }
+
+        .affirmation-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .combo-prompt {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            padding-top: 15px;
+            border-top: 1px solid #f2f2f2;
+            margin: 0;
+        }
 
         .prompt-blur {
-            position: relative; max-height: 110px; overflow: hidden;
+            position: relative;
+            max-height: 110px;
+            overflow: hidden;
             mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
         }
 
         .footer-fade-overlay {
-            margin-top: -60px; padding: 80px 30px 25px; position: relative; z-index: 2;
+            margin-top: -60px;
+            padding: 80px 30px 25px;
+            position: relative;
+            z-index: 2;
             background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.6) 30%, white 65%, white 100%);
             border-radius: 0 0 var(--radius-container) var(--radius-container);
-            pointer-events: none; width: calc(100% + 60px); margin-left: -30px; 
+            pointer-events: none;
+            width: calc(100% + 60px);
+            margin-left: -30px;
         }
 
         .gradient-link {
-            font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
             background: linear-gradient(90deg, #2563eb 70%, #e11d48 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-size: 0.9rem;
         }
 
         .pagination-container {
-            display: flex; justify-content: center; gap: 20px;
-            margin: 60px 0 20px; padding: 0 12px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 60px 0 20px;
+            padding: 0 12px;
         }
 
         .page-btn {
-            padding: 14px 28px; border-radius: 50px;
-            background: #fff; border: 1px solid rgba(0,0,0,0.06);
-            color: var(--text-main); font-weight: 700;
-            cursor: pointer; transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            display: flex; align-items: center; gap: 10px;
+            padding: 14px 28px;
+            border-radius: 50px;
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            color: var(--text-main);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .page-btn:hover { border-color: var(--brand-blue); color: var(--brand-blue); transform: translateY(-2px); }
-        .page-btn:active { transform: scale(0.96); }
+
+        .page-btn:hover {
+            border-color: var(--brand-blue);
+            color: var(--brand-blue);
+            transform: translateY(-2px);
+        }
+
+        .page-btn:active {
+            transform: scale(0.96);
+        }
 
         @media (max-width: 1024px) {
-            .scroll-arrow { display: none; }
-            .mood-tags { padding: 8px 15px; }
+            .scroll-arrow {
+                display: none;
+            }
+
+            .mood-tags {
+                padding: 8px 15px;
+            }
         }
 
         @media (max-width: 850px) {
-            .sticky-content-row { gap: 15px; padding: 0 10px 8px; }
-            .search-area-box { width: 180px; }
+            .sticky-content-row {
+                gap: 15px;
+                padding: 0 10px 8px;
+            }
+
+            .search-area-box {
+                width: 180px;
+            }
         }
 
         @media (max-width: 600px) {
-            .global-sticky-header { padding: 6px 0 0; } 
-            .container { padding: 20px 0 60px; }
-            .chat-flow { gap: 60px; padding: 0; }
-            .thread-container { padding: 35px 20px 0; border-radius: 0; border-left: none; border-right: none; }
-            .footer-fade-overlay { width: calc(100% + 40px); margin-left: -20px; }
-            .mood-pill { padding: 12px 16px; font-size: 0.85rem; }
-            .sticky-content-row { justify-content: space-between; padding: 0 12px 4px; gap: 8px; }
-            .sticky-logo { order: 1; flex: 1; }
-            .search-area-box { order: 2; width: 120px; }
-            .search-area-box input { height: 40px; border-radius: 10px; font-size: 0.85rem; }
-            .search-area-box .search-btn-icon { width: 36px; border-radius: 0 10px 10px 0; }
-            .mood-slider-container { width: 100%; order: 3; flex: none; margin-top: 4px; }
-            .mood-tags { padding: 4px 0; }
+            .global-sticky-header {
+                padding: 6px 0 0;
+            }
+
+            .container {
+                padding: 20px 0 60px;
+            }
+
+            .chat-flow {
+                gap: 60px;
+                padding: 0;
+            }
+
+            .thread-container {
+                padding: 35px 20px 0;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+
+            .footer-fade-overlay {
+                width: calc(100% + 40px);
+                margin-left: -20px;
+            }
+
+            .mood-pill {
+                padding: 12px 16px;
+                font-size: 0.85rem;
+            }
+
+            .sticky-content-row {
+                justify-content: space-between;
+                padding: 0 12px 4px;
+                gap: 8px;
+            }
+
+            .sticky-logo {
+                order: 1;
+                flex: 1;
+            }
+
+            .search-area-box {
+                order: 2;
+                width: 120px;
+            }
+
+            .search-area-box input {
+                height: 40px;
+                border-radius: 10px;
+                font-size: 0.85rem;
+            }
+
+            .search-area-box .search-btn-icon {
+                width: 36px;
+                border-radius: 0 10px 10px 0;
+            }
+
+            .mood-slider-container {
+                width: 100%;
+                order: 3;
+                flex: none;
+                margin-top: 4px;
+            }
+
+            .mood-tags {
+                padding: 4px 0;
+            }
         }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <!-- GLOBAL STICKY HEADER -->
     <div id="globalStickyHeader" class="global-sticky-header">
-      <div class="sticky-content-row">
-        <a href="index.html" class="sticky-logo">
-          <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" />
-        </a>
-        
-        <div class="mood-slider-container">
-          <div class="scroll-arrow arrow-left" onclick="scrollPills(-1, 'stickyMoodTags')">
-            <i class="fa-solid fa-chevron-left"></i>
-          </div>
-          <div class="mood-tags" id="stickyMoodTags">
-            <!-- Dynamically populated -->
-          </div>
-          <div class="scroll-arrow arrow-right" onclick="scrollPills(1, 'stickyMoodTags')">
-            <i class="fa-solid fa-chevron-right"></i>
-          </div>
-        </div>
+        <div class="sticky-content-row">
+            <a href="index.html" class="sticky-logo">
+                <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" />
+            </a>
 
-        <div class="search-area-box" onclick="performSearchRedirect()">
-            <input type="text" placeholder="Search..." readonly />
-            <div class="search-btn-icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
+            <div class="mood-slider-container">
+                <div class="scroll-arrow arrow-left" onclick="scrollPills(-1, 'stickyMoodTags')">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="mood-tags" id="stickyMoodTags">
+                    <!-- Dynamically populated -->
+                </div>
+                <div class="scroll-arrow arrow-right" onclick="scrollPills(1, 'stickyMoodTags')">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
             </div>
-        </div>
-      </div>
-    </div>
 
-    <header id="mainHeader">
-      <div class="header-inner">
-        <a href="index.html" class="logo">
-          <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" />
-        </a>
-      </div>
-    </header>
-
-    <div class="container">
-      <div class="headline-wrapper">
-        <h1 class="main-headline">Affirmations &amp; Prompts</h1>
-      </div>
-      
-      <div class="controls-wrapper" id="mainControls">
-        <div class="main-search-container">
-            <div class="search-area-box" style="width: 100%; max-width: 500px;" onclick="performSearchRedirect()">
-                <input type="text" placeholder="Search prompts..." readonly />
+            <div class="search-area-box" onclick="performSearchRedirect()">
+                <input type="text" placeholder="Search..." readonly />
                 <div class="search-btn-icon">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="mood-slider-container">
-          <div class="scroll-arrow arrow-left" onclick="scrollPills(-1, 'mainMoodTags')">
-            <i class="fa-solid fa-chevron-left"></i>
-          </div>
-          <div class="mood-tags" id="mainMoodTags">
-            <div class="mood-pill active" data-tag="" onclick="handlePillClick(this, '')">All</div>
-            <div class="mood-pill" data-tag="Gratitude" onclick="handlePillClick(this, 'Gratitude')">Gratitude</div>
-            <div class="mood-pill" data-tag="Self Confidence" onclick="handlePillClick(this, 'Self Confidence')">Self Confidence</div>
-            <div class="mood-pill" data-tag="Career Growth" onclick="handlePillClick(this, 'Career Growth')">Career Growth</div>
-            <div class="mood-pill" data-tag="Self Discovery" onclick="handlePillClick(this, 'Self Discovery')">Self Discovery</div>
-            <div class="mood-pill" data-tag="Inner Peace" onclick="handlePillClick(this, 'Inner Peace')">Inner Peace</div>
-            <div class="mood-pill" data-tag="Motivation" onclick="handlePillClick(this, 'Motivation')">Motivation</div>
-            <div class="mood-pill" data-tag="Productivity" onclick="handlePillClick(this, 'Productivity')">Productivity</div>
-            <div class="mood-pill" data-tag="Mindfulness" onclick="handlePillClick(this, 'Mindfulness')">Mindfulness</div>
-          </div>
-          <div class="scroll-arrow arrow-right" onclick="scrollPills(1, 'mainMoodTags')">
-            <i class="fa-solid fa-chevron-right"></i>
-          </div>
+    <header id="mainHeader">
+        <div class="header-inner">
+            <a href="index.html" class="logo">
+                <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" />
+            </a>
         </div>
-      </div>
+    </header>
 
-      <div class="list-header">
-        <span id="listHeaderLabel">Latest</span>
-        <i class="fa-solid fa-chevron-down"></i>
-      </div>
+    <div class="container">
+        <div class="headline-wrapper">
+            <h1 class="main-headline">Affirmations &amp; Prompts</h1>
+        </div>
 
-      <main class="chat-flow" id="responseFlow">
-        <!-- Dynamically populated -->
-      </main>
+        <div class="controls-wrapper" id="mainControls">
+            <div class="main-search-container">
+                <div class="search-area-box" style="width: 100%; max-width: 500px;" onclick="performSearchRedirect()">
+                    <input type="text" placeholder="Search prompts..." readonly />
+                    <div class="search-btn-icon">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                </div>
+            </div>
 
-      <div class="pagination-container" id="paginationControls">
-          <!-- Next/Prev Buttons -->
-      </div>
+            <div class="mood-slider-container">
+                <div class="scroll-arrow arrow-left" onclick="scrollPills(-1, 'mainMoodTags')">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="mood-tags" id="mainMoodTags">
+                    <div class="mood-pill active" data-tag="" onclick="handlePillClick(this, '')">All</div>
+                    <div class="mood-pill" data-tag="Gratitude" onclick="handlePillClick(this, 'Gratitude')">Gratitude
+                    </div>
+                    <div class="mood-pill" data-tag="Self Confidence"
+                        onclick="handlePillClick(this, 'Self Confidence')">Self Confidence</div>
+                    <div class="mood-pill" data-tag="Anxiety" onclick="handlePillClick(this, 'Anxiety')">Anxiety</div>
+                    <div class="mood-pill" data-tag="Career" onclick="handlePillClick(this, 'Career')">Career</div>
+                    <div class="mood-pill" data-tag="Healing" onclick="handlePillClick(this, 'Healing')">Healing</div>
+                    <div class="mood-pill" data-tag="Manifestation" onclick="handlePillClick(this, 'Manifestation')">
+                        Manifestation</div>
+                    <div class="mood-pill" data-tag="Productivity" onclick="handlePillClick(this, 'Productivity')">
+                        Productivity</div>
+
+                    <div class="mood-pill" data-tag="Mindfulness" onclick="handlePillClick(this, 'Mindfulness')">
+                        Mindfulness</div>
+                 
+                    <div class="mood-pill" data-tag="Self Discovery" onclick="handlePillClick(this, 'Self Discovery')">
+                        Self Discovery</div>
+                    <div class="mood-pill" data-tag="Inner Peace" onclick="handlePillClick(this, 'Inner Peace')">Inner
+                        Peace</div>
+                    <div class="mood-pill" data-tag="Relationships" onclick="handlePillClick(this, 'Relationships')">
+                        Relationships</div>
+                    <div class="mood-pill" data-tag="Art" onclick="handlePillClick(this, 'Art')">Art</div>
+                    <div class="mood-pill" data-tag="Grief" onclick="handlePillClick(this, 'Grief')">Grief</div>
+                    <div class="mood-pill" data-tag="Faith" onclick="handlePillClick(this, 'Faith')">Faith</div>
+                </div>
+                <div class="scroll-arrow arrow-right" onclick="scrollPills(1, 'mainMoodTags')">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="list-header">
+            <span id="listHeaderLabel">Latest</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+
+        <main class="chat-flow" id="responseFlow">
+            <!-- Dynamically populated -->
+        </main>
+
+        <div class="pagination-container" id="paginationControls">
+            <!-- Next/Prev Buttons -->
+        </div>
     </div>
 
     <script>
         const CATEGORY_COOKIE = "affirzone_category";
         const CARDS_PER_PAGE = 7;
-        
+
         let fullRegistry = [];
         let currentFilter = "";
         let currentPage = 1;
@@ -383,7 +658,7 @@
                 // Path updated to 'topics'
                 const res = await fetch(`data/topics/list.json`);
                 fullRegistry = await res.json();
-                
+
                 const urlParams = new URLSearchParams(window.location.search);
                 currentPage = parseInt(urlParams.get('page')) || 1;
 
@@ -401,7 +676,7 @@
                 if (isActive) {
                     try {
                         pill.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
-                    } catch(err) {}
+                    } catch (err) { }
                 }
             });
         }
@@ -410,11 +685,11 @@
             const flow = document.getElementById('responseFlow');
             const pagination = document.getElementById('paginationControls');
             const label = document.getElementById('listHeaderLabel');
-            
-            flow.innerHTML = ""; 
+
+            flow.innerHTML = "";
             pagination.innerHTML = "";
 
-            let filteredItems = currentFilter 
+            let filteredItems = currentFilter
                 ? fullRegistry.filter(i => i.tags && i.tags.some(t => t.toLowerCase() === currentFilter.toLowerCase()))
                 : fullRegistry;
 
@@ -431,7 +706,7 @@
 
             const totalPages = Math.ceil(filteredItems.length / CARDS_PER_PAGE);
             if (currentPage > totalPages) currentPage = totalPages || 1;
-            
+
             const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
             const itemsToRender = filteredItems.slice(startIndex, startIndex + CARDS_PER_PAGE);
 
@@ -441,7 +716,7 @@
                     // USE RELATIVE PATHS for reliability
                     const promptRes = await fetch(`data/prompts/${item.file}`);
                     const promptData = await promptRes.json();
-                    
+
                     const cardBg = item.color && item.color.trim() !== "" ? item.color : "#f2f2f2";
 
                     const card = document.createElement('article');
@@ -452,7 +727,7 @@
                     card.onclick = () => window.location.href = `show.html?title=${encodeURIComponent(item.title).replace(/%20/g, '+')}`;
 
                     let content = `<h2 class="card-title">${item.title}</h2>`;
-                    
+
                     // Robust type check including potential typos or legacy types
                     const isListType = (item.type || "").includes('list') && !(item.type || "").includes('combo');
                     const isComboType = (item.type || "").includes('combo');
@@ -460,7 +735,7 @@
                     if (isListType) {
                         content += `<ul class="prompt-list">${promptData.items.slice(0, 4).map((p, idx) => `
                             <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
-                                <span class="prompt-number">${idx+1}.</span><p class="item-text">${p}</p>
+                                <span class="prompt-number">${idx + 1}.</span><p class="item-text">${p}</p>
                             </li>`).join('')}</ul>`;
                     } else if (isComboType) {
                         content += `<div class="prompt-list">${promptData.items.slice(0, 3).map((p, idx) => `
@@ -472,7 +747,7 @@
                     content += `<div class="footer-fade-overlay"><div style="text-align:right;"><span class="gradient-link">Show More <i class="fa-solid fa-arrow-right"></i></span></div></div>`;
                     card.innerHTML = content;
                     flow.appendChild(card);
-                } catch(e) { console.error(`Error loading file ${item.file}:`, e); }
+                } catch (e) { console.error(`Error loading file ${item.file}:`, e); }
             }
 
             if (totalPages > 1) {
@@ -540,5 +815,6 @@
 
         window.addEventListener('load', init);
     </script>
-  </body>
+</body>
+
 </html>

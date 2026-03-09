@@ -1,34 +1,114 @@
 [
-  {
-    "title": "8 Journal Prompts for Self-Discovery",
-    "file": "8-journal-prompts-for-self-discovery.json",
+ {
+    "title": "12 Healing Journal Prompts for Emotional Recovery",
+    "file": "12+Healing+Journal+Prompts+for+Emotional+Recovery.json",
     "type": "prompt-list",
     "tags": [
-      "Self Confidence",
-      "Inner peace"
+      "Healing",
+      "Inner Peace"
     ],
     "pinterest_img": "",
     "color": "#fff3f3"
   },
   {
-    "title": "15 Daily Affirmations for Mental Clarity",
-    "file": "15-daily-affirmations-for-mental-clarity.json",
-    "type": "affirmation-list",
+    "title": "10 Manifestation Journal Prompts for Goal Setting & Alignment",
+    "file": "10+Manifestation+Journal+Prompts+for+Goal+Setting+&+Alignment.json",
+    "type": "prompt-list",
     "tags": [
-      "Mindfulness",
+      "Manifestation",
+      "Self Discovery"
+    ],
+    "pinterest_img": "",
+    "color": "#f3f9ff"
+  },
+  {
+    "title": "10 Calming Journal Prompts for Managing Daily Anxiety",
+    "file": "10+Calming+Journal+Prompts+for+Managing+Daily+Anxiety.json",
+    "type": "prompt-list",
+    "tags": [
+      "Anxiety",
+      "Inner Peace",
+      "Mindfulness"
+    ],
+    "pinterest_img": "",
+    "color": "#f0fdf4"
+  },
+  {
+    "title": "10 Strategic Journal Prompts for Peak Productivity",
+    "file": "10+Strategic+Journal+Prompts+for+Peak+Productivity.json",
+    "type": "prompt-list",
+    "tags": [
+      "Productivity",
+      "Career Growth",
+      "Motivation"
+    ],
+    "pinterest_img": "",
+    "color": "#fffbeb"
+  },
+  {
+    "title": "12 Compassionate Journal Prompts for Navigating Grief",
+    "file": "12+Compassionate+Journal+Prompts+for+Navigating+Grief.json",
+    "type": "prompt-list",
+    "tags": [
+      "Grief",
+      "Inner Peace",
+      "Self Discovery"
+    ],
+    "pinterest_img": "",
+    "color": "#fdf2f2"
+  },
+  {
+    "title": "12 Thoughtful Bible Journal Prompts for Spiritual Reflection",
+    "file": "12+Thoughtful+Bible+Journal+Prompts+for+Spiritual+Reflection.json",
+    "type": "prompt-list",
+    "tags": [
+      "Faith",
+      "Inner Peace",
+      "Mindfulness"
+    ],
+    "pinterest_img": "",
+    "color": "#fdfcf0"
+  },
+  {
+    "title": "10 Deep Prayer Journal Prompts for Spiritual Connection",
+    "file": "10+Deep+Prayer+Journal+Prompts+for+Spiritual+Connection.json",
+    "type": "prompt-list",
+    "tags": [
+      "Faith",
       "Inner Peace"
     ],
     "pinterest_img": "",
-    "color": "#e9f7ef"
+    "color": "#fefce8"
   },
   {
-    "title": "Career Growth: Affirmation & Prompt Combo",
-    "file": "career-growth-affirmation-prompt-combo.json",
-    "type": "combo-list",
+    "title": "15 April Journal Prompts for Work Focus and Motivation",
+    "file": "15+April+Journal+Prompts+for+Work+Focus+and+Motivation.json",
+    "type": "prompt-list",
     "tags": [
-      "Career Growth",
-      "Self Confidence"
+      "Career",
+      "Productivity"
     ],
-    "color": "#f0f7ff"
+    "pinterest_img": "",
+    "color": "#ecfdf5"
+  },
+  {
+    "title": "12 Creative Art Journal Prompts to Express Your Inner Artist",
+    "file": "12+Creative+Art+Journal+Prompts+to+Express+Your+Inner+Artist.json",
+    "type": "prompt-list",
+    "tags": [
+      "Art"
+    ],
+    "pinterest_img": "",
+    "color": "#f0fdfa"
+  },
+  {
+    "title": "10 Meaningful Journal Prompts for Couples to Strengthen Their Bond",
+    "file": "10+Meaningful+Journal+Prompts+for+Couples+to+Strengthen+Their+Bond.json",
+    "type": "prompt-list",
+    "tags": [
+      "Relationships"
+    ],
+    "pinterest_img": "",
+    "color": "#fff5f5"
   }
 ]
