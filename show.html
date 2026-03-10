@@ -284,7 +284,6 @@
             border-radius: 18px;
             padding: 35px;
             margin: 50px 0;
-            /* Internal subtle glows only, simple solid border */
             background:
                 radial-gradient(circle at top left, rgba(37, 99, 235, 0.04) 0%, transparent 20%),
                 radial-gradient(circle at bottom right, rgba(225, 29, 72, 0.04) 0%, transparent 20%),
@@ -312,7 +311,6 @@
             font-size: 1rem;
         }
 
-        /* Ad Actions styling - Layout only */
         .ad-actions {
             display: flex;
             align-items: center;
@@ -326,8 +324,7 @@
 
         /* Mobile (Phones) */
         @media screen and (max-width: 600px) {
-            /* Best for all smartphones */
-                     .content-card {
+            .content-card {
                 padding: 45px 0;
                 border-radius: 0;
             }
@@ -356,23 +353,17 @@
             }
         }
 
-        /* Tablet (Portrait) */
         @media screen and (min-width: 601px) and (max-width: 1024px) {
-            /* Best for iPads and tablets */
-              #pageTitle {
+            #pageTitle {
                 font-size: 28px;
             }
         }
 
-        /* Desktop */
         @media screen and (min-width: 1025px) {
-            /* Best for laptops and monitors */
-              #pageTitle {
+            #pageTitle {
                 font-size: 30px;
             }
         }
-
-   
     </style>
 </head>
 
@@ -437,6 +428,7 @@
     <script>
         let pinTitle = "", fullDescription = "", isExpanded = false;
         let globalAdCatalog = [];
+        let adsMasterActive = true; // Global Master Toggle
         const COOKIE_NAME = 'affirzone_seen_ads';
 
         // --- COOKIE HELPER FUNCTIONS ---
@@ -473,19 +465,21 @@
             document.getElementById('contentCard').style.display = 'none';
         }
 
-        // Selection Logic using COOKIE STORAGE
+        // Selection Logic respecting Active states
         function getUnseenAd(targetType, targetFile) {
-            if (globalAdCatalog.length === 0) return "";
+            // Master Toggle Check
+            if (!adsMasterActive || globalAdCatalog.length === 0) return "";
 
             let seen = getCookie(COOKIE_NAME) || [];
 
-            // 1. Prioritize ads specific to this title
-            let titleAds = globalAdCatalog.filter(ad =>
+            // 1. Filter Pool for matching targets AND individual active status
+            const activeCatalog = globalAdCatalog.filter(ad => ad.adsActive !== false);
+
+            let titleAds = activeCatalog.filter(ad =>
                 ad["target-title"] && Array.isArray(ad["target-title"]) && ad["target-title"].includes(targetFile)
             );
 
-            // 2. Fallback to ads matching this content type
-            let typeAds = globalAdCatalog.filter(ad =>
+            let typeAds = activeCatalog.filter(ad =>
                 ad["target-type"] && Array.isArray(ad["target-type"]) && ad["target-type"].includes(targetType)
             );
 
@@ -498,7 +492,7 @@
             if (unseenPool.length === 0 && pool.length > 0) {
                 // Reset cookie tracking for this relevant pool if all were seen
                 seen = seen.filter(id => !pool.find(a => a.id === id));
-                setCookie(COOKIE_NAME, seen, 30); // Persist for 30 days
+                setCookie(COOKIE_NAME, seen, 30);
                 unseenPool = pool;
             }
 
@@ -506,7 +500,7 @@
 
             const selected = unseenPool[Math.floor(Math.random() * unseenPool.length)];
             seen.push(selected.id);
-            setCookie(COOKIE_NAME, seen, 30); // Save the updated seen list to cookies
+            setCookie(COOKIE_NAME, seen, 30);
 
             return `<div class="ad-recommendation">${selected.html}</div>`;
         }
@@ -518,15 +512,18 @@
             const queryTitle = rawTitle.trim().toLowerCase();
 
             try {
-                // Fetch product list (Ads)
+                // Fetch product list (New Object Format)
                 const adsRes = await fetch('data/products/list.json');
-                globalAdCatalog = await adsRes.json();
+                const adsData = await adsRes.json();
+                
+                // Set Master Toggle and Catalog
+                adsMasterActive = adsData.adsActive !== undefined ? adsData.adsActive : true;
+                globalAdCatalog = adsData.products || [];
 
                 // Fetch topic registry
                 const res = await fetch('data/topics/list.json');
                 const registry = await res.json();
 
-                // Find meta data
                 const meta = registry.find(item =>
                     (item.title && item.title.toLowerCase().trim() === queryTitle) ||
                     (item.query && item.query.toLowerCase().trim() === queryTitle)
@@ -546,7 +543,6 @@
                 const renderArea = document.getElementById('renderArea');
                 let html = "";
 
-                // Normalize content type for ad matching
                 const contentType = meta.type || 'list';
                 const normalizedType = (contentType === 'list') ? 'prompt-list' : (contentType === 'combo' ? 'combo-list' : contentType);
                 const currentFile = meta.file;
@@ -555,9 +551,13 @@
                     html += `<ul class="prompt-list">`;
                     data.items.forEach((text, i) => {
                         html += `<li class="prompt-item"><span class="prompt-number">${i + 1}.</span><p class="journal-text">${text}</p></li>`;
-                        // Inject ad after 5th item
+                        
+                        // Only break the list if an ad is actually going to be rendered
                         if (i === 4) {
-                            html += `</ul>${getUnseenAd(normalizedType, currentFile)}<ul class="prompt-list">`;
+                            const adHtml = getUnseenAd(normalizedType, currentFile);
+                            if (adHtml) {
+                                html += `</ul>${adHtml}<ul class="prompt-list">`;
+                            }
                         }
                     });
                     html += `</ul>`;
@@ -565,9 +565,10 @@
                     html += `<div class="combo-list">`;
                     data.items.forEach((item, i) => {
                         html += `<div class="combo-item"><p class="affirmation-text">"${item.affirmation}"</p><p class="prompt-text">${item.prompt}</p></div>`;
-                        // Inject ad after 3rd combo card (index 2)
-                        // This is the optimal placement for UX grouping and Ad Conversion
-                        if (i === 2) html += getUnseenAd(normalizedType, currentFile);
+                        if (i === 2) {
+                            const adHtml = getUnseenAd(normalizedType, currentFile);
+                            if (adHtml) html += adHtml;
+                        }
                     });
                     html += `</div>`;
                 }
