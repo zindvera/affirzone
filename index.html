@@ -4,7 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Affirzone | Discovery</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="media/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32x32.png">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="media/favicon-180x180.png">
+    <title>Affirzone | Affirmation & Journal Prompts For Positive Mindset</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -38,6 +42,45 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #ffffff;
+            border-top: 1px solid #eeeeee;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #666666;
+            /* var(--footer-text) */
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00a896;
+            /* var(--brand-color) */
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #999999;
+        }
+
+        @media (max-width: 600px) {
+            .footer-links a {
+                display: inline-block;
+                margin: 5px 10px;
+            }
         }
 
         header {
@@ -460,11 +503,13 @@
 
         @media (max-width: 600px) {
             .container {
-                padding: 10px 0 60px; /* Reduced top padding for more content visibility */
+                padding: 10px 0 60px;
+                /* Reduced top padding for more content visibility */
             }
 
             .chat-flow {
-                gap: 50px; /* Tighter gap on mobile */
+                gap: 50px;
+                /* Tighter gap on mobile */
                 padding: 0;
             }
 
@@ -481,19 +526,22 @@
             }
 
             .mood-pill {
-                padding: 10px 16px; /* Slightly thinner pills */
+                padding: 10px 16px;
+                /* Slightly thinner pills */
                 font-size: 0.85rem;
             }
 
             /* Sticky Header Phone Compression */
             .global-sticky-header {
-                padding: 4px 0 0; /* Minimal top padding */
+                padding: 4px 0 0;
+                /* Minimal top padding */
             }
 
             .sticky-content-row {
                 justify-content: space-between;
                 gap: 4px;
-                padding: 0 12px 2px; /* Tighter padding */
+                padding: 0 12px 2px;
+                /* Tighter padding */
             }
 
             .sticky-logo {
@@ -508,7 +556,8 @@
             }
 
             .search-area-box input {
-                height: 40px; /* Slimmer search bar in sticky mode */
+                height: 40px;
+                /* Slimmer search bar in sticky mode */
                 padding: 0 40px 0 15px;
             }
 
@@ -519,13 +568,16 @@
             .mood-slider-container {
                 order: 3;
                 width: 100%;
-                flex: 0 0 100%; 
-                margin-top: 2px; /* Reduced gap between top row and tags */
-                padding-bottom: 2px; /* Minimal bottom padding */
+                flex: 0 0 100%;
+                margin-top: 2px;
+                /* Reduced gap between top row and tags */
+                padding-bottom: 2px;
+                /* Minimal bottom padding */
             }
 
             .mood-tags {
-                padding: 4px 10px; /* Tighter vertical padding for tags */
+                padding: 4px 10px;
+                /* Tighter vertical padding for tags */
             }
         }
     </style>
@@ -623,6 +675,18 @@
         <main class="chat-flow" id="responseFlow"></main>
         <div class="pagination-container" id="paginationControls"></div>
     </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms & Conditions</a>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Affirzone. Made for mindful thinkers.
+        </div>
+    </footer>
 
     <script>
         const CATEGORY_COOKIE = "affirzone_category";

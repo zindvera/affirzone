@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search | Affirzone</title>
+
+    <title>Affirzone | Search</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="media/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32x32.png">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="media/favicon-180x180.png">
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
         :root {
-            --bg-base: #f7f7f7; 
+            --bg-base: #f7f7f7;
             --glass-white: #ffffff;
             --text-main: #111111;
-            --text-sub: #4b4b4b; 
+            --text-sub: #4b4b4b;
             --text-muted: #888888;
             --brand-blue: #2563eb;
             --radius-card: 22px;
@@ -20,55 +28,109 @@
             --radius-container: 32px;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-base);
             background-image: radial-gradient(circle at 0 120px, #e3f2fd 0%, transparent 20%),
-                              radial-gradient(circle at 100% 100%, #fdeaea 0%, transparent 15%);
+                radial-gradient(circle at 100% 100%, #fdeaea 0%, transparent 15%);
             background-attachment: fixed;
             color: var(--text-main);
-            margin: 0; padding: 0;
+            margin: 0;
+            padding: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #ffffff;
+            border-top: 1px solid #eeeeee;
+            margin-top: 2in;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #666666;
+            /* var(--footer-text) */
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00a896;
+            /* var(--brand-color) */
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #999999;
+        }
+
+        @media (max-width: 600px) {
+            .footer-links a {
+                display: inline-block;
+                margin: 5px 10px;
+            }
+        }
+
         /* --- GLOBAL STICKY HEADER --- */
         .global-sticky-header {
-            position: fixed; top: 0; left: 0; right: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(15px);
             z-index: 2000;
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
-            display: none; 
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            display: none;
             padding: 10px 0;
             animation: slideDown 0.3s ease;
         }
 
         @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
         }
 
         .sticky-content-row {
-            display: flex; 
+            display: flex;
             align-items: center;
             justify-content: space-between;
-            max-width: 1400px; 
-            margin: 0 auto; 
-            width: 100%; 
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
             padding: 0 20px;
         }
 
-        .sticky-logo img { height: 24px; width: auto; }
+        .sticky-logo img {
+            height: 24px;
+            width: auto;
+        }
 
         .sticky-search-box {
             position: relative;
-            width: 240px; 
+            width: 240px;
             cursor: pointer;
             flex-shrink: 0;
         }
@@ -78,7 +140,7 @@
             height: 48px;
             padding: 0 50px 0 20px;
             border-radius: 14px;
-            border: 1px solid rgba(0,0,0,0.08);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             background: #fff;
             font-size: 0.95rem;
             color: var(--text-main);
@@ -88,21 +150,25 @@
 
         .sticky-search-box .search-btn-icon {
             position: absolute;
-            right: 0; top: 0; bottom: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
             width: 50px;
             background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%);
             color: #2563eb;
             border: none;
             border-radius: 0 14px 14px 0;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1rem;
         }
 
-        .container { 
-            width: 100%; 
-            max-width: 850px; 
-            margin: 0 auto; 
-            padding: 80px 12px 100px; 
+        .container {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 80px 12px 100px;
             display: flex;
             flex-direction: column;
         }
@@ -113,6 +179,7 @@
             width: 100%;
             margin-bottom: 40px;
         }
+
         .big-logo img {
             height: 60px;
             width: auto;
@@ -143,9 +210,9 @@
             width: 100%;
             padding: 22px 85px 22px 30px;
             border-radius: var(--radius-input);
-            border: 1px solid rgba(0,0,0,0.08);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             background: #fff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
             font-size: 1.15rem;
             outline: none;
             color: var(--text-main);
@@ -153,7 +220,9 @@
 
         .search-btn {
             position: absolute;
-            right: 0; top: 0; bottom: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
             width: 70px;
             background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%);
             color: #2563eb;
@@ -167,7 +236,7 @@
         }
 
         .list-header {
-            display: none; 
+            display: none;
             align-items: center;
             gap: 8px;
             padding: 0 12px;
@@ -185,11 +254,11 @@
         }
 
         .thread-container {
-            padding: 40px 30px 0; 
-            border-radius: var(--radius-container); 
-            display: flex; 
-            flex-direction: column; 
-            gap: 30px; 
+            padding: 40px 30px 0;
+            border-radius: var(--radius-container);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
             border: 1px solid rgba(0, 0, 0, 0.05);
             box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
             text-decoration: none;
@@ -198,8 +267,13 @@
             overflow: hidden;
         }
 
-        .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0 0 5px 0; }
-        
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0 0 5px 0;
+        }
+
         /* HEADING PROMPT STYLES */
         .prompt-subheading {
             font-size: 1rem;
@@ -218,10 +292,35 @@
             padding-top: 6px;
         }
 
-        .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 45px; } 
-        .prompt-item { display: flex; gap: 14px; align-items: flex-start; }
-        .prompt-number { font-size: 1.1rem; font-weight: 800; color: #b0b0b0; min-width: 20px; }
-        .item-text { font-size: 1.25rem; line-height: 1.6; color: var(--text-main); font-weight: 500; margin: 0; }
+        .prompt-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 45px;
+        }
+
+        .prompt-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .prompt-number {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #b0b0b0;
+            min-width: 20px;
+        }
+
+        .item-text {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            font-weight: 500;
+            margin: 0;
+        }
 
         .combo-item {
             background-color: #fff;
@@ -230,78 +329,104 @@
             border: 1px solid rgba(0, 0, 0, 0.05);
             margin-bottom: 15px;
         }
-        .affirmation-text { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; line-height: 1.4; }
-        .combo-prompt { font-size: 1.1rem; color: var(--text-sub); line-height: 1.6; padding-top: 15px; border-top: 1px solid #f2f2f2; margin: 0; }
+
+        .affirmation-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .combo-prompt {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            padding-top: 15px;
+            border-top: 1px solid #f2f2f2;
+            margin: 0;
+        }
 
         .prompt-blur {
-            position: relative; max-height: 110px; overflow: hidden;
+            position: relative;
+            max-height: 110px;
+            overflow: hidden;
             mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
         }
 
-        .footer-fade-overlay {
-            margin-top: -60px; padding: 80px 30px 25px; position: relative; z-index: 2;
-            background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.6) 30%, white 65%, white 100%);
-            border-radius: 0 0 var(--radius-container) var(--radius-container);
-            pointer-events: none; width: calc(100% + 60px); margin-left: -30px; 
-        }
 
         .gradient-link {
-            font-weight: 800; text-transform: uppercase;
+            font-weight: 800;
+            text-transform: uppercase;
             background: linear-gradient(90deg, #2563eb 70%, #e11d48 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-size: 0.9rem;
         }
 
-        footer { padding: 60px 20px; border-top: 1px solid #eee; margin-top: auto; text-align: center; }
-        .footer-links { display: flex; justify-content: center; gap: 20px; list-style: none; padding: 0; }
-        .footer-links a { color: #888; text-decoration: none; font-size: 0.9rem; }
+
 
         @media (max-width: 600px) {
-            .thread-container { padding: 35px 20px 0; border-radius: 0; border-left: none; border-right: none; }
+            .thread-container {
+                padding: 35px 20px 0;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div id="globalStickyHeader" class="global-sticky-header">
-      <div class="sticky-content-row">
-        <a href="index.html" class="sticky-logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Logo" /></a>
-        <div class="sticky-search-box" onclick="scrollToMainSearch()">
-            <input type="text" id="stickySearchInput" placeholder="Search..." readonly />
-            <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <div class="sticky-content-row">
+            <a href="index.html" class="sticky-logo"><img src="https://affirzone.store/media/Affirzone-logo.png"
+                    alt="Logo" /></a>
+            <div class="sticky-search-box" onclick="scrollToMainSearch()">
+                <input type="text" id="stickySearchInput" placeholder="Search..." readonly />
+                <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+            </div>
         </div>
-      </div>
     </div>
 
     <div class="container">
-        <div class="logo-wrapper"><a href="index.html" class="big-logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Logo"></a></div>
-        <h1 class="search-title">Search Affirmation &amp; Journal Prompt</h1>
+        <div class="logo-wrapper"><a href="index.html" class="big-logo"><img
+                    src="https://affirzone.store/media/Affirzone-logo.png" alt="Logo"></a></div>
+        <h1 class="search-title">Search Affirmation &amp; Journal Prompts</h1>
 
         <div class="search-wrapper" id="mainSearchWrapper">
             <div class="search-input-area">
-                <input type="text" id="searchInput" placeholder="Enter keywords..." oninput="syncStickyInput(this)" onkeydown="if(event.key==='Enter') handleSearch()" autocomplete="off">
-                <button class="search-btn" onclick="handleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <input type="text" id="searchInput" placeholder="Enter keywords..." oninput="syncStickyInput(this)"
+                    onkeydown="if(event.key==='Enter') handleSearch()" autocomplete="off">
+                <button class="search-btn" onclick="handleSearch()"><i
+                        class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
 
-        <div class="list-header" id="resultsHeader"><span>Search Result</span> <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="list-header" id="resultsHeader"><span>Search Result</span> <i class="fa-solid fa-chevron-down"></i>
+        </div>
         <main class="results-container" id="resultsList"></main>
     </div>
 
     <footer>
-        <ul class="footer-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="#">Privacy</a></li>
-        </ul>
-        <div style="color: #bbb; font-size: 0.8rem;">&copy; 2024 Affirzone.</div>
+        <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms & Conditions</a>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Affirzone. Made for mindful thinkers.
+        </div>
     </footer>
 
     <script>
         let registry = [];
 
         function syncStickyInput(source) { document.getElementById('stickySearchInput').value = source.value; }
-        function scrollToMainSearch() { 
+        function scrollToMainSearch() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setTimeout(() => document.getElementById('searchInput').focus(), 600);
         }
@@ -319,22 +444,22 @@
             } catch (err) { console.error("Registry load failed", err); }
         }
 
-     
+
         async function handleSearch() {
             const query = document.getElementById('searchInput').value.trim();
             const list = document.getElementById('resultsList');
             const header = document.getElementById('resultsHeader');
-            
-            if (!query) { 
-                list.innerHTML = ""; 
-                header.style.display = "none"; 
-                return; 
+
+            if (!query) {
+                list.innerHTML = "";
+                header.style.display = "none";
+                return;
             }
 
             const q = query.toLowerCase();
             const ignoreWords = ["for", "the", "and", "with", "from", "your", "this", "that", "how", "what", "where", "into"];
             const utilityWords = ["prompt", "prompts", "affirmation", "affirmations"];
-            
+
             const searchWords = q.split(/\s+/).filter(word => word.length > 2 && !ignoreWords.includes(word));
 
             const scoredResults = registry.map(item => {
@@ -342,7 +467,7 @@
                 const queryText = (item.query || "").toLowerCase();
                 // Combine tags into a single string for searching
                 const tagsText = (item.tags && Array.isArray(item.tags)) ? item.tags.join(" ").toLowerCase() : "";
-                
+
                 let score = 0;
 
                 // 1. Exact Phrase Match in Title (Highest Priority)
@@ -369,17 +494,17 @@
 
                 return { item, score };
             })
-            .filter(res => res.score > 0)
-            .sort((a, b) => b.score - a.score);
+                .filter(res => res.score > 0)
+                .sort((a, b) => b.score - a.score);
 
             header.style.display = "flex";
-            
+
             if (scoredResults.length === 0) {
                 list.innerHTML = `<div style="text-align:center; padding: 40px; color: #888;">No results found for "${query}"</div>`;
                 return;
             }
 
-            list.innerHTML = ""; 
+            list.innerHTML = "";
 
             // Load top 7 matches by relevance
             for (const res of scoredResults.slice(0, 7)) {
@@ -389,7 +514,7 @@
                 try {
                     const promptRes = await fetch(`data/prompts/${item.file}`);
                     const promptData = await promptRes.json();
-                    
+
                     const displayTitle = item.title || promptData.title || item.query || item.id || "Mindful Session";
                     const cardBg = item.color || "#f2f2f2";
                     const itemsArr = promptData.items || [];
@@ -416,7 +541,7 @@
                     } else {
                         contentHtml += `<ul class="prompt-list">${itemsArr.slice(0, 4).map((p, idx) => `
                             <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
-                                <span class="prompt-number">${idx+1}.</span><p class="item-text">${p}</p>
+                                <span class="prompt-number">${idx + 1}.</span><p class="item-text">${p}</p>
                             </li>`).join('')}</ul>`;
                     }
 
@@ -426,14 +551,14 @@
                                 <span class="gradient-link">Show More <i class="fa-solid fa-arrow-right"></i></span>
                             </div>
                         </div>`;
-                    
+
                     card.innerHTML = contentHtml;
                     list.appendChild(card);
                 } catch (err) { console.warn(err); }
             }
         }
 
-        
+
         window.addEventListener('scroll', () => {
             const stickyHeader = document.getElementById('globalStickyHeader');
             const mainSearchWrapper = document.getElementById('mainSearchWrapper');
@@ -445,4 +570,5 @@
         window.onload = loadRegistry;
     </script>
 </body>
+
 </html>

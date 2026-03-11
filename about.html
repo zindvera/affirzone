@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="media/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32x32.png">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="media/favicon-180x180.png">
+    <title>About Us | Affirzone</title>
+    <style>
+        :root {
+            --brand-color: #00a896;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --footer-text: #666;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            background: #fff;
+            padding: 15px 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav img {
+            height: 40px;
+        }
+
+        /* Main Content */
+        .container {
+            flex: 1;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1a1a1a;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: var(--brand-color);
+            margin-top: 30px;
+            border-left: 4px solid var(--brand-color);
+            padding-left: 15px;
+        }
+
+        .how-to-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .how-to-list li {
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .how-to-list strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #1a1a1a;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #fff;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--footer-text);
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--brand-color);
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #999;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 25px;
+            }
+
+            .footer-links a {
+                display: inline-block;
+                margin: 5px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html">
+            <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo">
+        </a>
+    </nav>
+
+    <div class="container">
+        <h1>About Us</h1>
+        <p style="text-align: center; font-style: italic;"><strong>Welcome to Affirzone</strong> — Your dedicated space
+            to think, write, and grow.</p>
+
+        <h2>How to Use Affirzone</h2>
+        <ul class="how-to-list">
+            <li>
+                <strong>For Digital & Goodnotes Users</strong>
+                Simply copy our prompts and paste them directly into your digital planning apps like Goodnotes or
+                Notability, or use them as a guide for your tablet-based entries.
+            </li>
+            <li>
+                <strong>For Physical Journalers</strong>
+                Keep our site open on your phone or tablet while you hand-write your reflections into your favorite
+                paper notebook.
+            </li>
+            <li>
+                <strong>For Writers Needing Inspiration</strong>
+                Whenever you feel "stuck" or face a blank page, browse our curated categories to find a fresh spark or a
+                new perspective to start your writing.
+            </li>
+            <li>
+                <strong>For Mental Wellbeing</strong>
+               Feel better with a quick affirmation to keep you positive. Reflect with our journal prompts or ask yourself a question to help clear your mind and relieve stress when needed.
+            </li>
+        </ul>
+
+        <h2>Our Mission</h2>
+        <p>To provide simple, powerful affirmations and journal prompts that help you build a consistent habit of
+            self-reflection and intentional writing.</p>
+
+        <h2>The Story</h2>
+        <p>We started Affirzone because we believe the right words can change how you think. By giving you simple questions, we want to help you feel clear, confident, and calm.</p>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms & Conditions</a>
+
+        </div>
+        <div class="copyright">
+            &copy; 2026 Affirzone. Made for mindful thinkers.
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discovery | Affirzone</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="media/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32x32.png">
 
+    <link rel="apple-touch-icon" sizes="180x180" href="media/favicon-180x180.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -42,6 +45,46 @@
             display: flex;
             flex-direction: column;
         }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #ffffff;
+            border-top: 1px solid #eeeeee;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #666666;
+            /* var(--footer-text) */
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00a896;
+            /* var(--brand-color) */
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #999999;
+        }
+
+        @media (max-width: 600px) {
+            .footer-links a {
+                display: inline-block;
+                margin: 5px 10px;
+            }
+        }
+
 
         header {
             position: sticky;
@@ -311,7 +354,7 @@
             color: var(--text-main);
             font-weight: 600;
             margin: 0;
-            padding-top:4px;
+            padding-top: 4px;
         }
 
         /* --- REFINED AD RECOMMENDATION BOX --- */
@@ -370,7 +413,8 @@
                 padding: 0 12px;
             }
 
-            .prompt-list, .heading-list-container {
+            .prompt-list,
+            .heading-list-container {
                 padding: 0 14px;
             }
 
@@ -443,28 +487,23 @@
         </main>
     </div>
 
+
     <footer>
-        <div class="footer-inner"
-            style="max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 30px; padding: 60px 20px;">
-            <ul style="display: flex; gap: 25px; list-style: none; padding: 0; margin: 0;">
-                <li><a href="index.html"
-                        style="text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Home</a>
-                </li>
-                <li><a href="search.html"
-                        style="text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Topics</a>
-                </li>
-                <li><a href="#"
-                        style="text-decoration: none; color: var(--text-muted); font-size: 0.85rem; font-weight: 600;">Privacy</a>
-                </li>
-            </ul>
-            <div style="font-size: 0.8rem; color: #bbb;">&copy; 2024 Affirzone. Crafted for mindful discovery.</div>
+        <div class="footer-links">
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms & Conditions</a>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Affirzone. Made for mindful thinkers.
         </div>
     </footer>
 
     <script>
         let pinTitle = "", fullDescription = "", isExpanded = false;
         let globalAdCatalog = [];
-        let adsMasterActive = true; 
+        let adsMasterActive = true;
         const COOKIE_NAME = 'affirzone_seen_ads';
 
         function setCookie(name, value, days) {
@@ -576,7 +615,7 @@
                         }
                     });
                     html += `</div>`;
-                } 
+                }
                 // --- EXISTING TEMPLATE: PROMPT-LIST ---
                 else if (normalizedType.includes('list') && !normalizedType.includes('combo')) {
                     html += `<ul class="prompt-list">`;
@@ -590,7 +629,7 @@
                         }
                     });
                     html += `</ul>`;
-                } 
+                }
                 // --- EXISTING TEMPLATE: COMBO-LIST ---
                 else if (normalizedType.includes('combo')) {
                     html += `<div class="combo-list">`;
