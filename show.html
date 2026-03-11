@@ -278,6 +278,42 @@
             border-top: 1px solid #f8f8f8;
         }
 
+        /* --- HEADING-PROMPT-LIST STYLES --- */
+        .heading-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .heading-prompt-item {
+            background-color: #fff;
+            padding: 30px 25px;
+            border-radius: var(--radius-card);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            margin: 0 10px;
+        }
+
+        .prompt-subheading {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: rgb(110, 110, 110);
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        .heading-prompt-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            font-weight: 600;
+            margin: 0;
+            padding-top:4px;
+        }
+
         /* --- REFINED AD RECOMMENDATION BOX --- */
         .ad-recommendation {
             position: relative;
@@ -334,7 +370,7 @@
                 padding: 0 12px;
             }
 
-            .prompt-list {
+            .prompt-list, .heading-list-container {
                 padding: 0 14px;
             }
 
@@ -428,10 +464,9 @@
     <script>
         let pinTitle = "", fullDescription = "", isExpanded = false;
         let globalAdCatalog = [];
-        let adsMasterActive = true; // Global Master Toggle
+        let adsMasterActive = true; 
         const COOKIE_NAME = 'affirzone_seen_ads';
 
-        // --- COOKIE HELPER FUNCTIONS ---
         function setCookie(name, value, days) {
             let expires = "";
             if (days) {
@@ -465,43 +500,27 @@
             document.getElementById('contentCard').style.display = 'none';
         }
 
-        // Selection Logic respecting Active states
         function getUnseenAd(targetType, targetFile) {
-            // Master Toggle Check
             if (!adsMasterActive || globalAdCatalog.length === 0) return "";
-
             let seen = getCookie(COOKIE_NAME) || [];
-
-            // 1. Filter Pool for matching targets AND individual active status
             const activeCatalog = globalAdCatalog.filter(ad => ad.adsActive !== false);
-
             let titleAds = activeCatalog.filter(ad =>
                 ad["target-title"] && Array.isArray(ad["target-title"]) && ad["target-title"].includes(targetFile)
             );
-
             let typeAds = activeCatalog.filter(ad =>
                 ad["target-type"] && Array.isArray(ad["target-type"]) && ad["target-type"].includes(targetType)
             );
-
-            // Merge pools, prioritizing specific title ads
             let pool = titleAds.length > 0 ? titleAds : typeAds;
-
-            // Filter pool for rotation based on cookies
             let unseenPool = pool.filter(ad => !seen.includes(ad.id));
-
             if (unseenPool.length === 0 && pool.length > 0) {
-                // Reset cookie tracking for this relevant pool if all were seen
                 seen = seen.filter(id => !pool.find(a => a.id === id));
                 setCookie(COOKIE_NAME, seen, 30);
                 unseenPool = pool;
             }
-
             if (unseenPool.length === 0) return "";
-
             const selected = unseenPool[Math.floor(Math.random() * unseenPool.length)];
             seen.push(selected.id);
             setCookie(COOKIE_NAME, seen, 30);
-
             return `<div class="ad-recommendation">${selected.html}</div>`;
         }
 
@@ -512,15 +531,11 @@
             const queryTitle = rawTitle.trim().toLowerCase();
 
             try {
-                // Fetch product list (New Object Format)
                 const adsRes = await fetch('data/products/list.json');
                 const adsData = await adsRes.json();
-                
-                // Set Master Toggle and Catalog
                 adsMasterActive = adsData.adsActive !== undefined ? adsData.adsActive : true;
                 globalAdCatalog = adsData.products || [];
 
-                // Fetch topic registry
                 const res = await fetch('data/topics/list.json');
                 const registry = await res.json();
 
@@ -542,17 +557,31 @@
 
                 const renderArea = document.getElementById('renderArea');
                 let html = "";
-
                 const contentType = meta.type || 'list';
                 const normalizedType = (contentType === 'list') ? 'prompt-list' : (contentType === 'combo' ? 'combo-list' : contentType);
                 const currentFile = meta.file;
 
-                if (normalizedType.includes('list') && !normalizedType.includes('combo')) {
+                // --- NEW TEMPLATE: HEADING-PROMPT-LIST ---
+                if (normalizedType === 'heading-prompt-list') {
+                    html += `<div class="heading-list-container">`;
+                    data.items.forEach((item, i) => {
+                        html += `
+                            <div class="heading-prompt-item">
+                                <h3 class="prompt-subheading">${item.heading}</h3>
+                                <p class="heading-prompt-text">${item.prompt}</p>
+                            </div>`;
+                        if (i === 4) {
+                            const adHtml = getUnseenAd(normalizedType, currentFile);
+                            if (adHtml) html += adHtml;
+                        }
+                    });
+                    html += `</div>`;
+                } 
+                // --- EXISTING TEMPLATE: PROMPT-LIST ---
+                else if (normalizedType.includes('list') && !normalizedType.includes('combo')) {
                     html += `<ul class="prompt-list">`;
                     data.items.forEach((text, i) => {
                         html += `<li class="prompt-item"><span class="prompt-number">${i + 1}.</span><p class="journal-text">${text}</p></li>`;
-                        
-                        // Only break the list if an ad is actually going to be rendered
                         if (i === 4) {
                             const adHtml = getUnseenAd(normalizedType, currentFile);
                             if (adHtml) {
@@ -561,7 +590,9 @@
                         }
                     });
                     html += `</ul>`;
-                } else if (normalizedType.includes('combo')) {
+                } 
+                // --- EXISTING TEMPLATE: COMBO-LIST ---
+                else if (normalizedType.includes('combo')) {
                     html += `<div class="combo-list">`;
                     data.items.forEach((item, i) => {
                         html += `<div class="combo-item"><p class="affirmation-text">"${item.affirmation}"</p><p class="prompt-text">${item.prompt}</p></div>`;

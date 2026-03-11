@@ -1,114 +1,136 @@
 [
-{
-"title": "12 Healing Journal Prompts for Emotional Recovery",
-"file": "12+Healing+Journal+Prompts+for+Emotional+Recovery.json",
-"type": "prompt-list",
-"tags": [
-"Healing",
-"Inner Peace"
-],
-"pinterest_img": "",
-"color": "#fff5f5"
-},
-{
-"title": "10 Manifestation Journal Prompts for Goal Setting & Alignment",
-"file": "10+Manifestation+Journal+Prompts+for+Goal+Setting+&+Alignment.json",
-"type": "prompt-list",
-"tags": [
-"Manifestation",
-"Self Discovery"
-],
-"pinterest_img": "",
-"color": "#f8f2ff"
-},
-{
-"title": "10 Calming Journal Prompts for Managing Daily Anxiety",
-"file": "10+Calming+Journal+Prompts+for+Managing+Daily+Anxiety.json",
-"type": "prompt-list",
-"tags": [
-"Anxiety",
-"Inner Peace",
-"Mindfulness"
-],
-"pinterest_img": "",
-"color": "#f2fff5"
-},
-{
-"title": "10 Strategic Journal Prompts for Peak Productivity",
-"file": "10+Strategic+Journal+Prompts+for+Peak+Productivity.json",
-"type": "prompt-list",
-"tags": [
-"Productivity",
-"Career Growth",
-"Motivation"
-],
-"pinterest_img": "",
-"color": "#fff9ec"
-},
-{
-"title": "12 Compassionate Journal Prompts for Navigating Grief",
-"file": "12+Compassionate+Journal+Prompts+for+Navigating+Grief.json",
-"type": "prompt-list",
-"tags": [
-"Grief",
-"Inner Peace",
-"Self Discovery"
-],
-"pinterest_img": "",
-"color": "#f4f7fb"
-},
-{
-"title": "12 Thoughtful Bible Journal Prompts for Spiritual Reflection",
-"file": "12+Thoughtful+Bible+Journal+Prompts+for+Spiritual+Reflection.json",
-"type": "prompt-list",
-"tags": [
-"Faith",
-"Inner Peace",
-"Mindfulness"
-],
-"pinterest_img": "",
-"color": "#fdfdf2"
-},
-{
-"title": "10 Deep Prayer Journal Prompts for Spiritual Connection",
-"file": "10+Deep+Prayer+Journal+Prompts+for+Spiritual+Connection.json",
-"type": "prompt-list",
-"tags": [
-"Faith",
-"Inner Peace"
-],
-"pinterest_img": "",
-"color": "#fffdf0"
-},
-{
-"title": "15 April Journal Prompts for Work Focus and Motivation",
-"file": "15+April+Journal+Prompts+for+Work+Focus+and+Motivation.json",
-"type": "prompt-list",
-"tags": [
-"Career",
-"Productivity"
-],
-"pinterest_img": "",
-"color": "#f0fdf9"
-},
-{
-"title": "12 Creative Art Journal Prompts to Express Your Inner Artist",
-"file": "12+Creative+Art+Journal+Prompts+to+Express+Your+Inner+Artist.json",
-"type": "prompt-list",
-"tags": [
-"Art"
-],
-"pinterest_img": "",
-"color": "#f0faff"
-},
-{
-"title": "10 Meaningful Journal Prompts for Couples to Strengthen Their Bond",
-"file": "10+Meaningful+Journal+Prompts+for+Couples+to+Strengthen+Their+Bond.json",
-"type": "prompt-list",
-"tags": [
-"Relationships"
-],
-"pinterest_img": "",
-"color": "#fff5f8"
-}
+  {
+    "title": "10 Journal Prompts to Make You Stop Caring What Others Think",
+    "file": "10+Journal+Prompts+to+Make+You+Stop+Caring+What+Others+Think.json",
+    "type": "prompt-list",
+    "tags": [
+      "Anxiety"
+    ],
+    "pinterest_img": "",
+    "color": "#f3eef3"
+  },
+  {
+    "title": "12 Healing Journal Prompts for Emotional Recovery",
+    "file": "12+Healing+Journal+Prompts+for+Emotional+Recovery.json",
+    "type": "prompt-list",
+    "tags": [
+      "Healing",
+      "Inner Peace"
+    ],
+    "pinterest_img": "",
+    "color": "#fff5f5"
+  },
+  {
+    "title": "10 Manifestation Journal Prompts for Goal Setting & Alignment",
+    "file": "10+Manifestation+Journal+Prompts+for+Goal+Setting+&+Alignment.json",
+    "type": "prompt-list",
+    "tags": [
+      "Manifestation",
+      "Self Discovery"
+    ],
+    "pinterest_img": "",
+    "color": "#f8f2ff"
+  },
+  {
+    "title": "10 Calming Journal Prompts for Managing Daily Anxiety",
+    "file": "10+Calming+Journal+Prompts+for+Managing+Daily+Anxiety.json",
+    "type": "prompt-list",
+    "tags": [
+      "Anxiety",
+      "Inner Peace",
+      "Mindfulness"
+    ],
+    "pinterest_img": "",
+    "color": "#f2fff5"
+  },
+  {
+    "title": "10 Strategic Journal Prompts for Peak Productivity",
+    "file": "10+Strategic+Journal+Prompts+for+Peak+Productivity.json",
+    "type": "prompt-list",
+    "tags": [
+      "Productivity",
+      "Career Growth",
+      "Motivation"
+    ],
+    "pinterest_img": "",
+    "color": "#fff9ec"
+  },
+  {
+    "title": "12 Compassionate Journal Prompts for Navigating Grief",
+    "file": "12+Compassionate+Journal+Prompts+for+Navigating+Grief.json",
+    "type": "prompt-list",
+    "tags": [
+      "Grief",
+      "Inner Peace",
+      "Self Discovery"
+    ],
+    "pinterest_img": "",
+    "color": "#f4f7fb"
+  },
+  {
+    "title": "15 Journal Prompts for Long Career Gap Since Graduation: Remove Shame & Build Positivity",
+    "file": "15+Journal+Prompts+for+Long+Career+Gap+Since+Graduation.json",
+    "type": "heading-prompt-list",
+    "tags": [
+      "Career",
+      "Self Confidence",
+      "Anxiety"
+    ],
+    "pinterest_img": "",
+    "color": "#f4f6f8"
+  },
+  {
+    "title": "April Month: 15 Journal Prompts for Work Focus and Motivation",
+    "file": "April+Month+15+Journal+Prompts+for+Work+Focus+and+Motivation.json",
+    "type": "prompt-list",
+    "tags": [
+      "Career",
+      "Productivity"
+    ],
+    "pinterest_img": "",
+    "color": "#f0fdf9"
+  },
+  {
+    "title": "12 Thoughtful Bible Journal Prompts for Spiritual Reflection",
+    "file": "12+Thoughtful+Bible+Journal+Prompts+for+Spiritual+Reflection.json",
+    "type": "prompt-list",
+    "tags": [
+      "Faith",
+      "Inner Peace",
+      "Mindfulness"
+    ],
+    "pinterest_img": "",
+    "color": "#fdfdf2"
+  },
+  {
+    "title": "10 Deep Prayer Journal Prompts for Spiritual Connection",
+    "file": "10+Deep+Prayer+Journal+Prompts+for+Spiritual+Connection.json",
+    "type": "prompt-list",
+    "tags": [
+      "Faith",
+      "Inner Peace"
+    ],
+    "pinterest_img": "",
+    "color": "#fffdf0"
+  },
+  {
+    "title": "12 Creative Art Journal Prompts to Express Your Inner Artist",
+    "file": "12+Creative+Art+Journal+Prompts+to+Express+Your+Inner+Artist.json",
+    "type": "prompt-list",
+    "tags": [
+      "Art"
+    ],
+    "pinterest_img": "",
+    "color": "#f0faff"
+  },
+  {
+    "title": "10 Meaningful Journal Prompts for Couples to Strengthen Their Bond",
+    "file": "10+Meaningful+Journal+Prompts+for+Couples+to+Strengthen+Their+Bond.json",
+    "type": "prompt-list",
+    "tags": [
+      "Relationships"
+    ],
+    "pinterest_img": "",
+    "color": "#fff5f8"
+  }
 ]

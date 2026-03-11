@@ -199,7 +199,26 @@
         }
 
         .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin: 0 0 5px 0; }
-        .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 30px; } 
+        
+        /* HEADING PROMPT STYLES */
+        .prompt-subheading {
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgb(110, 110, 110);
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        .heading-prompt-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            font-weight: 600;
+            margin: 0;
+            padding-top: 6px;
+        }
+
+        .prompt-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 45px; } 
         .prompt-item { display: flex; gap: 14px; align-items: flex-start; }
         .prompt-number { font-size: 1.1rem; font-weight: 800; color: #b0b0b0; min-width: 20px; }
         .item-text { font-size: 1.25rem; line-height: 1.6; color: var(--text-main); font-weight: 500; margin: 0; }
@@ -300,6 +319,7 @@
             } catch (err) { console.error("Registry load failed", err); }
         }
 
+     
         async function handleSearch() {
             const query = document.getElementById('searchInput').value.trim();
             const list = document.getElementById('resultsList');
@@ -315,35 +335,35 @@
             const ignoreWords = ["for", "the", "and", "with", "from", "your", "this", "that", "how", "what", "where", "into"];
             const utilityWords = ["prompt", "prompts", "affirmation", "affirmations"];
             
-            // Filter out short words and basic grammar words
             const searchWords = q.split(/\s+/).filter(word => word.length > 2 && !ignoreWords.includes(word));
 
-            /**
-             * Relevance Ranking Logic
-             * 1. Calculate a score for each item based on query overlap
-             * 2. Give high weight to unique topic words (career, clarity, growth)
-             * 3. Give low weight to generic terms (prompt, affirmation)
-             * 4. Sort results by total score
-             */
             const scoredResults = registry.map(item => {
-                const targetText = (item.title || item.query || item.id || "").toLowerCase();
+                const titleText = (item.title || "").toLowerCase();
+                const queryText = (item.query || "").toLowerCase();
+                // Combine tags into a single string for searching
+                const tagsText = (item.tags && Array.isArray(item.tags)) ? item.tags.join(" ").toLowerCase() : "";
+                
                 let score = 0;
 
-                // Exact phrase match (Highest Priority)
-                if (targetText.includes(q)) {
-                    score += 50;
-                }
+                // 1. Exact Phrase Match in Title (Highest Priority)
+                if (titleText.includes(q)) score += 60;
 
-                // Word-by-word density matching
+                // 2. Exact Phrase Match in Tags
+                if (tagsText.includes(q)) score += 40;
+
+                // 3. Word-by-word matching
                 searchWords.forEach(word => {
-                    if (targetText.includes(word)) {
-                        if (utilityWords.includes(word)) {
-                            // Low weight for generic functional terms
-                            score += 5;
-                        } else {
-                            // High weight for specific content keywords
-                            score += 25;
-                        }
+                    // Match in Title
+                    if (titleText.includes(word)) {
+                        score += utilityWords.includes(word) ? 5 : 25;
+                    }
+                    // Match in Tags
+                    if (tagsText.includes(word)) {
+                        score += 20; // Tags are highly relevant for intent
+                    }
+                    // Match in Query field
+                    if (queryText.includes(word)) {
+                        score += 15;
                     }
                 });
 
@@ -372,9 +392,7 @@
                     
                     const displayTitle = item.title || promptData.title || item.query || item.id || "Mindful Session";
                     const cardBg = item.color || "#f2f2f2";
-                    
                     const itemsArr = promptData.items || [];
-                    const isCombo = itemsArr.length > 0 && typeof itemsArr[0] === 'object' && itemsArr[0].affirmation;
 
                     const card = document.createElement('article');
                     card.className = `thread-container`;
@@ -383,28 +401,23 @@
 
                     let contentHtml = `<h2 class="card-title">${displayTitle}</h2>`;
 
-                    if (!isCombo) {
-                        contentHtml += `<ul class="prompt-list">`;
-                        itemsArr.slice(0, 4).forEach((p, idx) => {
-                            const text = typeof p === 'string' ? p : "Explore more prompts...";
-                            contentHtml += `
-                                <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
-                                    <span class="prompt-number">${idx+1}.</span><p class="item-text">${text}</p>
-                                </li>`;
-                        });
-                        contentHtml += `</ul>`;
+                    if (item.type === "heading-prompt-list") {
+                        contentHtml += `<div class="prompt-list">${itemsArr.slice(0, 4).map((p, idx) => `
+                            <div class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}" style="flex-direction:column; gap:2px;">
+                                <span class="prompt-subheading">${p.heading}</span>
+                                <p class="heading-prompt-text" style="font-size:1.1rem;">${p.prompt}</p>
+                            </div>`).join('')}</div>`;
+                    } else if (item.type && item.type.includes('combo')) {
+                        contentHtml += `<div class="prompt-list">${itemsArr.slice(0, 3).map((p, idx) => `
+                            <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
+                                <p class="affirmation-text">"${p.affirmation}"</p>
+                                <p class="combo-prompt">${p.prompt}</p>
+                            </div>`).join('')}</div>`;
                     } else {
-                        contentHtml += `<div class="prompt-list">`;
-                        itemsArr.slice(0, 3).forEach((p, idx) => {
-                            const aff = p.affirmation || "I am growing daily.";
-                            const pr = p.prompt || "How did you grow today?";
-                            contentHtml += `
-                                <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
-                                    <p class="affirmation-text">"${aff}"</p>
-                                    <p class="combo-prompt">${pr}</p>
-                                </div>`;
-                        });
-                        contentHtml += `</div>`;
+                        contentHtml += `<ul class="prompt-list">${itemsArr.slice(0, 4).map((p, idx) => `
+                            <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
+                                <span class="prompt-number">${idx+1}.</span><p class="item-text">${p}</p>
+                            </li>`).join('')}</ul>`;
                     }
 
                     contentHtml += `
@@ -416,12 +429,11 @@
                     
                     card.innerHTML = contentHtml;
                     list.appendChild(card);
-                } catch (err) { 
-                    console.warn(`Could not load prompt data from: ${item.file}`, err); 
-                }
+                } catch (err) { console.warn(err); }
             }
         }
 
+        
         window.addEventListener('scroll', () => {
             const stickyHeader = document.getElementById('globalStickyHeader');
             const mainSearchWrapper = document.getElementById('mainSearchWrapper');

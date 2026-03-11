@@ -308,10 +308,28 @@
 
         .card-title {
             font-size: 1.5rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text-main);
             margin: 0 0 5px 0;
-            line-height: 1.2;
+            line-height: 1.5;
+        }
+
+        /* HEADING PROMPT STYLES */
+        .prompt-subheading {
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgb(110, 110, 110);
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+
+        .heading-prompt-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            font-weight: 600;
+            margin: 0;
+            padding-top: 6px;
         }
 
         .prompt-list {
@@ -320,7 +338,7 @@
             margin: 0;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 45px;
         }
 
         .prompt-item {
@@ -430,10 +448,6 @@
             transform: translateY(-2px);
         }
 
-        .page-btn:active {
-            transform: scale(0.96);
-        }
-
         @media (max-width: 1024px) {
             .scroll-arrow {
                 display: none;
@@ -444,22 +458,7 @@
             }
         }
 
-        @media (max-width: 850px) {
-            .sticky-content-row {
-                gap: 15px;
-                padding: 0 10px 8px;
-            }
-
-            .search-area-box {
-                width: 180px;
-            }
-        }
-
         @media (max-width: 600px) {
-            .global-sticky-header {
-                padding: 6px 0 0;
-            }
-
             .container {
                 padding: 20px 0 60px;
             }
@@ -486,49 +485,14 @@
                 font-size: 0.85rem;
             }
 
-            .sticky-content-row {
-                justify-content: space-between;
-                padding: 0 12px 4px;
-                gap: 8px;
-            }
-
-            .sticky-logo {
-                order: 1;
-                flex: 1;
-            }
-
             .search-area-box {
-                order: 2;
                 width: 120px;
-            }
-
-            .search-area-box input {
-                height: 40px;
-                border-radius: 10px;
-                font-size: 0.85rem;
-            }
-
-            .search-area-box .search-btn-icon {
-                width: 36px;
-                border-radius: 0 10px 10px 0;
-            }
-
-            .mood-slider-container {
-                width: 100%;
-                order: 3;
-                flex: none;
-                margin-top: 4px;
-            }
-
-            .mood-tags {
-                padding: 4px 0;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- GLOBAL STICKY HEADER -->
     <div id="globalStickyHeader" class="global-sticky-header">
         <div class="sticky-content-row">
             <a href="index.html" class="sticky-logo">
@@ -539,9 +503,7 @@
                 <div class="scroll-arrow arrow-left" onclick="scrollPills(-1, 'stickyMoodTags')">
                     <i class="fa-solid fa-chevron-left"></i>
                 </div>
-                <div class="mood-tags" id="stickyMoodTags">
-                    <!-- Dynamically populated -->
-                </div>
+                <div class="mood-tags" id="stickyMoodTags"></div>
                 <div class="scroll-arrow arrow-right" onclick="scrollPills(1, 'stickyMoodTags')">
                     <i class="fa-solid fa-chevron-right"></i>
                 </div>
@@ -596,10 +558,8 @@
                         Manifestation</div>
                     <div class="mood-pill" data-tag="Productivity" onclick="handlePillClick(this, 'Productivity')">
                         Productivity</div>
-
                     <div class="mood-pill" data-tag="Mindfulness" onclick="handlePillClick(this, 'Mindfulness')">
                         Mindfulness</div>
-                 
                     <div class="mood-pill" data-tag="Self Discovery" onclick="handlePillClick(this, 'Self Discovery')">
                         Self Discovery</div>
                     <div class="mood-pill" data-tag="Inner Peace" onclick="handlePillClick(this, 'Inner Peace')">Inner
@@ -621,19 +581,13 @@
             <i class="fa-solid fa-chevron-down"></i>
         </div>
 
-        <main class="chat-flow" id="responseFlow">
-            <!-- Dynamically populated -->
-        </main>
-
-        <div class="pagination-container" id="paginationControls">
-            <!-- Next/Prev Buttons -->
-        </div>
+        <main class="chat-flow" id="responseFlow"></main>
+        <div class="pagination-container" id="paginationControls"></div>
     </div>
 
     <script>
         const CATEGORY_COOKIE = "affirzone_category";
         const CARDS_PER_PAGE = 7;
-
         let fullRegistry = [];
         let currentFilter = "";
         let currentPage = 1;
@@ -654,14 +608,10 @@
                 const mainTags = document.getElementById('mainMoodTags');
                 const stickyTags = document.getElementById('stickyMoodTags');
                 stickyTags.innerHTML = mainTags.innerHTML;
-
-                // Path updated to 'topics'
                 const res = await fetch(`data/topics/list.json`);
                 fullRegistry = await res.json();
-
                 const urlParams = new URLSearchParams(window.location.search);
                 currentPage = parseInt(urlParams.get('page')) || 1;
-
                 currentFilter = getCookie(CATEGORY_COOKIE) || "";
                 updatePillUI();
                 renderRegistry();
@@ -673,13 +623,10 @@
             allPills.forEach(pill => {
                 const isActive = (pill.getAttribute('data-tag') || "") === currentFilter;
                 pill.classList.toggle('active', isActive);
-                if (isActive) {
-                    try {
-                        pill.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'center' });
-                    } catch (err) { }
-                }
             });
         }
+
+
 
         async function renderRegistry() {
             const flow = document.getElementById('responseFlow');
@@ -689,6 +636,7 @@
             flow.innerHTML = "";
             pagination.innerHTML = "";
 
+            // 1. Filter the items based on the active tag
             let filteredItems = currentFilter
                 ? fullRegistry.filter(i => i.tags && i.tags.some(t => t.toLowerCase() === currentFilter.toLowerCase()))
                 : fullRegistry;
@@ -696,85 +644,89 @@
             label.innerText = currentFilter ? currentFilter : "Latest";
 
             if (filteredItems.length === 0) {
-                flow.innerHTML = `
-                    <div style="text-align:center; padding: 60px 20px; color: var(--text-muted); font-size: 1.1rem; font-weight: 500;">
-                        [No content available for "${currentFilter || 'all'}"]
-                    </div>
-                `;
+                flow.innerHTML = `<div style="text-align:center; padding: 60px 20px; color: var(--text-muted);">[No content available]</div>`;
                 return;
             }
 
+            // 2. Setup Pagination
             const totalPages = Math.ceil(filteredItems.length / CARDS_PER_PAGE);
-            if (currentPage > totalPages) currentPage = totalPages || 1;
-
             const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
             const itemsToRender = filteredItems.slice(startIndex, startIndex + CARDS_PER_PAGE);
 
-            for (let i = 0; i < itemsToRender.length; i++) {
-                const item = itemsToRender[i];
+            // 3. Loop through and render cards
+            for (let item of itemsToRender) {
                 try {
-                    // USE RELATIVE PATHS for reliability
                     const promptRes = await fetch(`data/prompts/${item.file}`);
-                    const promptData = await promptRes.json();
+                    if (!promptRes.ok) continue; // Skip if file is missing
 
-                    const cardBg = item.color && item.color.trim() !== "" ? item.color : "#f2f2f2";
+                    const rawData = await promptRes.json();
 
+                    // FIX: This ensures we get the data whether it's wrapped in [] or a plain object
+                    const promptData = Array.isArray(rawData) ? rawData[0] : rawData;
+
+                    // Safety: Get the prompts from 'items' OR 'prompt-list' OR empty array
+                    const prompts = promptData.items || (promptData["prompt-list"] ? Object.values(promptData["prompt-list"]) : []);
+
+                    const cardBg = item.color || "#f2f2f2";
                     const card = document.createElement('article');
                     card.className = `thread-container`;
                     card.style.backgroundColor = cardBg;
-                    card.style.borderColor = cardBg === "#f2f2f2" ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.04)";
-
                     card.onclick = () => window.location.href = `show.html?title=${encodeURIComponent(item.title).replace(/%20/g, '+')}`;
 
                     let content = `<h2 class="card-title">${item.title}</h2>`;
 
-                    // Robust type check including potential typos or legacy types
-                    const isListType = (item.type || "").includes('list') && !(item.type || "").includes('combo');
-                    const isComboType = (item.type || "").includes('combo');
-
-                    if (isListType) {
-                        content += `<ul class="prompt-list">${promptData.items.slice(0, 4).map((p, idx) => `
-                            <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
-                                <span class="prompt-number">${idx + 1}.</span><p class="item-text">${p}</p>
-                            </li>`).join('')}</ul>`;
-                    } else if (isComboType) {
-                        content += `<div class="prompt-list">${promptData.items.slice(0, 3).map((p, idx) => `
-                            <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
-                                <p class="affirmation-text">"${p.affirmation}"</p>
-                                <p class="combo-prompt">${p.prompt}</p>
-                            </div>`).join('')}</div>`;
+                    // 4. Render based on Type
+                    if (item.type === "heading-prompt-list") {
+                        content += `<div class="prompt-list">${prompts.slice(0, 4).map((p, idx) => `
+                    <div class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}" style="flex-direction:column; gap:2px;">
+                        <span class="prompt-subheading">${p.heading || ''}</span>
+                        <p class="heading-prompt-text" style="font-size:1.1rem;">${p.prompt || p}</p>
+                    </div>`).join('')}</div>`;
+                    } else if (item.type.includes('combo')) {
+                        content += `<div class="prompt-list">${prompts.slice(0, 3).map((p, idx) => `
+                    <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
+                        <p class="affirmation-text">"${p.affirmation || ''}"</p>
+                        <p class="combo-prompt">${p.prompt || ''}</p>
+                    </div>`).join('')}</div>`;
+                    } else {
+                        content += `<ul class="prompt-list">${prompts.slice(0, 4).map((p, idx) => `
+                    <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
+                        <span class="prompt-number">${idx + 1}.</span><p class="item-text">${p}</p>
+                    </li>`).join('')}</ul>`;
                     }
+
                     content += `<div class="footer-fade-overlay"><div style="text-align:right;"><span class="gradient-link">Show More <i class="fa-solid fa-arrow-right"></i></span></div></div>`;
                     card.innerHTML = content;
                     flow.appendChild(card);
-                } catch (e) { console.error(`Error loading file ${item.file}:`, e); }
+
+                } catch (e) {
+                    console.error("Error rendering:", item.file, e);
+                }
             }
 
+            // 5. Build Pagination Buttons
             if (totalPages > 1) {
                 if (currentPage > 1) {
-                    const prevBtn = document.createElement('button');
-                    prevBtn.className = 'page-btn';
-                    prevBtn.innerHTML = `<i class="fa-solid fa-arrow-left"></i> Previous`;
-                    prevBtn.onclick = () => navigateToPage(currentPage - 1);
-                    pagination.appendChild(prevBtn);
+                    const btn = document.createElement('button');
+                    btn.className = 'page-btn'; btn.innerHTML = `<i class="fa-solid fa-arrow-left"></i> Previous`;
+                    btn.onclick = () => navigateToPage(currentPage - 1);
+                    pagination.appendChild(btn);
                 }
                 if (currentPage < totalPages) {
-                    const nextBtn = document.createElement('button');
-                    nextBtn.className = 'page-btn';
-                    nextBtn.innerHTML = `Next <i class="fa-solid fa-arrow-right"></i>`;
-                    nextBtn.onclick = () => navigateToPage(currentPage + 1);
-                    pagination.appendChild(nextBtn);
+                    const btn = document.createElement('button');
+                    btn.className = 'page-btn'; btn.innerHTML = `Next <i class="fa-solid fa-arrow-right"></i>`;
+                    btn.onclick = () => navigateToPage(currentPage + 1);
+                    pagination.appendChild(btn);
                 }
             }
         }
 
-        function navigateToPage(pageNumber) {
-            currentPage = pageNumber;
+        function navigateToPage(p) {
+            currentPage = p;
             const url = new URL(window.location);
-            url.searchParams.set('page', pageNumber);
+            url.searchParams.set('page', p);
             window.history.pushState({}, '', url);
-            const scrollAnchor = document.getElementById('mainControls');
-            window.scrollTo({ top: scrollAnchor.offsetTop - 10, behavior: 'smooth' });
+            window.scrollTo({ top: document.getElementById('mainControls').offsetTop - 10, behavior: 'smooth' });
             renderRegistry();
         }
 
@@ -782,35 +734,21 @@
             setCookie(CATEGORY_COOKIE, tag);
             currentFilter = tag;
             currentPage = 1;
-            const url = new URL(window.location);
-            url.searchParams.set('page', '1');
-            window.history.pushState({}, '', url);
             updatePillUI();
             renderRegistry();
         }
 
-        function performSearchRedirect() {
-            window.location.href = `search.html`;
+        function performSearchRedirect() { window.location.href = `search.html`; }
+        function scrollPills(d, id) {
+            const c = document.getElementById(id);
+            c.scrollBy({ left: (c.clientWidth / 2) * d, behavior: 'smooth' });
         }
-
-        function scrollPills(direction, containerId) {
-            const container = document.getElementById(containerId);
-            const scrollAmount = container.clientWidth / 2;
-            container.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
-        }
-
-        window.addEventListener('popstate', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            currentPage = parseInt(urlParams.get('page')) || 1;
-            renderRegistry();
-        });
 
         window.addEventListener('scroll', () => {
-            const stickyHeader = document.getElementById('globalStickyHeader');
-            const mainControls = document.getElementById('mainControls');
-            const triggerPoint = mainControls.offsetTop + mainControls.offsetHeight - 10;
-            if (window.scrollY > triggerPoint) stickyHeader.style.display = 'flex';
-            else stickyHeader.style.display = 'none';
+            const sticky = document.getElementById('globalStickyHeader');
+            const controls = document.getElementById('mainControls');
+            if (window.scrollY > (controls.offsetTop + controls.offsetHeight)) sticky.style.display = 'flex';
+            else sticky.style.display = 'none';
         });
 
         window.addEventListener('load', init);
