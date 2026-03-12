@@ -11,7 +11,6 @@
 
     <link rel="apple-touch-icon" sizes="180x180" href="media/favicon-180x180.png">
 
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -48,13 +47,12 @@
             align-items: center;
         }
 
-        /* Footer Styles */
         footer {
             text-align: center;
             padding: 40px 20px;
             background: #ffffff;
             border-top: 1px solid #eeeeee;
-            margin-top: 2in;
+            margin-top: 40px;
         }
 
         .footer-links {
@@ -63,7 +61,6 @@
 
         .footer-links a {
             color: #666666;
-            /* var(--footer-text) */
             text-decoration: none;
             margin: 0 10px;
             font-size: 0.9rem;
@@ -72,7 +69,6 @@
 
         .footer-links a:hover {
             color: #00a896;
-            /* var(--brand-color) */
         }
 
         .copyright {
@@ -80,14 +76,6 @@
             color: #999999;
         }
 
-        @media (max-width: 600px) {
-            .footer-links a {
-                display: inline-block;
-                margin: 5px 10px;
-            }
-        }
-
-        /* --- GLOBAL STICKY HEADER --- */
         .global-sticky-header {
             position: fixed;
             top: 0;
@@ -104,13 +92,8 @@
         }
 
         @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-            }
-
-            to {
-                transform: translateY(0);
-            }
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
         }
 
         .sticky-content-row {
@@ -123,10 +106,7 @@
             padding: 0 20px;
         }
 
-        .sticky-logo img {
-            height: 24px;
-            width: auto;
-        }
+        .sticky-logo img { height: 24px; width: auto; }
 
         .sticky-search-box {
             position: relative;
@@ -180,10 +160,7 @@
             margin-bottom: 40px;
         }
 
-        .big-logo img {
-            height: 60px;
-            width: auto;
-        }
+        .big-logo img { height: 60px; width: auto; }
 
         .search-title {
             font-size: 1.5rem;
@@ -274,24 +251,6 @@
             margin: 0 0 5px 0;
         }
 
-        /* HEADING PROMPT STYLES */
-        .prompt-subheading {
-            font-size: 1rem;
-            font-weight: 500;
-            color: rgb(110, 110, 110);
-            letter-spacing: 0.05em;
-            margin: 0;
-        }
-
-        .heading-prompt-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: var(--text-main);
-            font-weight: 600;
-            margin: 0;
-            padding-top: 6px;
-        }
-
         .prompt-list {
             list-style: none;
             padding: 0;
@@ -355,17 +314,28 @@
             -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
         }
 
+        /* --- THE EXACT FOOTER FADE FROM HOMEPAGE --- */
+        .footer-fade-overlay {
+            margin-top: -60px;
+            padding: 80px 30px 25px;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.6) 30%, white 65%, white 100%);
+            border-radius: 0 0 var(--radius-container) var(--radius-container);
+            pointer-events: none;
+            width: calc(100% + 60px);
+            margin-left: -30px;
+        }
 
         .gradient-link {
             font-weight: 800;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
             background: linear-gradient(90deg, #2563eb 70%, #e11d48 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-size: 0.9rem;
         }
-
-
 
         @media (max-width: 600px) {
             .thread-container {
@@ -373,6 +343,10 @@
                 border-radius: 0;
                 border-left: none;
                 border-right: none;
+            }
+            .footer-fade-overlay {
+                width: calc(100% + 40px);
+                margin-left: -20px;
             }
         }
     </style>
@@ -382,8 +356,7 @@
 
     <div id="globalStickyHeader" class="global-sticky-header">
         <div class="sticky-content-row">
-            <a href="index.html" class="sticky-logo"><img src="https://affirzone.store/media/Affirzone-logo.png"
-                    alt="Logo" /></a>
+            <a href="index.html" class="sticky-logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Logo" /></a>
             <div class="sticky-search-box" onclick="scrollToMainSearch()">
                 <input type="text" id="stickySearchInput" placeholder="Search..." readonly />
                 <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
@@ -392,21 +365,17 @@
     </div>
 
     <div class="container">
-        <div class="logo-wrapper"><a href="index.html" class="big-logo"><img
-                    src="https://affirzone.store/media/Affirzone-logo.png" alt="Logo"></a></div>
+        <div class="logo-wrapper"><a href="index.html" class="big-logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Logo"></a></div>
         <h1 class="search-title">Search Affirmation &amp; Journal Prompts</h1>
 
         <div class="search-wrapper" id="mainSearchWrapper">
             <div class="search-input-area">
-                <input type="text" id="searchInput" placeholder="Enter keywords..." oninput="syncStickyInput(this)"
-                    onkeydown="if(event.key==='Enter') handleSearch()" autocomplete="off">
-                <button class="search-btn" onclick="handleSearch()"><i
-                        class="fa-solid fa-magnifying-glass"></i></button>
+                <input type="text" id="searchInput" placeholder="Enter keywords..." oninput="syncStickyInput(this)" onkeydown="if(event.key==='Enter') handleSearch()" autocomplete="off">
+                <button class="search-btn" onclick="handleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
 
-        <div class="list-header" id="resultsHeader"><span>Search Result</span> <i class="fa-solid fa-chevron-down"></i>
-        </div>
+        <div class="list-header" id="resultsHeader"><span>Search Result</span> <i class="fa-solid fa-chevron-down"></i></div>
         <main class="results-container" id="resultsList"></main>
     </div>
 
@@ -417,9 +386,7 @@
             <a href="privacy.html">Privacy Policy</a>
             <a href="terms.html">Terms & Conditions</a>
         </div>
-        <div class="copyright">
-            &copy; 2026 Affirzone. Made for mindful thinkers.
-        </div>
+        <div class="copyright">&copy; 2026 Affirzone. Made for mindful thinkers.</div>
     </footer>
 
     <script>
@@ -444,7 +411,6 @@
             } catch (err) { console.error("Registry load failed", err); }
         }
 
-
         async function handleSearch() {
             const query = document.getElementById('searchInput').value.trim();
             const list = document.getElementById('resultsList');
@@ -459,43 +425,23 @@
             const q = query.toLowerCase();
             const ignoreWords = ["for", "the", "and", "with", "from", "your", "this", "that", "how", "what", "where", "into"];
             const utilityWords = ["prompt", "prompts", "affirmation", "affirmations"];
-
             const searchWords = q.split(/\s+/).filter(word => word.length > 2 && !ignoreWords.includes(word));
 
             const scoredResults = registry.map(item => {
                 const titleText = (item.title || "").toLowerCase();
-                const queryText = (item.query || "").toLowerCase();
-                // Combine tags into a single string for searching
                 const tagsText = (item.tags && Array.isArray(item.tags)) ? item.tags.join(" ").toLowerCase() : "";
 
                 let score = 0;
-
-                // 1. Exact Phrase Match in Title (Highest Priority)
                 if (titleText.includes(q)) score += 60;
-
-                // 2. Exact Phrase Match in Tags
                 if (tagsText.includes(q)) score += 40;
 
-                // 3. Word-by-word matching
                 searchWords.forEach(word => {
-                    // Match in Title
-                    if (titleText.includes(word)) {
-                        score += utilityWords.includes(word) ? 5 : 25;
-                    }
-                    // Match in Tags
-                    if (tagsText.includes(word)) {
-                        score += 20; // Tags are highly relevant for intent
-                    }
-                    // Match in Query field
-                    if (queryText.includes(word)) {
-                        score += 15;
-                    }
+                    if (titleText.includes(word)) score += utilityWords.includes(word) ? 5 : 25;
+                    if (tagsText.includes(word)) score += 20;
                 });
 
                 return { item, score };
-            })
-                .filter(res => res.score > 0)
-                .sort((a, b) => b.score - a.score);
+            }).filter(res => res.score > 0).sort((a, b) => b.score - a.score);
 
             header.style.display = "flex";
 
@@ -506,7 +452,6 @@
 
             list.innerHTML = "";
 
-            // Load top 7 matches by relevance
             for (const res of scoredResults.slice(0, 7)) {
                 const item = res.item;
                 if (!item.file) continue;
@@ -515,7 +460,7 @@
                     const promptRes = await fetch(`data/prompts/${item.file}`);
                     const promptData = await promptRes.json();
 
-                    const displayTitle = item.title || promptData.title || item.query || item.id || "Mindful Session";
+                    const displayTitle = item.title || promptData.title || "Mindful Session";
                     const cardBg = item.color || "#f2f2f2";
                     const itemsArr = promptData.items || [];
 
@@ -526,25 +471,22 @@
 
                     let contentHtml = `<h2 class="card-title">${displayTitle}</h2>`;
 
-                    if (item.type === "heading-prompt-list") {
-                        contentHtml += `<div class="prompt-list">${itemsArr.slice(0, 4).map((p, idx) => `
-                            <div class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}" style="flex-direction:column; gap:2px;">
-                                <span class="prompt-subheading">${p.heading}</span>
-                                <p class="heading-prompt-text" style="font-size:1.1rem;">${p.prompt}</p>
-                            </div>`).join('')}</div>`;
-                    } else if (item.type && item.type.includes('combo')) {
+                    if (item.type && item.type.includes('combo')) {
                         contentHtml += `<div class="prompt-list">${itemsArr.slice(0, 3).map((p, idx) => `
                             <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
                                 <p class="affirmation-text">"${p.affirmation}"</p>
                                 <p class="combo-prompt">${p.prompt}</p>
                             </div>`).join('')}</div>`;
-                    } else {
+                    } 
+                    else {
                         contentHtml += `<ul class="prompt-list">${itemsArr.slice(0, 4).map((p, idx) => `
                             <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
-                                <span class="prompt-number">${idx + 1}.</span><p class="item-text">${p}</p>
+                                <span class="prompt-number">${idx + 1}.</span>
+                                <p class="item-text">${(typeof p === 'object' ? p.prompt : p)}</p>
                             </li>`).join('')}</ul>`;
                     }
 
+                    // ADDING THE EXACT OVERLAY LOGIC
                     contentHtml += `
                         <div class="footer-fade-overlay">
                             <div style="text-align: right;"> 
@@ -557,7 +499,6 @@
                 } catch (err) { console.warn(err); }
             }
         }
-
 
         window.addEventListener('scroll', () => {
             const stickyHeader = document.getElementById('globalStickyHeader');

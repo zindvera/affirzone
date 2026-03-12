@@ -59,7 +59,6 @@
 
         .footer-links a {
             color: #666666;
-            /* var(--footer-text) */
             text-decoration: none;
             margin: 0 10px;
             font-size: 0.9rem;
@@ -68,19 +67,11 @@
 
         .footer-links a:hover {
             color: #00a896;
-            /* var(--brand-color) */
         }
 
         .copyright {
             font-size: 0.85rem;
             color: #999999;
-        }
-
-        @media (max-width: 600px) {
-            .footer-links a {
-                display: inline-block;
-                margin: 5px 10px;
-            }
         }
 
         header {
@@ -126,13 +117,8 @@
         }
 
         @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-            }
-
-            to {
-                transform: translateY(0);
-            }
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
         }
 
         .sticky-content-row {
@@ -146,14 +132,7 @@
             gap: 15px;
         }
 
-        .sticky-logo {
-            order: 1;
-        }
-
-        .sticky-logo img {
-            height: 24px;
-            width: auto;
-        }
+        .sticky-logo img { height: 24px; width: auto; }
 
         .search-area-box {
             position: relative;
@@ -246,9 +225,7 @@
             width: 100%;
         }
 
-        .mood-tags::-webkit-scrollbar {
-            display: none;
-        }
+        .mood-tags::-webkit-scrollbar { display: none; }
 
         .mood-pill {
             background: #fff;
@@ -294,14 +271,6 @@
             background: #e5e5e5;
         }
 
-        .arrow-left {
-            margin-right: 10px;
-        }
-
-        .arrow-right {
-            margin-left: 10px;
-        }
-
         .list-header {
             display: flex;
             align-items: center;
@@ -338,15 +307,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card-title {
@@ -355,24 +317,6 @@
             color: var(--text-main);
             margin: 0 0 5px 0;
             line-height: 1.5;
-        }
-
-        /* HEADING PROMPT STYLES */
-        .prompt-subheading {
-            font-size: 1rem;
-            font-weight: 500;
-            color: rgb(110, 110, 110);
-            letter-spacing: 0.05em;
-            margin: 0;
-        }
-
-        .heading-prompt-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: var(--text-main);
-            font-weight: 600;
-            margin: 0;
-            padding-top: 6px;
         }
 
         .prompt-list {
@@ -492,93 +436,23 @@
         }
 
         @media (max-width: 1024px) {
-            .scroll-arrow {
-                display: none;
-            }
-
-            .mood-tags {
-                padding: 8px 15px;
-            }
+            .scroll-arrow { display: none; }
+            .mood-tags { padding: 8px 15px; }
         }
 
         @media (max-width: 600px) {
-            .container {
-                padding: 10px 0 60px;
-                /* Reduced top padding for more content visibility */
-            }
-
-            .chat-flow {
-                gap: 50px;
-                /* Tighter gap on mobile */
-                padding: 0;
-            }
-
-            .thread-container {
-                padding: 30px 20px 0;
-                border-radius: 0;
-                border-left: none;
-                border-right: none;
-            }
-
-            .footer-fade-overlay {
-                width: calc(100% + 40px);
-                margin-left: -20px;
-            }
-
-            .mood-pill {
-                padding: 10px 16px;
-                /* Slightly thinner pills */
-                font-size: 0.85rem;
-            }
-
-            /* Sticky Header Phone Compression */
-            .global-sticky-header {
-                padding: 4px 0 0;
-                /* Minimal top padding */
-            }
-
-            .sticky-content-row {
-                justify-content: space-between;
-                gap: 4px;
-                padding: 0 12px 2px;
-                /* Tighter padding */
-            }
-
-            .sticky-logo {
-                order: 1;
-                flex: 0 0 auto;
-            }
-
-            .search-area-box {
-                order: 2;
-                width: 120px;
-                flex: 0 0 auto;
-            }
-
-            .search-area-box input {
-                height: 40px;
-                /* Slimmer search bar in sticky mode */
-                padding: 0 40px 0 15px;
-            }
-
-            .search-area-box .search-btn-icon {
-                width: 40px;
-            }
-
-            .mood-slider-container {
-                order: 3;
-                width: 100%;
-                flex: 0 0 100%;
-                margin-top: 2px;
-                /* Reduced gap between top row and tags */
-                padding-bottom: 2px;
-                /* Minimal bottom padding */
-            }
-
-            .mood-tags {
-                padding: 4px 10px;
-                /* Tighter vertical padding for tags */
-            }
+            .container { padding: 10px 0 60px; }
+            .chat-flow { gap: 50px; padding: 0; }
+            .thread-container { padding: 30px 20px 0; border-radius: 0; border-left: none; border-right: none; }
+            .footer-fade-overlay { width: calc(100% + 40px); margin-left: -20px; }
+            .mood-pill { padding: 10px 16px; font-size: 0.85rem; }
+            .global-sticky-header { padding: 4px 0 0; }
+            .sticky-content-row { justify-content: space-between; gap: 4px; padding: 0 12px 2px; }
+            .search-area-box { order: 2; width: 120px; flex: 0 0 auto; }
+            .search-area-box input { height: 40px; padding: 0 40px 0 15px; }
+            .search-area-box .search-btn-icon { width: 40px; }
+            .mood-slider-container { order: 3; width: 100%; flex: 0 0 100%; margin-top: 2px; padding-bottom: 2px; }
+            .mood-tags { padding: 4px 10px; }
         }
     </style>
 </head>
@@ -589,7 +463,6 @@
             <a href="index.html" class="sticky-logo">
                 <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" />
             </a>
-
             <div class="mood-slider-container">
                 <div class="scroll-arrow arrow-left" onclick="scrollPills(-1, 'stickyMoodTags')">
                     <i class="fa-solid fa-chevron-left"></i>
@@ -599,12 +472,9 @@
                     <i class="fa-solid fa-chevron-right"></i>
                 </div>
             </div>
-
             <div class="search-area-box" onclick="performSearchRedirect()">
                 <input type="text" placeholder="Search..." readonly />
-                <div class="search-btn-icon">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </div>
+                <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
             </div>
         </div>
     </div>
@@ -626,37 +496,26 @@
             <div class="main-search-container">
                 <div class="search-area-box" style="width: 100%; max-width: 500px;" onclick="performSearchRedirect()">
                     <input type="text" placeholder="Search prompts..." readonly />
-                    <div class="search-btn-icon">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
+                    <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
                 </div>
             </div>
-
             <div class="mood-slider-container">
                 <div class="scroll-arrow arrow-left" onclick="scrollPills(-1, 'mainMoodTags')">
                     <i class="fa-solid fa-chevron-left"></i>
                 </div>
                 <div class="mood-tags" id="mainMoodTags">
                     <div class="mood-pill active" data-tag="" onclick="handlePillClick(this, '')">All</div>
-                    <div class="mood-pill" data-tag="Gratitude" onclick="handlePillClick(this, 'Gratitude')">Gratitude
-                    </div>
-                    <div class="mood-pill" data-tag="Self Confidence"
-                        onclick="handlePillClick(this, 'Self Confidence')">Self Confidence</div>
+                    <div class="mood-pill" data-tag="Gratitude" onclick="handlePillClick(this, 'Gratitude')">Gratitude</div>
+                    <div class="mood-pill" data-tag="Self Confidence" onclick="handlePillClick(this, 'Self Confidence')">Self Confidence</div>
                     <div class="mood-pill" data-tag="Anxiety" onclick="handlePillClick(this, 'Anxiety')">Anxiety</div>
                     <div class="mood-pill" data-tag="Career" onclick="handlePillClick(this, 'Career')">Career</div>
                     <div class="mood-pill" data-tag="Healing" onclick="handlePillClick(this, 'Healing')">Healing</div>
-                    <div class="mood-pill" data-tag="Manifestation" onclick="handlePillClick(this, 'Manifestation')">
-                        Manifestation</div>
-                    <div class="mood-pill" data-tag="Productivity" onclick="handlePillClick(this, 'Productivity')">
-                        Productivity</div>
-                    <div class="mood-pill" data-tag="Mindfulness" onclick="handlePillClick(this, 'Mindfulness')">
-                        Mindfulness</div>
-                    <div class="mood-pill" data-tag="Self Discovery" onclick="handlePillClick(this, 'Self Discovery')">
-                        Self Discovery</div>
-                    <div class="mood-pill" data-tag="Inner Peace" onclick="handlePillClick(this, 'Inner Peace')">Inner
-                        Peace</div>
-                    <div class="mood-pill" data-tag="Relationships" onclick="handlePillClick(this, 'Relationships')">
-                        Relationships</div>
+                    <div class="mood-pill" data-tag="Manifestation" onclick="handlePillClick(this, 'Manifestation')">Manifestation</div>
+                    <div class="mood-pill" data-tag="Productivity" onclick="handlePillClick(this, 'Productivity')">Productivity</div>
+                    <div class="mood-pill" data-tag="Mindfulness" onclick="handlePillClick(this, 'Mindfulness')">Mindfulness</div>
+                    <div class="mood-pill" data-tag="Self Discovery" onclick="handlePillClick(this, 'Self Discovery')">Self Discovery</div>
+                    <div class="mood-pill" data-tag="Inner Peace" onclick="handlePillClick(this, 'Inner Peace')">Inner Peace</div>
+                    <div class="mood-pill" data-tag="Relationships" onclick="handlePillClick(this, 'Relationships')">Relationships</div>
                     <div class="mood-pill" data-tag="Art" onclick="handlePillClick(this, 'Art')">Art</div>
                     <div class="mood-pill" data-tag="Grief" onclick="handlePillClick(this, 'Grief')">Grief</div>
                     <div class="mood-pill" data-tag="Faith" onclick="handlePillClick(this, 'Faith')">Faith</div>
@@ -683,9 +542,7 @@
             <a href="privacy.html">Privacy Policy</a>
             <a href="terms.html">Terms & Conditions</a>
         </div>
-        <div class="copyright">
-            &copy; 2026 Affirzone. Made for mindful thinkers.
-        </div>
+        <div class="copyright">&copy; 2026 Affirzone. Made for mindful thinkers.</div>
     </footer>
 
     <script>
@@ -722,14 +579,28 @@
         }
 
         function updatePillUI() {
-            const allPills = document.querySelectorAll('.mood-pill');
-            allPills.forEach(pill => {
-                const isActive = (pill.getAttribute('data-tag') || "") === currentFilter;
-                pill.classList.toggle('active', isActive);
+            const containerIds = ['mainMoodTags', 'stickyMoodTags'];
+            
+            containerIds.forEach(id => {
+                const container = document.getElementById(id);
+                if (!container) return;
+
+                const allPills = container.querySelectorAll('.mood-pill');
+                allPills.forEach(pill => {
+                    const isActive = (pill.getAttribute('data-tag') || "") === currentFilter;
+                    pill.classList.toggle('active', isActive);
+                    
+                    // Logic to show selected button: Scroll horizontally to active pill
+                    if (isActive) {
+                        pill.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'nearest', 
+                            inline: 'center' 
+                        });
+                    }
+                });
             });
         }
-
-
 
         async function renderRegistry() {
             const flow = document.getElementById('responseFlow');
@@ -739,7 +610,6 @@
             flow.innerHTML = "";
             pagination.innerHTML = "";
 
-            // 1. Filter the items based on the active tag
             let filteredItems = currentFilter
                 ? fullRegistry.filter(i => i.tags && i.tags.some(t => t.toLowerCase() === currentFilter.toLowerCase()))
                 : fullRegistry;
@@ -751,41 +621,27 @@
                 return;
             }
 
-            // 2. Setup Pagination
             const totalPages = Math.ceil(filteredItems.length / CARDS_PER_PAGE);
             const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
             const itemsToRender = filteredItems.slice(startIndex, startIndex + CARDS_PER_PAGE);
 
-            // 3. Loop through and render cards
             for (let item of itemsToRender) {
                 try {
                     const promptRes = await fetch(`data/prompts/${item.file}`);
-                    if (!promptRes.ok) continue; // Skip if file is missing
+                    if (!promptRes.ok) continue;
 
                     const rawData = await promptRes.json();
-
-                    // FIX: This ensures we get the data whether it's wrapped in [] or a plain object
                     const promptData = Array.isArray(rawData) ? rawData[0] : rawData;
-
-                    // Safety: Get the prompts from 'items' OR 'prompt-list' OR empty array
                     const prompts = promptData.items || (promptData["prompt-list"] ? Object.values(promptData["prompt-list"]) : []);
 
-                    const cardBg = item.color || "#f2f2f2";
                     const card = document.createElement('article');
                     card.className = `thread-container`;
-                    card.style.backgroundColor = cardBg;
+                    card.style.backgroundColor = item.color || "#f2f2f2";
                     card.onclick = () => window.location.href = `show.html?title=${encodeURIComponent(item.title).replace(/%20/g, '+')}`;
 
                     let content = `<h2 class="card-title">${item.title}</h2>`;
 
-                    // 4. Render based on Type
-                    if (item.type === "heading-prompt-list") {
-                        content += `<div class="prompt-list">${prompts.slice(0, 4).map((p, idx) => `
-                    <div class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}" style="flex-direction:column; gap:2px;">
-                        <span class="prompt-subheading">${p.heading || ''}</span>
-                        <p class="heading-prompt-text" style="font-size:1.1rem;">${p.prompt || p}</p>
-                    </div>`).join('')}</div>`;
-                    } else if (item.type.includes('combo')) {
+                    if (item.type && item.type.includes('combo')) {
                         content += `<div class="prompt-list">${prompts.slice(0, 3).map((p, idx) => `
                     <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
                         <p class="affirmation-text">"${p.affirmation || ''}"</p>
@@ -802,12 +658,9 @@
                     card.innerHTML = content;
                     flow.appendChild(card);
 
-                } catch (e) {
-                    console.error("Error rendering:", item.file, e);
-                }
+                } catch (e) { console.error("Error rendering:", item.file, e); }
             }
 
-            // 5. Build Pagination Buttons
             if (totalPages > 1) {
                 if (currentPage > 1) {
                     const btn = document.createElement('button');

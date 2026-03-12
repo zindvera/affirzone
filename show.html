@@ -46,7 +46,6 @@
             flex-direction: column;
         }
 
-        /* Footer Styles */
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -61,7 +60,6 @@
 
         .footer-links a {
             color: #666666;
-            /* var(--footer-text) */
             text-decoration: none;
             margin: 0 10px;
             font-size: 0.9rem;
@@ -70,21 +68,12 @@
 
         .footer-links a:hover {
             color: #00a896;
-            /* var(--brand-color) */
         }
 
         .copyright {
             font-size: 0.85rem;
             color: #999999;
         }
-
-        @media (max-width: 600px) {
-            .footer-links a {
-                display: inline-block;
-                margin: 5px 10px;
-            }
-        }
-
 
         header {
             position: sticky;
@@ -182,15 +171,7 @@
         }
 
         @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .page-not-found {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-sub);
+            to { transform: rotate(360deg); }
         }
 
         .content-card {
@@ -208,33 +189,12 @@
             align-self: flex-start;
         }
 
-        .hero-bubble {
-            background-color: #fff;
-            padding: 22px 28px;
-            border-radius: var(--radius-bubble);
-            position: relative;
-            filter: drop-shadow(0 1.5px 0 var(--border-accent));
-        }
-
-        .hero-bubble h2 {
+        .pageTitle h2 {
             margin: 0;
             font-size: 1.7rem;
             font-weight: 800;
             line-height: 1.3;
             letter-spacing: -0.03em;
-        }
-
-        .hero-bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -13px;
-            left: 35px;
-            width: 0;
-            height: 0;
-            border-left: 14px solid transparent;
-            border-right: 14px solid transparent;
-            border-top: 14px solid #fff;
-            z-index: 1;
         }
 
         .intro-text {
@@ -321,79 +281,15 @@
             border-top: 1px solid #f8f8f8;
         }
 
-        /* --- HEADING-PROMPT-LIST STYLES --- */
-        .heading-list-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .heading-prompt-item {
-            background-color: #fff;
-            padding: 30px 25px;
-            border-radius: var(--radius-card);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.03);
-            margin: 0 10px;
-        }
-
-        .prompt-subheading {
-            font-size: 1.05rem;
-            font-weight: 500;
-            color: rgb(110, 110, 110);
-            letter-spacing: 0.05em;
-            margin: 0;
-        }
-
-        .heading-prompt-text {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: var(--text-main);
-            font-weight: 600;
-            margin: 0;
-            padding-top: 4px;
-        }
-
-        /* --- REFINED AD RECOMMENDATION BOX --- */
         .ad-recommendation {
             position: relative;
             border-radius: 18px;
             padding: 35px;
             margin: 50px 0;
-            background:
-                radial-gradient(circle at top left, rgba(37, 99, 235, 0.04) 0%, transparent 20%),
-                radial-gradient(circle at bottom right, rgba(225, 29, 72, 0.04) 0%, transparent 20%),
-                #fcfcfc;
+            background: #fcfcfc;
             border: 1px solid rgba(0, 0, 0, 0.05);
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
-        }
-
-        .ad-text {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: var(--text-main);
-            font-weight: 500;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-
-        .ad-text i {
-            color: var(--brand-blue);
-            margin-top: 4px;
-            font-size: 1rem;
-        }
-
-        .ad-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
             gap: 20px;
         }
 
@@ -401,58 +297,20 @@
             font-size: 30px;
         }
 
-        /* Mobile (Phones) */
         @media screen and (max-width: 600px) {
-            .content-card {
-                padding: 45px 0;
-                border-radius: 0;
-            }
-
-            .hero-section,
-            .intro-text {
-                padding: 0 12px;
-            }
-
-            .prompt-list,
-            .heading-list-container {
-                padding: 0 14px;
-            }
-
-            .ad-recommendation {
-                margin: 35px 0px;
-                padding: 25px 20px;
-            }
-
-            .ad-actions {
-                justify-content: space-between;
-                width: 100%;
-            }
-
-            #pageTitle {
-                font-size: 26px;
-            }
-        }
-
-        @media screen and (min-width: 601px) and (max-width: 1024px) {
-            #pageTitle {
-                font-size: 28px;
-            }
-        }
-
-        @media screen and (min-width: 1025px) {
-            #pageTitle {
-                font-size: 30px;
-            }
+            .content-card { padding: 45px 0; border-radius: 0; }
+            .hero-section, .intro-text { padding: 0 12px; }
+            .prompt-list { padding: 0 14px; }
+            .ad-recommendation { margin: 35px 0px; padding: 25px 20px; }
+            #pageTitle { font-size: 26px; }
         }
     </style>
 </head>
 
 <body>
-
     <header>
         <div class="header-inner">
-            <a href="index.html" class="logo"><img src="https://affirzone.store/media/Affirzone-logo.png"
-                    alt="Affirzone Logo"></a>
+            <a href="index.html" class="logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo"></a>
             <div class="search-area-box" onclick="performSearchRedirect()">
                 <input type="text" placeholder="Search..." readonly />
                 <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
@@ -466,9 +324,7 @@
         </div>
         <main class="content-card" id="contentCard">
             <section class="hero-section">
-                <div class="pageTitle">
-                    <h2 id="pageTitle"></h2>
-                </div>
+                <div class="pageTitle"><h2 id="pageTitle"></h2></div>
             </section>
             <div class="intro-text" id="pageIntroContainer">
                 <span id="pageIntro"></span>
@@ -487,7 +343,6 @@
         </main>
     </div>
 
-
     <footer>
         <div class="footer-links">
             <a href="about.html">About Us</a>
@@ -495,9 +350,7 @@
             <a href="privacy.html">Privacy Policy</a>
             <a href="terms.html">Terms & Conditions</a>
         </div>
-        <div class="copyright">
-            &copy; 2026 Affirzone. Made for mindful thinkers.
-        </div>
+        <div class="copyright">&copy; 2026 Affirzone. Made for mindful thinkers.</div>
     </footer>
 
     <script>
@@ -523,11 +376,7 @@
                 let c = ca[i];
                 while (c.charAt(0) == ' ') c = c.substring(1, c.length);
                 if (c.indexOf(nameEQ) == 0) {
-                    try {
-                        return JSON.parse(c.substring(nameEQ.length, c.length));
-                    } catch (e) {
-                        return [];
-                    }
+                    try { return JSON.parse(c.substring(nameEQ.length, c.length)); } catch (e) { return []; }
                 }
             }
             return [];
@@ -543,13 +392,10 @@
             if (!adsMasterActive || globalAdCatalog.length === 0) return "";
             let seen = getCookie(COOKIE_NAME) || [];
             const activeCatalog = globalAdCatalog.filter(ad => ad.adsActive !== false);
-            let titleAds = activeCatalog.filter(ad =>
-                ad["target-title"] && Array.isArray(ad["target-title"]) && ad["target-title"].includes(targetFile)
+            let pool = activeCatalog.filter(ad => 
+                (ad["target-title"] && ad["target-title"].includes(targetFile)) || 
+                (ad["target-type"] && ad["target-type"].includes(targetType))
             );
-            let typeAds = activeCatalog.filter(ad =>
-                ad["target-type"] && Array.isArray(ad["target-type"]) && ad["target-type"].includes(targetType)
-            );
-            let pool = titleAds.length > 0 ? titleAds : typeAds;
             let unseenPool = pool.filter(ad => !seen.includes(ad.id));
             if (unseenPool.length === 0 && pool.length > 0) {
                 seen = seen.filter(id => !pool.find(a => a.id === id));
@@ -578,7 +424,7 @@
                 const res = await fetch('data/topics/list.json');
                 const registry = await res.json();
 
-                const meta = registry.find(item =>
+                const meta = registry.find(item => 
                     (item.title && item.title.toLowerCase().trim() === queryTitle) ||
                     (item.query && item.query.toLowerCase().trim() === queryTitle)
                 );
@@ -596,51 +442,32 @@
 
                 const renderArea = document.getElementById('renderArea');
                 let html = "";
-                const contentType = meta.type || 'list';
-                const normalizedType = (contentType === 'list') ? 'prompt-list' : (contentType === 'combo' ? 'combo-list' : contentType);
-                const currentFile = meta.file;
+                const normalizedType = (meta.type && meta.type.includes('combo')) ? 'combo-list' : 'prompt-list';
 
-                // --- NEW TEMPLATE: HEADING-PROMPT-LIST ---
-                if (normalizedType === 'heading-prompt-list') {
-                    html += `<div class="heading-list-container">`;
-                    data.items.forEach((item, i) => {
-                        html += `
-                            <div class="heading-prompt-item">
-                                <h3 class="prompt-subheading">${item.heading}</h3>
-                                <p class="heading-prompt-text">${item.prompt}</p>
-                            </div>`;
-                        if (i === 4) {
-                            const adHtml = getUnseenAd(normalizedType, currentFile);
-                            if (adHtml) html += adHtml;
-                        }
-                    });
-                    html += `</div>`;
-                }
-                // --- EXISTING TEMPLATE: PROMPT-LIST ---
-                else if (normalizedType.includes('list') && !normalizedType.includes('combo')) {
-                    html += `<ul class="prompt-list">`;
-                    data.items.forEach((text, i) => {
-                        html += `<li class="prompt-item"><span class="prompt-number">${i + 1}.</span><p class="journal-text">${text}</p></li>`;
-                        if (i === 4) {
-                            const adHtml = getUnseenAd(normalizedType, currentFile);
-                            if (adHtml) {
-                                html += `</ul>${adHtml}<ul class="prompt-list">`;
-                            }
-                        }
-                    });
-                    html += `</ul>`;
-                }
-                // --- EXISTING TEMPLATE: COMBO-LIST ---
-                else if (normalizedType.includes('combo')) {
+                // COMBO-LIST rendering
+                if (normalizedType === 'combo-list') {
                     html += `<div class="combo-list">`;
                     data.items.forEach((item, i) => {
                         html += `<div class="combo-item"><p class="affirmation-text">"${item.affirmation}"</p><p class="prompt-text">${item.prompt}</p></div>`;
                         if (i === 2) {
-                            const adHtml = getUnseenAd(normalizedType, currentFile);
+                            const adHtml = getUnseenAd(normalizedType, meta.file);
                             if (adHtml) html += adHtml;
                         }
                     });
                     html += `</div>`;
+                } 
+                // STANDARD PROMPT-LIST rendering (Default for everything else)
+                else {
+                    html += `<ul class="prompt-list">`;
+                    data.items.forEach((item, i) => {
+                        const promptText = (typeof item === 'object') ? item.prompt : item;
+                        html += `<li class="prompt-item"><span class="prompt-number">${i + 1}.</span><p class="journal-text">${promptText}</p></li>`;
+                        if (i === 4) {
+                            const adHtml = getUnseenAd(normalizedType, meta.file);
+                            if (adHtml) html += `</ul>${adHtml}<ul class="prompt-list">`;
+                        }
+                    });
+                    html += `</ul>`;
                 }
 
                 renderArea.innerHTML = html;
@@ -667,5 +494,4 @@
         window.onload = initShowPage;
     </script>
 </body>
-
 </html>

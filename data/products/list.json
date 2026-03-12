@@ -9,7 +9,7 @@
     },
     {
       "id": "digital-pdf-standard",
-      "adsActive": false,
+      "adsActive": true,
       "target-type": ["prompt-list", "combo-list"],
       "html": "<div class='ad-text'><i class='fa-solid fa-pen-nib'></i><span>Want to save these prompts? Get the annotatable digital PDF for GoodNotes.</span></div><div class='ad-actions'><a href='#' style='font-size: 0.9rem; font-weight: 700; color: #4b4b4b; text-decoration: underline; cursor: pointer; margin-right: 15px;'>Preview</a><a href='#' style='background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); color: #059669; border: 1px solid rgba(5, 150, 105, 0.1); padding: 10px 24px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; text-decoration: none; display: inline-block;'>Get PDF</a></div>"
     },
