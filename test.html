@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affirzone | Minimalist Journal</title>
+    <!-- Minimal Bootstrap Usage -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS Variables & Base --- */
+        :root {
+            --bg-body: #FAFAFA;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --text-light: #9ca3af;
+            --font-sans: 'Inter', sans-serif;
+            --font-serif: 'Lora', serif;
+            
+            --paper-snow: #FFFFFF;
+            --border-snow: #e5e7eb;
+            --paper-ivory: #FFFCF5;
+            --border-ivory: #EAE1D8;
+            --paper-stone: #F7F7F6;
+            --border-stone: #E5E5E5;
+            --paper-sage: #F4F5F4;
+            --border-sage: #E2E8E2;
+            --paper-blush: #FCF8F8;
+            --border-blush: #FCE1E4;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding-bottom: 6rem;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D1D5DB; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; overflow-x: auto; }
+
+        /* --- Layout & Utilities --- */
+        .max-w-6xl { max-width: 72rem; margin-inline: auto; }
+        .svg-icon { width: 1.25rem; height: 1.25rem; }
+        .svg-icon-sm { width: 1rem; height: 1rem; }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Navigation & Header --- */
+        .az-nav {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background-color: var(--bg-body);
+            padding: 0.75rem 1.5rem;
+        }
+        @media (min-width: 768px) { .az-nav { padding: 0.75rem 3rem; } }
+        
+        .logo-img { height: 1.5rem; object-fit: contain; opacity: 0.8; transition: opacity 0.3s; cursor: pointer; }
+        .logo-img:hover { opacity: 1; }
+
+        .editorial-header {
+            margin-bottom: 3rem;
+            max-width: 48rem;
+            padding: 0 0.5rem;
+        }
+        .header-title { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 500; line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+        @media (min-width: 768px) { .header-title { font-size: 3rem; } }
+        .header-desc { color: var(--text-muted); font-weight: 300; font-size: 1.125rem; line-height: 1.625; max-width: 36rem; }
+
+        /* --- Sticky Mood Filters --- */
+        .filters-header { font-size: 0.75rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; padding: 0 0.5rem; }
+        .sticky-wrapper {
+            position: sticky;
+            top: 48px;
+            z-index: 30;
+            background-color: var(--bg-body);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+            margin-inline: -0.75rem;
+            padding-inline: 0.75rem;
+        }
+        @media (min-width: 768px) { .sticky-wrapper { margin-inline: 0; padding-inline: 0; } }
+
+        .mood-pill {
+            display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap;
+            padding: 0.625rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500;
+            transition: all 0.3s; border: 1px solid transparent; background: transparent; color: var(--text-muted);
+        }
+        .mood-pill:hover { background-color: #f3f4f6; color: #1f2937; }
+        .mood-pill.active { background-color: #ffffff; color: #111827; border-color: #e5e7eb; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+
+        /* --- Card Grid --- */
+        .deck-container {
+            display: grid; grid-template-columns: 1fr; gap: 1.5rem; padding: 0 0.75rem;
+        }
+        @media (min-width: 768px) { .deck-container { grid-template-columns: repeat(2, 1fr); gap: 2rem; padding: 0; } }
+        @media (min-width: 1024px) { .deck-container { grid-template-columns: repeat(3, 1fr); } }
+
+        .az-card {
+            border-radius: 1rem; padding: 2rem; display: flex; flex-direction: column; height: 100%;
+            transition: all 0.3s ease; cursor: pointer; border-style: solid; border-width: 1px; position: relative;
+        }
+        @media (min-width: 1024px) { .az-card { padding: 2.5rem; } }
+        .az-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+
+        .card-cat { font-size: 0.5625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-light); margin-bottom: 1.5rem; }
+        .card-aff { font-family: var(--font-serif); font-size: 1.5rem; color: #111827; margin-bottom: 1rem; line-height: 1.375; }
+        .card-prm { font-size: 0.875rem; color: var(--text-muted); line-height: 1.625; margin-bottom: 2rem; flex: 1; }
+        .card-action { border-top: 1px solid rgba(229, 231, 235, 0.6); padding-top: 1.25rem; display: flex; justify-content: flex-end; align-items: center; gap: 0.375rem; color: var(--text-light); transition: color 0.3s; }
+        .az-card:hover .card-action { color: #111827; }
+        .card-action span { font-size: 0.625rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        .featured-dot { position: absolute; top: 1.5rem; right: 1.5rem; width: 0.5rem; height: 0.5rem; border-radius: 50%; background-color: #111827; }
+
+        /* --- Recommendation Card --- */
+        .recommendation-card {
+            grid-column: 1 / -1; /* Spans full width of grid naturally */
+            border-radius: 1rem; padding: 2rem; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 1px dashed #dee2e6; text-align: center; height: 100%; min-height: 200px;
+        }
+        .recommendation-card h4 { font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; color: #111827; }
+        .recommendation-card p { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+        /* --- Full Screen Modal --- */
+        .az-modal {
+            position: fixed; inset: 0; z-index: 50; background-color: #FAFAFA; display: flex; flex-direction: column;
+            transition: all 0.3s; opacity: 0; pointer-events: none; overflow-y: auto; overflow-x: hidden;
+        }
+        .az-modal.active { opacity: 1; pointer-events: auto; }
+        
+        .modal-controls { position: absolute; top: 0; left: 0; right: 0; padding: 1.5rem 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; z-index: 20; }
+        @media (min-width: 768px) { .modal-controls { padding: 1.5rem 3rem; } }
+        
+        .btn-close-modal { display: flex; align-items: center; gap: 0.75rem; background: none; border: none; padding: 0; cursor: pointer; transition: opacity 0.2s; margin-top: 0.25rem; }
+        .btn-close-modal:hover { opacity: 0.7; }
+        
+        .theme-dot { width: 1.5rem; height: 1.5rem; border-radius: 50%; border: 1px solid var(--border-snow); transition: all 0.2s; padding: 0; cursor: pointer; }
+        .theme-dot:hover { border-color: #9ca3af; }
+        .theme-dot.active { border-color: #111827; transform: scale(1.1); }
+
+        .modal-workspace { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: 6rem 0.5rem 8rem 0.5rem; width: 100%; height: 100%; }
+        @media (min-width: 768px) { .modal-workspace { padding: 5rem 2rem 10rem 2rem; } }
+
+        .capture-node {
+            width: 100%; max-width: 42rem; border-radius: 0.75rem; padding: 1.5rem; display: flex; flex-direction: column; min-height: 500px;
+            border-style: solid; border-width: 1px; transition: background-color 0.3s, border-color 0.3s; margin: 0 auto;
+        }
+        @media (min-width: 768px) { .capture-node { padding: 3rem; border-radius: 1rem; } }
+        @media (min-width: 1024px) { .capture-node { padding: 4rem; } }
+
+        .capture-node .card-aff { font-size: 1.875rem; margin-bottom: 1.5rem; }
+        @media (min-width: 768px) { .capture-node .card-aff { font-size: 2.25rem; } }
+        .capture-node .card-prm { font-size: 1.125rem; margin-bottom: 3rem; flex: none; }
+
+        .editor-area {
+            flex: 1; font-family: var(--font-serif); font-size: 1.125rem; line-height: 2; color: #1f2937;
+            white-space: pre-wrap; word-wrap: break-word; outline: none; border-top: 1px solid rgba(229,231,235,0.5); padding-top: 1.5rem;
+        }
+        [contenteditable]:empty:before { content: attr(data-placeholder); color: #9CA3AF; pointer-events: none; display: block; font-style: italic; }
+        [contenteditable]:focus { outline: none; }
+
+        .btn-save {
+            background-color: #111827; color: white; padding: 0.875rem 2rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500;
+            border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: background-color 0.2s, box-shadow 0.2s;
+            margin-top: 2rem; width: auto; align-self: flex-end;
+        }
+        .btn-save:hover { background-color: #000000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+        /* --- Tooltip --- */
+        .az-tooltip {
+            position: absolute; top: 100%; right: 0; margin-top: 0.875rem; width: 14rem; background-color: #eff6ff;
+            border: 1px solid #dbeafe; color: #1e40af; font-size: 0.75rem; padding: 0.875rem; border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 50;
+        }
+        .az-tooltip.show { opacity: 1; pointer-events: auto; }
+        .tooltip-arrow { position: absolute; top: -0.375rem; right: 1.5rem; width: 0.75rem; height: 0.75rem; background-color: #eff6ff; border-top: 1px solid #dbeafe; border-left: 1px solid #dbeafe; transform: rotate(45deg); }
+
+        /* --- Toast --- */
+        .az-toast {
+            position: fixed; bottom: 2.5rem; left: 50%; transform: translateX(-50%) translateY(20px);
+            background-color: #111827; color: white; font-size: 0.875rem; padding: 0.75rem 1.5rem; border-radius: 0.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); opacity: 0; transition: all 0.3s; z-index: 60; display: flex; align-items: center; gap: 0.75rem;
+        }
+        .az-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* --- Theme Classes --- */
+        .bg-paper-snow { background-color: var(--paper-snow); } .border-paper-snow { border-color: var(--border-snow); }
+        .bg-paper-ivory { background-color: var(--paper-ivory); } .border-paper-ivory { border-color: var(--border-ivory); }
+        .bg-paper-stone { background-color: var(--paper-stone); } .border-paper-stone { border-color: var(--border-stone); }
+        .bg-paper-sage { background-color: var(--paper-sage); } .border-paper-sage { border-color: var(--border-sage); }
+        .bg-paper-blush { background-color: var(--paper-blush); } .border-paper-blush { border-color: var(--border-blush); }
+    </style>
+</head>
+<body>
+
+    <!-- Minimalist Navbar -->
+    <nav class="az-nav">
+        <div class="max-w-6xl d-flex justify-content-between align-items-center w-100 mx-auto">
+            <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" class="logo-img">
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl w-100 px-3 px-md-5 mt-4 mt-md-5 position-relative z-1">
+        
+        <!-- Editorial Header -->
+        <div class="editorial-header">
+            <h1 class="header-title">A quiet space for reflection.</h1>
+            <p class="header-desc">Select a prompt, pour your thoughts onto the page, and save it to your digital journal.</p>
+        </div>
+
+        <!-- Mood Filters Header -->
+        <h3 class="filters-header">How are you feeling right now?</h3>
+        
+        <!-- Sticky Wrapper -->
+        <div class="sticky-wrapper">
+            <div class="position-relative w-100 max-w-6xl mx-auto">
+                <div id="mood-container" class="d-flex gap-2 overflow-auto scrollbar-hide pb-1">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Masonry-style / Clean Grid -->
+        <div id="deck-container" class="deck-container">
+            <!-- Cards injected via JS -->
+        </div>
+    </main>
+
+    <!-- Workspace Modal (Focus Mode) -->
+    <div id="journal-modal" class="az-modal">
+        
+        <!-- Modal Controls -->
+        <div class="modal-controls w-100">
+            <button onclick="closeModal()" class="btn-close-modal">
+                <svg class="svg-icon text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" class="h-100" style="max-height: 1.25rem; object-fit: contain;">
+            </button>
+            
+            <!-- Quick Paper Selector with Guiding Tooltip -->
+            <div class="position-relative d-flex flex-column align-items-end">
+                <div class="d-flex gap-2" id="modal-theme-selector">
+                    <!-- Injected via JS -->
+                </div>
+                
+                <!-- Tooltip Overlay -->
+                <div id="theme-tooltip" class="az-tooltip">
+                    <div class="tooltip-arrow"></div>
+                    <div class="d-flex justify-content-between align-items-start gap-2 position-relative z-1">
+                        <p class="m-0" style="line-height: 1.5;">Change your paper color here to match your mood.</p>
+                        <button onclick="dismissTooltip()" class="btn p-0 border-0 text-primary bg-transparent" style="margin-top: -4px; margin-right: -4px;">
+                            <svg class="svg-icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Centered Writing Canvas -->
+        <div class="modal-workspace">
+            <div class="d-flex flex-column w-100 mx-auto" style="max-width: 42rem;">
+                
+                <!-- The Paper Card -->
+                <div id="capture-node" class="capture-node">
+                    <div class="card-cat" id="card-category">Category</div>
+                    <h2 class="card-aff" id="card-affirmation"></h2>
+                    <p class="card-prm" id="card-prompt"></p>
+
+                    <!-- The Editor -->
+                    <div id="card-response" class="editor-area" contenteditable="true" data-placeholder="Start writing here..."></div>
+                </div>
+
+                <!-- Subtle Action Area with increased padding -->
+                <div class="d-flex justify-content-end w-100 px-2 px-md-0 pb-5">
+                    <button onclick="downloadImage()" class="btn-save">
+                        <svg class="svg-icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Save to GoodNotes
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimalist Toast -->
+    <div id="toast" class="az-toast">
+        <svg class="svg-icon-sm text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span id="toast-message" class="m-0">Saved successfully</span>
+    </div>
+
+    <script>
+        // --- Authentic Paper Themes ---
+        const themes = {
+            snow: { name: 'Snow', bg: 'bg-paper-snow', border: 'border-paper-snow' },
+            ivory: { name: 'Ivory', bg: 'bg-paper-ivory', border: 'border-paper-ivory' },
+            stone: { name: 'Stone', bg: 'bg-paper-stone', border: 'border-paper-stone' },
+            sage: { name: 'Sage', bg: 'bg-paper-sage', border: 'border-paper-sage' },
+            blush: { name: 'Blush', bg: 'bg-paper-blush', border: 'border-paper-blush' }
+        };
+
+        // --- Content Deck (Expanded to show row behavior better) ---
+        const promptsDeck = [
+            { id: 'gratitude_1', category: 'Gratitude', mood: 'Grateful', affirmation: 'I am surrounded by abundance.', prompt: 'What are three small things that brought you unexpected joy today?' },
+            { id: 'gratitude_2', category: 'Gratitude', mood: 'Grateful', affirmation: 'I appreciate the journey I am on.', prompt: 'Who is someone that has positively impacted your life recently, and why?' },
+            { id: 'confidence_1', category: 'Confidence', mood: 'Empowered', affirmation: 'I trust my abilities and intuition.', prompt: 'What is a recent accomplishment, big or small, that you are proud of?' },
+            { id: 'confidence_2', category: 'Confidence', mood: 'Empowered', affirmation: 'I am worthy of success and happiness.', prompt: 'What is a unique strength you possess that others appreciate about you?' },
+            { id: 'mindful_1', category: 'Mindfulness', mood: 'Anxious', affirmation: 'I am present in this exact moment.', prompt: 'Take a deep breath. Describe your current physical surroundings using three different senses.' },
+            { id: 'peace_1', category: 'Inner Peace', mood: 'Tired', affirmation: 'I release what I cannot control.', prompt: 'What is a heavy or anxious thought you can consciously choose to let go of today?' },
+            { id: 'gratitude_3', category: 'Gratitude', mood: 'Grateful', affirmation: 'I find beauty in the ordinary.', prompt: 'Look around you. What is one completely ordinary object that you find oddly beautiful?' },
+            { id: 'confidence_3', category: 'Confidence', mood: 'Empowered', affirmation: 'My voice deserves to be heard.', prompt: 'What is a topic you feel passionate about but rarely discuss? Write down your core belief on it.' },
+            { id: 'mindful_2', category: 'Mindfulness', mood: 'Anxious', affirmation: 'My mind is a clear, calm sky.', prompt: 'What thoughts are acting like passing clouds today? Acknowledge them without judgment.' }
+        ];
+
+        // --- Pill Styles Mood Array ---
+        const moodsList = [
+            { id: 'All', label: 'Just Browsing', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>' },
+            { id: 'Grateful', label: 'Grateful', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>' },
+            { id: 'Empowered', label: 'Empowered', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>' },
+            { id: 'Anxious', label: 'Anxious', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>' },
+            { id: 'Tired', label: 'Tired', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>' }
+        ];
+
+        // --- Recommendation Logic & Data ---
+        const recommendedProducts = [
+            {
+                product_id: 'prod_gratitude_journal',
+                prompt_type: 'Gratitude',
+                html: `
+                    <h4>5-Minute Gratitude Planner</h4>
+                    <p>Elevate your daily routine with our premium guided planner.</p>
+                    <button class="btn btn-dark btn-sm rounded-pill px-4" onclick="event.stopPropagation()">Shop Now</button>
+                `
+            },
+            {
+                product_id: 'prod_mindful_cards',
+                prompt_type: 'Mindfulness',
+                html: `
+                    <h4>Mindfulness Prompt Cards</h4>
+                    <p>Physical cards to keep you grounded anywhere you go.</p>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill px-4" onclick="event.stopPropagation()">Explore Collection</button>
+                `
+            },
+            {
+                product_id: 'prod_confidence_workbook',
+                prompt_type: 'Confidence',
+                html: `
+                    <h4>Confidence Building Workbook</h4>
+                    <p>Overcome self-doubt with daily actionable exercises.</p>
+                    <button class="btn btn-dark btn-sm rounded-pill px-4" onclick="event.stopPropagation()">View Details</button>
+                `
+            },
+            {
+                product_id: 'prod_all_purpose_pen',
+                prompt_type: 'All',
+                html: `
+                    <h4>Premium Minimalist Pen</h4>
+                    <p>The perfect companion for your daily reflections.</p>
+                    <button class="btn btn-outline-dark btn-sm rounded-pill px-4" onclick="event.stopPropagation()">Shop Accessories</button>
+                `
+            }
+        ];
+
+        let currentCardData = null;
+        let activeMood = 'All';
+        let activeTheme = 'snow';
+
+        // --- Cookie Helpers ---
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                let date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(';');
+            for(let i=0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
+        // --- Recommendation Cookie Managers ---
+        function getSeenProducts() {
+            const cookie = getCookie('az_seen_products');
+            try { return cookie ? JSON.parse(cookie) : []; } 
+            catch(e) { return []; }
+        }
+
+        function addSeenProduct(id) {
+            const seen = getSeenProducts();
+            if (!seen.includes(id)) {
+                seen.push(id);
+                setCookie('az_seen_products', JSON.stringify(seen), 365);
+            }
+        }
+
+        function clearSeenProducts() {
+            setCookie('az_seen_products', JSON.stringify([]), 365);
+        }
+
+        // --- Global Observer for Recommendations ---
+        let adObserver = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                // When ad element enters viewport, mark it as seen in cookie
+                if (entry.isIntersecting) {
+                    const productId = entry.target.dataset.productId;
+                    if (productId) {
+                        addSeenProduct(productId);
+                        obs.unobserve(entry.target); // Only trigger once per view
+                    }
+                }
+            });
+        }, { threshold: 0.3 }); // Triggers when 30% of the ad is visible
+
+        // --- Init ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeKeys = Object.keys(themes);
+            promptsDeck.forEach(card => {
+                card.theme = themeKeys[Math.floor(Math.random() * themeKeys.length)];
+            });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetId = urlParams.get('card');
+            if (targetId) {
+                const index = promptsDeck.findIndex(c => c.id === targetId);
+                if (index > -1) {
+                    const [card] = promptsDeck.splice(index, 1);
+                    promptsDeck.unshift(card);
+                }
+            }
+
+            renderMoods();
+            renderGrid();
+            renderModalThemes();
+            setupAutoSave();
+        });
+
+        // --- Rendering ---
+        function renderMoods() {
+            const container = document.getElementById('mood-container');
+            container.innerHTML = '';
+            
+            moodsList.forEach(mood => {
+                const btn = document.createElement('button');
+                const isActive = mood.id === activeMood;
+                
+                btn.className = `mood-pill ${isActive ? 'active' : ''}`;
+                btn.innerHTML = `<svg class="svg-icon-sm ${isActive ? 'text-dark' : 'text-secondary'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">${mood.icon}</svg>${mood.label}`;
+
+                btn.onclick = () => {
+                    activeMood = mood.id;
+                    renderMoods();
+                    renderGrid(); // Grid re-render handles smooth ad interleaving
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function renderGrid() {
+            const container = document.getElementById('deck-container');
+            container.innerHTML = '';
+            
+            // 1. Calculate Grid Break Interval (Randomized based on device)
+            // Phone: 3 to 6 cards. Tablet: 4 to 6 cards. Desktop: 6 to 9 cards.
+            let minInterval = 3, maxInterval = 6; 
+            if (window.innerWidth >= 1024) { minInterval = 6; maxInterval = 9; }
+            else if (window.innerWidth >= 768) { minInterval = 4; maxInterval = 6; }
+
+            const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+            let nextAdTarget = getRandomInt(minInterval, maxInterval);
+
+            const filtered = activeMood === 'All' ? promptsDeck : promptsDeck.filter(c => c.mood === activeMood);
+
+            // 2. Prepare Context-Aware Ads
+            const visibleCategories = [...new Set(filtered.map(c => c.category))];
+            let eligibleProducts = recommendedProducts.filter(p => 
+                activeMood === 'All' || 
+                p.prompt_type === 'All' || 
+                p.prompt_type === activeMood || 
+                visibleCategories.includes(p.prompt_type)
+            );
+
+            let seen = getSeenProducts();
+            let unseenEligible = eligibleProducts.filter(p => !seen.includes(p.product_id));
+            let cardCounter = 0;
+
+            filtered.forEach((card, index) => {
+                // Standard Card Injection
+                const t = themes[card.theme];
+                const el = document.createElement('div');
+                el.className = `az-card prompt-card-wrapper fade-in ${t.bg} ${t.border}`;
+                el.style.animationDelay = `${(index % maxInterval) * 50}ms`;
+                el.onclick = () => openModal(card);
+
+                el.innerHTML = `
+                    <div class="card-cat">${card.category}</div>
+                    <h3 class="card-aff">${card.affirmation}</h3>
+                    <p class="card-prm">${card.prompt}</p>
+                    
+                    <div class="card-action">
+                        <span>Write</span>
+                        <svg class="svg-icon-sm" style="transition: transform 0.3s;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                `;
+                container.appendChild(el);
+                
+                cardCounter++;
+
+                // Seamless Static Ad Injection Check with Randomized Target
+                if (cardCounter === nextAdTarget && eligibleProducts.length > 0) {
+                    
+                    if (unseenEligible.length === 0) {
+                        clearSeenProducts();
+                        seen = [];
+                        unseenEligible = [...eligibleProducts];
+                    }
+                    
+                    const product = unseenEligible.shift();
+                    
+                    const adEl = document.createElement('div');
+                    adEl.className = 'recommendation-card fade-in';
+                    adEl.dataset.productId = product.product_id;
+                    adEl.innerHTML = product.html;
+                    
+                    container.appendChild(adEl);
+                    
+                    // Hook into IntersectionObserver to save cookie strictly on viewport view
+                    adObserver.observe(adEl);
+                    
+                    cardCounter = 0; // Reset counter for next row segment
+                    nextAdTarget = getRandomInt(minInterval, maxInterval); // Generate NEW random target for the next ad
+                }
+            });
+        }
+
+        function renderModalThemes() {
+            const container = document.getElementById('modal-theme-selector');
+            container.innerHTML = '';
+            
+            Object.entries(themes).forEach(([key, t]) => {
+                const btn = document.createElement('button');
+                const isActive = key === activeTheme;
+                
+                btn.className = `theme-dot ${t.bg} ${isActive ? 'active' : ''}`;
+                btn.title = t.name;
+                btn.onclick = () => applyTheme(key);
+                container.appendChild(btn);
+            });
+        }
+
+        // --- Workspace Logic ---
+        function openModal(card) {
+            currentCardData = card;
+            const modal = document.getElementById('journal-modal');
+            
+            document.getElementById('card-category').innerText = card.category;
+            document.getElementById('card-affirmation').innerText = card.affirmation;
+            document.getElementById('card-prompt').innerText = card.prompt;
+            
+            const draft = localStorage.getItem(`draft_${card.id}`) || '';
+            document.getElementById('card-response').innerText = draft;
+
+            applyTheme(card.theme);
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            if (!getCookie('themeTooltipSeen')) {
+                const tooltip = document.getElementById('theme-tooltip');
+                tooltip.classList.add('show');
+            }
+
+            if (!history.state || history.state.modal !== 'open') { 
+                history.pushState({ modal: 'open' }, '', '#write'); 
+            }
+        }
+
+        function closeModal(fromHistory = false) {
+            const modal = document.getElementById('journal-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentCardData = null;
+            if (!fromHistory && window.location.hash === '#write') { history.back(); }
+        }
+
+        window.addEventListener('popstate', () => {
+            const modal = document.getElementById('journal-modal');
+            if (modal.classList.contains('active')) {
+                closeModal(true); 
+            }
+        });
+
+        function applyTheme(themeKey) {
+            activeTheme = themeKey;
+            renderModalThemes();
+            
+            const t = themes[themeKey];
+            const node = document.getElementById('capture-node');
+            
+            node.className = `capture-node ${t.bg} ${t.border}`;
+        }
+
+        function dismissTooltip() {
+            const tooltip = document.getElementById('theme-tooltip');
+            tooltip.classList.remove('show');
+            setCookie('themeTooltipSeen', 'true', 365);
+        }
+
+        function setupAutoSave() {
+            document.getElementById('card-response').addEventListener('input', (e) => {
+                if (currentCardData) { 
+                    localStorage.setItem(`draft_${currentCardData.id}`, e.target.innerText); 
+                }
+            });
+        }
+
+        // --- High-Res Export ---
+        async function downloadImage() {
+            const node = document.getElementById('capture-node');
+            window.getSelection().removeAllRanges();
+            
+            try {
+                const canvas = await html2canvas(node, {
+                    scale: 3, 
+                    useCORS: true,
+                    backgroundColor: null, 
+                    logging: false
+                });
+
+                const link = document.createElement('a');
+                link.download = `Affirzone_${currentCardData.category.replace(/\s+/g, '_')}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                showToast('Saved to device');
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to save image.');
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+        
+        // Ensure intervals respond correctly if device orientation changes
+        window.addEventListener('resize', () => {
+            // Added debouncer to prevent excessive rendering
+            clearTimeout(window.resizeTimer);
+            window.resizeTimer = setTimeout(() => {
+                renderGrid();
+            }, 200);
+        });
+    </script>
+</body>
+</html>

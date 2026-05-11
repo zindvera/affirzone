@@ -103,10 +103,13 @@
         .page-title-container {
             text-align: center;
             margin-bottom: 50px;
+            margin-top: 0;
+            font-weight: normal;
             font-family: 'Inter', sans-serif;
         }
 
         .page-title-sub {
+            display: block;
             font-size: 26px; /* Increased */
             font-weight: 500;
             color: var(--text-main);
@@ -114,6 +117,7 @@
         }
 
         .page-title-for {
+            display: block;
             font-size: 20px; /* Increased */
             font-weight: 400;
             color: var(--text-muted);
@@ -121,6 +125,7 @@
         }
 
         .page-title-main {
+            display: block;
             font-size: 28px; /* Decreased */
             font-weight: 900;
             color: #111;
@@ -138,7 +143,7 @@
             line-height: 1.7;
         }
 
-        #more-text {
+        #more-text-inline, #more-text-block {
             display: none;
         }
 
@@ -154,6 +159,19 @@
 
         .read-more:hover {
             color: #239b94;
+        }
+
+        .double-tap-hint {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 80px; /* Increased bottom margin */
+            font-style: italic;
+            background: rgba(255,255,255,0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            width: 100%;
         }
 
         .prompts-wrapper {
@@ -276,6 +294,7 @@
             font-weight: 700;
             color: var(--text-main);
             margin-bottom: 16px;
+            margin-top: 0;
             line-height: 1.5;
             padding-bottom: 16px;
             border-bottom: 1px solid #f1f5f9;
@@ -486,20 +505,21 @@
     <div class="content-wrapper">
         <div class="main-card">
             
-            <div class="page-title-container">
-                <div class="page-title-sub">10 Journal Prompts</div>
-                <div class="page-title-for">for</div>
-                <h1 class="page-title-main">Make You Stop Caring What Others Think</h1>
-            </div>
+            <h1 class="page-title-container">
+                <span class="page-title-sub">10 Journal Prompts</span>
+                <span class="page-title-for">for</span>
+                <span class="page-title-main">Make You Stop Caring What Others Think</span>
+            </h1>
 
-            <!-- Intro text properly splits at the 15th word ("your") -->
+            <!-- Intro text restructured with valid HTML spacing and grouping -->
             <div class="intro-text">
-                <p style="display: inline;">Other people's opinions are just noise, not instructions. Use these prompts to refocus on your<span id="dots">...</span></p>
-                <span id="more-text">
-                    <span style="display: inline;"> own voice.</span>
+                <span>Other people's opinions are just noise, not instructions. Use these prompts to refocus on your<span id="dots">...</span><span id="more-text-inline"> own voice.</span></span>
+                
+                <div id="more-text-block">
                     <p style="margin-top: 16px;">Journaling is a powerful tool to untangle your thoughts, validate your feelings, and build a resilient mindset that is immune to external judgment.</p>
-                    <p style="margin-top: 16px; display: inline;">Grab a notebook and take a few minutes with these prompts whenever you feel overwhelmed.</p>
-                </span>
+                    <p style="margin-top: 16px;">Grab a notebook and take a few minutes with these prompts whenever you feel overwhelmed.</p>
+                </div>
+                
                 <a onclick="toggleText()" id="read-more-btn" class="read-more">Read More</a>
             </div>
 
@@ -574,52 +594,52 @@
             
             <div class="meanings-container">
                 <div class="meaning-card">
-                    <div class="meaning-prompt">1. Think about the words that are bothering you right now. If those words cannot actually stop you from breathing, moving, or taking your next step, why are you giving them the power to stop your happiness?</div>
+                    <h3 class="meaning-prompt">1. Think about the words that are bothering you right now. If those words cannot actually stop you from breathing, moving, or taking your next step, why are you giving them the power to stop your happiness?</h3>
                     <div class="meaning-desc">This prompt acts as an immediate reality check. It separates physical danger from emotional discomfort. By recognizing that another person's words cannot literally stop you from living your life, you strip those words of their catastrophic power. It helps you realize that the only way their opinion hurts you is if you internally agree to let it dictate your emotional state.</div>
                 </div>
 
                 <div class="meaning-card">
-                    <div class="meaning-prompt">2. Why are you taking directions from people who aren't even going to the places you want to go in life?</div>
+                    <h3 class="meaning-prompt">2. Why are you taking directions from people who aren't even going to the places you want to go in life?</h3>
                     <div class="meaning-desc">Often, we crave approval from people whose lives look nothing like the life we want to build. This prompt highlights the absurdity of taking roadmap advice from someone who isn't even traveling to your destination. It encourages you to confidently filter out the noise of unqualified critics.</div>
                 </div>
 
                 <div class="meaning-card">
-                    <div class="meaning-prompt">3. How much does it really matter to your real life if they just keep thinking that while you keep moving forward?</div>
+                    <h3 class="meaning-prompt">3. How much does it really matter to your real life if they just keep thinking that while you keep moving forward?</h3>
                     <div class="meaning-desc">This question separates their internal reality from your external progress. A person can sit and think negative thoughts about you all day long; however, their thoughts do not alter your reality. It reminds you that as long as you keep taking action, their silent judgments remain entirely insignificant to your actual life trajectory.</div>
                 </div>
 
                 <div class="meaning-card">
-                    <div class="meaning-prompt">4. If you would never go to this specific person for life advice, why are you letting their criticism stay in your head for even one minute?</div>
+                    <h3 class="meaning-prompt">4. If you would never go to this specific person for life advice, why are you letting their criticism stay in your head for even one minute?</h3>
                     <div class="meaning-desc">We frequently obsess over the criticism of people whose wisdom we would never actually respect or follow. If you wouldn't trust them to give you sound advice on your finances, relationships, or career, their unsolicited negative feedback should logically hold zero weight in your mind.</div>
                 </div>
 
                 <div class="meaning-card">
-                    <div class="meaning-prompt">5. How much energy do you waste trying to make people 'understand' your choices when you could just let them be wrong and use that energy for yourself instead?</div>
+                    <h3 class="meaning-prompt">5. How much energy do you waste trying to make people 'understand' your choices when you could just let them be wrong and use that energy for yourself instead?</h3>
                     <div class="meaning-desc">Explaining yourself to people committed to misunderstanding you is a massive drain on your vital energy. This prompt gives you permission to stop fighting for their validation. It is profoundly liberating to realize that you can simply let people be wrong about you while you use that energy to build your own happiness.</div>
                 </div>
 
                 <div class="meaning-card">
-                    <div class="meaning-prompt">6. Most people judge others just to feel better about their own insecurities. What insecurities might they be projecting onto you right now?</div>
+                    <h3 class="meaning-prompt">6. Most people judge others just to feel better about their own insecurities. What insecurities might they be projecting onto you right now?</h3>
                     <div class="meaning-desc">This flips the script from defense to empathy. Psychology shows that harsh judgment of others is almost always a projection of deep-seated personal insecurities. By asking yourself what *they* might be insecure about, you stop taking their judgment personally and see it for what it truly is: a reflection of their own inner turmoil.</div>
                 </div>
 
                 <div class="meaning-card">
-                    <div class="meaning-prompt">7. When you look back on your life in five years, will this specific situation or this person's opinion even be a minor footnote in your story?</div>
+                    <h3 class="meaning-prompt">7. When you look back on your life in five years, will this specific situation or this person's opinion even be a minor footnote in your story?</h3>
                     <div class="meaning-desc">Fear of judgment thrives in the short term. By artificially zooming out your timeline by five years, you immediately diminish the perceived importance of today's embarrassment. You'll quickly realize that this person's passing opinion will not even make it into the highlight reel of your life story.</div>
                 </div>
 
                 <div class="meaning-card">
-                    <div class="meaning-prompt">8. What is one incredible thing you would do right now if you knew with absolute certainty that no one would judge you for it?</div>
+                    <h3 class="meaning-prompt">8. What is one incredible thing you would do right now if you knew with absolute certainty that no one would judge you for it?</h3>
                     <div class="meaning-desc">Judgment acts as an invisible cage around our true desires. This prompt completely removes the variable of societal approval, allowing you to clearly see what your authentic self craves. It helps you identify the dreams and actions you are suppressing purely out of fear of what others might say.</div>
                 </div>
 
                 <div class="meaning-card">
-                    <div class="meaning-prompt">9. List three things you deeply love and respect about yourself that no one else's opinion can ever change, diminish, or take away.</div>
+                    <h3 class="meaning-prompt">9. List three things you deeply love and respect about yourself that no one else's opinion can ever change, diminish, or take away.</h3>
                     <div class="meaning-desc">External opinions are volatile and completely outside of your control. This exercise forces you to build an internal foundation of self-worth based on traits that are permanent and entirely yours. When you know your core value, superficial judgments simply bounce off.</div>
                 </div>
 
                 <div class="meaning-card">
-                    <div class="meaning-prompt">10. Are you living your life to become the most authentic version of yourself, or are you living a diluted version just to be acceptable to strangers?</div>
+                    <h3 class="meaning-prompt">10. Are you living your life to become the most authentic version of yourself, or are you living a diluted version just to be acceptable to strangers?</h3>
                     <div class="meaning-desc">This is the ultimate gut-check. It confronts the tragedy of living a watered-down life just to avoid making waves. It forces you to choose between the temporary comfort of blending in and the lasting fulfillment of living truthfully, asking you to boldly claim ownership of your own identity.</div>
                 </div>
             </div>
@@ -644,16 +664,19 @@
         // Read More Toggle
         function toggleText() {
             const dots = document.getElementById("dots");
-            const moreText = document.getElementById("more-text");
+            const moreTextInline = document.getElementById("more-text-inline");
+            const moreTextBlock = document.getElementById("more-text-block");
             const btnText = document.getElementById("read-more-btn");
 
-            if (moreText.style.display === "none" || moreText.style.display === "") {
+            if (moreTextInline.style.display === "none" || moreTextInline.style.display === "") {
                 dots.style.display = "none";
-                moreText.style.display = "inline";
+                moreTextInline.style.display = "inline";
+                moreTextBlock.style.display = "block";
                 btnText.innerHTML = " Read Less";
             } else {
                 dots.style.display = "inline";
-                moreText.style.display = "none";
+                moreTextInline.style.display = "none";
+                moreTextBlock.style.display = "none";
                 btnText.innerHTML = " Read More";
             }
         }
@@ -679,7 +702,7 @@
                         adTriggered = true; 
                         setTimeout(() => {
                             adContainer.classList.add('show-ad');
-                        }, 4000); 
+                        }, 2000); 
                     }
                 });
             }, {
