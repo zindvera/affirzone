@@ -32,6 +32,7 @@
             background-color: var(--bg-light);
             color: var(--text-main);
             overflow-x: hidden;
+            width: 100%;
         }
 
         #dynamic-content{
@@ -46,19 +47,34 @@
         .bg-brand { background-color: var(--brand-color); color: white; }
         
         .container-custom {
+            width: 100%;
             max-width: 80rem;
             margin: 0 auto;
-            padding: 0px;
+            padding: 0; /* Removed horizontal padding on mobile for full width */
         }
         @media (min-width: 768px) {
             .container-custom { padding: 0 40px; }
         }
 
-        .card-gap {
-            margin-bottom: 4rem;
+        /* Vertical Feed Card Wrapper */
+        .feed-card-wrapper {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto 3rem auto;
         }
         @media (min-width: 768px) {
-            .card-gap { margin-bottom: 6rem; }
+            .feed-card-wrapper { margin-bottom: 4rem; }
+        }
+
+        /* Skeleton Loading */
+        .skeleton-bg {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeletonLoading 1.5s infinite;
+        }
+        @keyframes skeletonLoading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         /* Nav Styles */
@@ -73,20 +89,48 @@
         .hero-search-bar { transition: transform 0.2s, box-shadow 0.2s; border-color: #e5e5e5 !important; }
         .hero-search-bar:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important; }
 
-        .nav-search-wrapper { width: 150px; }
-        .nav-search-text { font-size: 11px !important; }
+        /* Responsive Search Bar */
+        .nav-search-wrapper { width: 180px; padding: 8px 16px; }
+        .nav-search-text { font-size: 13px; font-weight: 600; }
+        .hero-search-bar i { font-size: 13px; }
+        
         @media (min-width: 768px) {
-            .nav-search-wrapper { width: 220px !important; padding: 8px 16px !important; }
-            .nav-search-text { font-size: 13px !important; }
+            .nav-search-wrapper { width: 240px; padding: 10px 20px; }
+            .nav-search-text { font-size: 14px; }
+            .hero-search-bar i { font-size: 14px; }
+        }
+        @media (min-width: 992px) {
+            .nav-search-wrapper { width: 280px; padding: 12px 24px; }
+            .nav-search-text { font-size: 15px; }
+            .hero-search-bar i { font-size: 15px; }
         }
 
-        /* Feed Card Styles */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Feed Card Styles & Global Prompt Card Overrides */
+        .custom-card, .prompt-card {
+            background: #fff; 
+            border-radius: 0; /* Full width flat edges on mobile */
+            border: 1px solid rgba(0,0,0,0.04);
+            border-left: none;
+            border-right: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03) !important; /* Subtle shadow */
+            transition: all 0.3s ease;
+        }
         .custom-card {
-            background: #fff; border-radius: 1rem; border: 1px solid rgba(0,0,0,0.04);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.04); transition: all 0.3s ease;
             display: flex; flex-direction: column; height: auto; 
         }
-        .custom-card:hover { box-shadow: 0 12px 40px rgba(35,180,142,0.08); }
+        .custom-card:hover { box-shadow: 0 12px 40px rgba(35,180,142,0.08) !important; }
+        
+        @media (min-width: 768px) {
+            .custom-card, .prompt-card {
+                border-radius: 1rem !important;
+                border-left: 1px solid rgba(0,0,0,0.04) !important;
+                border-right: 1px solid rgba(0,0,0,0.04) !important;
+            }
+        }
+
         .carousel-wrapper { position: relative; width: 100%; }
         .carousel-item-img {
             width: 90%; aspect-ratio: 4/3; flex-shrink: 0; position: relative;
@@ -140,7 +184,7 @@
 
     <!-- Top Banner -->
     <div class="accent-bar"></div>
-    <div class="bg-light border-bottom text-muted text-center py-2" style="font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+    <div class="bg-light border-bottom text-muted text-center py-2 px-3" style="font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
         Free Journal Prompts & Minimalist Digital Stationery
     </div>
 
@@ -151,9 +195,9 @@
         <div class="d-flex align-items-center gap-4">
             <div id="sticky-actions-container" class="d-flex flex-column align-items-end justify-content-center" style="gap: 4px; margin-top: 2px;">
                 <a href="search.html" class="text-decoration-none d-block">
-                    <div class="nav-search-wrapper d-flex align-items-center bg-white border rounded-pill px-3 py-1.5 shadow-sm text-muted hero-search-bar" style="width: 150px;">
-                        <i class="fa-solid fa-magnifying-glass me-2 text-brand" style="font-size: 11px;"></i>
-                        <span class="nav-search-text" style="font-size: 11px; font-weight: 600;">Search...</span>
+                    <div class="nav-search-wrapper d-flex align-items-center bg-white border rounded-pill shadow-sm text-muted hero-search-bar">
+                        <i class="fa-solid fa-magnifying-glass me-2 text-brand"></i>
+                        <span class="nav-search-text">Search...</span>
                     </div>
                 </a>
             </div>
@@ -163,10 +207,9 @@
     <!-- Main Content Area -->
     <main class="container-custom">
         
-   
         <!-- DYNAMIC CONTENT: The fetched HTML card will be injected here -->
         <div id="dynamic-content">
-            <div class="d-flex flex-column justify-content-center align-items-center py-5 my-5" style="min-height: 40vh;">
+            <div class="d-flex flex-column justify-content-center align-items-center py-5 my-5 px-3" style="min-height: 40vh;">
                 <div class="spinner-border text-brand mb-3" role="status"></div>
                 <p class="text-muted fw-semibold text-uppercase tracking-wider" style="letter-spacing: 1px; font-size: 12px;">Loading Prompt...</p>
             </div>
@@ -174,19 +217,24 @@
 
         <!-- DYNAMIC RELATED FEED -->
         <section id="related-section" class="py-5 mt-5 border-top" style="display: none;">
-            <div class="row" id="related-grid">
+            
+            <div class="text-center mb-5 px-3">
+                <h3 class="font-serif fw-medium m-0" style="font-size: 1.75rem; color: #1a1a1a;">More Prompts You Might Like</h3>
+            </div>
+
+            <div class="d-flex flex-column align-items-center w-100" id="related-grid">
                 <!-- Injected via JS -->
             </div>
 
             <!-- Pagination -->
-            <div id="related-pagination" class="d-flex justify-content-center align-items-center gap-3 mt-4">
+            <div id="related-pagination" class="d-flex justify-content-center align-items-center gap-3 mt-4 px-3">
                 <!-- Pagination injected via JS -->
             </div>
 
             <!-- Explore More Homepage CTA -->
-            <div class="text-center mt-5 pt-4">
+            <div class="text-center mt-5 pt-4 px-3">
                 <a href="index.html" class="btn btn-dark rounded-pill px-5 py-3 fw-bold" style="font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
-                    Explore All Prompts & Journals
+                    Explore More Prompts
                 </a>
             </div>
         </section>
@@ -237,15 +285,25 @@
             
             if (pageParam && !isNaN(pageParam)) currentPage = pageParam;
 
-            // 1. Check URL Parameter
+            // 1. Check URL Parameter Existence
             if (!titleParam) {
                 showError("No prompt specified. Please select a prompt from the homepage.");
                 return;
             }
 
+            // Strictly enforce literal '+' strings (reject %20 or %2B encoded forms in the raw string)
+            const rawTitleMatch = window.location.search.match(/[?&]title=([^&]+)/);
+            if (rawTitleMatch) {
+                const rawParam = rawTitleMatch[1];
+                if (rawParam.includes('%20') || rawParam.includes('%2B')) {
+                    showError("Invalid link format. Please use literal '+' instead of spaces or encoded characters.");
+                    return;
+                }
+            }
+
             // 2. Fetch the Dynamic JSON file for the Card
             try {
-                // We need to convert them back to `+` to match your exact saved JSON file name on the server.
+                // We convert spaces (which are parsed by URLSearchParams automatically from +) back to + for exact file fetching
                 const fileName = titleParam.replace(/ /g, '+');
                 const response = await fetch(`data/list/${fileName}.json`);
                 
@@ -334,7 +392,7 @@
         // Display a clean error if URL is missing or JSON 404s
         function showError(msg) {
             document.getElementById('dynamic-content').innerHTML = `
-                <div class="text-center py-5 my-5">
+                <div class="text-center py-5 my-5 px-3">
                     <div class="mb-4"><i class="fa-regular fa-file-lines text-muted" style="font-size: 3rem; opacity: 0.5;"></i></div>
                     <h2 class="font-serif fw-bold mb-3" style="color: #1a1a1a;">${msg}</h2>
                     <a href="index.html" class="btn btn-dark rounded-pill px-4 py-2 mt-3 font-semibold" style="font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Return to Home</a>
@@ -417,7 +475,7 @@
                     if (promptItems[insertPos1]) {
                         const adPromo1 = popRandomPromo() || promos[0];
                         const adDiv1 = document.createElement('div');
-                        adDiv1.className = 'w-100 my-4 promo-ad-container';
+                        adDiv1.className = 'w-100 my-4 promo-ad-container px-3';
                         adDiv1.setAttribute('data-promo-id', adPromo1.id);
                         adDiv1.innerHTML = getAdHtml(adPromo1);
                         promptItems[insertPos1].insertAdjacentElement('afterend', adDiv1);
@@ -431,7 +489,7 @@
                     if (promptItems[insertPos2]) {
                         const adPromo2 = popRandomPromo() || promos[0];
                         const adDiv2 = document.createElement('div');
-                        adDiv2.className = 'w-100 my-4 promo-ad-container';
+                        adDiv2.className = 'w-100 my-4 promo-ad-container px-3';
                         adDiv2.setAttribute('data-promo-id', adPromo2.id);
                         adDiv2.innerHTML = getAdHtml(adPromo2);
                         promptItems[insertPos2].insertAdjacentElement('afterend', adDiv2);
@@ -444,6 +502,113 @@
         }
 
         // ==========================================
+        // ASYNC JSON UI FETCHER FOR BLOGS
+        // ==========================================
+        async function fetchAndRenderBlog(blog) {
+            try {
+                // Encode '+' as '%2B' to ensure local servers don't interpret them as spaces
+                const safePath = (blog.url || blog.title).replace(/\+/g, '%2B');
+                const response = await fetch(`data/list/${safePath}.json`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const rawData = await response.json();
+                
+                // Smart check to handle if JSON is an array (e.g. [{ css:..., html:... }]) or a direct object
+                const data = Array.isArray(rawData) ? rawData[0] : rawData;
+
+                // Make sure css and html actually exist to prevent errors
+                if (!data || !data.css || !data.html) {
+                    throw new Error('JSON is missing required css or html keys');
+                }
+                
+                // Parse HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.html, 'text/html');
+                
+                // Remove description completely for the feed
+                const descContainer = doc.querySelector('.description-container');
+                if (descContainer) {
+                    descContainer.remove();
+                }
+
+                // Limit prompts to 3
+                const promptItems = doc.querySelectorAll('.prompt-item');
+                let remaining = 0;
+                promptItems.forEach((item, index) => {
+                    if (index >= 3) {
+                        item.remove();
+                        remaining++;
+                    }
+                });
+                
+                // Add '+n more prompts' casual text
+                if (remaining > 0) {
+                    const promptList = doc.querySelector('.prompt-list');
+                    if (promptList) {
+                        const textContainer = doc.createElement('div');
+                        textContainer.className = 'text-center mt-3 pb-2';
+                        textContainer.innerHTML = `<span style="color: #6c757d; font-size: 1.05rem; font-style: italic; font-weight: 500;">+ ${remaining} more prompts. Click to read the full list.</span>`;
+                        promptList.appendChild(textContainer);
+                    }
+                }
+                
+                // Adjust card styles specifically for fitting inside the feed
+                const innerCard = doc.querySelector('.prompt-card');
+                if (innerCard) {
+                    // Inject explicit styles to override any JSON styles so the outer custom-card dictates layout
+                    innerCard.style.setProperty('margin', '0', 'important');
+                    innerCard.style.setProperty('border-radius', '0', 'important'); // Flat edges to match outer container
+                    innerCard.style.setProperty('box-shadow', 'none', 'important'); // Outer a-tag container handles shadow
+                    innerCard.style.setProperty('max-width', '100%', 'important');
+                    innerCard.style.setProperty('width', '100%', 'important');
+                }
+
+                // Inject Scoped CSS (Only inject if not already present)
+                if (!document.getElementById(`css-${blog.id}`)) {
+                    const style = document.createElement('style');
+                    style.id = `css-${blog.id}`;
+                    // Crucial: Replace global dynamic container id with this specific card's ID
+                    style.innerHTML = data.css.replace(/#dynamic-content/g, `#blog-card-${blog.id}`);
+                    document.head.appendChild(style);
+                }
+                
+                // Render into outer container
+                const container = document.getElementById(`blog-card-${blog.id}`);
+                if (container) {
+                    container.innerHTML = doc.body.innerHTML;
+                    container.classList.remove('skeleton-bg'); // Remove loading background
+                    
+                    // Add subtle hover lift effect to inner HTML
+                    container.addEventListener('mouseenter', () => {
+                        const card = container.querySelector('.prompt-card');
+                        if (card) {
+                            card.style.transform = 'scale(1.02)';
+                            card.style.transition = 'transform 0.3s ease';
+                        }
+                    });
+                    container.addEventListener('mouseleave', () => {
+                        const card = container.querySelector('.prompt-card');
+                        if (card) card.style.transform = 'scale(1)';
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to load JSON UI for blog:", blog.title, error);
+                
+                // Fallback: If JSON fetch fails, show a clean title placeholder
+                const container = document.getElementById(`blog-card-${blog.id}`);
+                if (container) {
+                    container.classList.remove('skeleton-bg');
+                    container.innerHTML = `
+                        <div class="w-100 p-5 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; background: #fff;">
+                            <h3 class="font-serif fw-medium mb-4" style="font-size: 1.5rem; line-height: 1.3;">${blog.title}</h3>
+                            <span class="btn-pill active" style="font-size: 13px;">Read Prompts <i class="fa-solid fa-arrow-right ms-2"></i></span>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // ==========================================
         // DYNAMIC RELATED FEED GENERATION
         // ==========================================
         function renderRelatedFeed() {
@@ -451,14 +616,48 @@
             const pagination = document.getElementById('related-pagination');
             let html = '';
 
+            // FIX: Cross-reference with master list to populate missing categories or titles
+            const params = new URLSearchParams(window.location.search);
+            const titleParam = params.get('title') || "";
+            const currentUrlKey = titleParam.replace(/ /g, '+');
+
+            const masterBlogMatch = promptListData.find(b => 
+                b.url === currentUrlKey || 
+                b.title.toLowerCase().trim() === currentBlogTitle.toLowerCase().trim()
+            );
+
+            if (masterBlogMatch) {
+                currentBlogTitle = masterBlogMatch.title;
+                if (masterBlogMatch.category) {
+                    currentBlogCategories = masterBlogMatch.category.split(',').map(c => c.trim().toLowerCase());
+                }
+            }
+
+            const cleanCurrentTitle = currentBlogTitle.toLowerCase().trim();
+
             // 1. Get related blogs (exclude current by title, match category)
             let relatedBlogs = promptListData.filter(b => {
-                if (b.title === currentBlogTitle) return false; 
+                if (b.title.toLowerCase().trim() === cleanCurrentTitle) return false; 
                 if (!b.category) return false;
                 
                 const cats = b.category.split(',').map(c => c.trim().toLowerCase());
                 return cats.some(c => currentBlogCategories.includes(c));
             });
+
+            // Restrict exactly up to 4 blogs logic:
+            if (relatedBlogs.length > 4) {
+                relatedBlogs = relatedBlogs.slice(0, 4);
+            } else if (relatedBlogs.length < 4) {
+                // Not enough matches, fill the rest with random available prompts
+                let pool = promptListData.filter(b => 
+                    b.title.toLowerCase().trim() !== cleanCurrentTitle && 
+                    !relatedBlogs.some(rb => rb.title === b.title)
+                );
+                // Shuffle random pool
+                pool = pool.sort(() => 0.5 - Math.random());
+                const needed = 4 - relatedBlogs.length;
+                relatedBlogs = [...relatedBlogs, ...pool.slice(0, needed)];
+            }
 
             // 2. Get related products (target is null OR matches category)
             let relatedProducts = productsData.filter(p => {
@@ -487,13 +686,13 @@
             currentItems.forEach(item => {
                 if (item.type === 'blog') {
                     html += `
-                        <div class="col-12 col-md-4 card-gap align-self-start">
+                        <div class="feed-card-wrapper">
                             ${generateBlogHtml(item.data)}
                         </div>
                     `;
                 } else if (item.type === 'product') {
                     html += `
-                        <div class="col-12 col-md-4 card-gap align-self-start">
+                        <div class="feed-card-wrapper">
                             ${generateProductHtml(item.data, 'digital')}
                         </div>
                     `;
@@ -501,6 +700,13 @@
             });
 
             grid.innerHTML = html;
+
+            // Load JSON UIs asynchronously for visible blogs
+            currentItems.forEach(item => {
+                if (item.type === 'blog') {
+                    fetchAndRenderBlog(item.data);
+                }
+            });
 
             // Render Pagination
             if (totalPages > 1) {
@@ -531,20 +737,15 @@
         // ==========================================
         
         function generateBlogHtml(blog) {
-            // Note: Update to link to this dynamic show.html script!
-            const dynamicUrl = `show.html?title=${encodeURIComponent(blog.title)}`;
+            // Encode the string, but strictly preserve explicit literal '+' signs instead of converting to %2B
+            const rawQuery = (blog.url || blog.title).replace(/ /g, '+');
+            const safeQuery = rawQuery.split('+').map(part => encodeURIComponent(part)).join('+');
+            const dynamicUrl = `show.html?title=${safeQuery}`;
+            
             return `
-                <a href="${dynamicUrl}" class="custom-card text-decoration-none text-dark">
-                    <div class="w-100 overflow-hidden border-bottom" style="aspect-ratio: 4/3; border-radius: 1rem 1rem 0 0;">
-                        <img src="${blog.image}" alt="${blog.title}" class="w-100 h-100 object-fit-cover" style="transition: transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" loading="lazy">
-                    </div>
-                    <div class="p-4 md:p-5 d-flex flex-column">
-                        <div class="text-brand fw-bold mb-3" style="font-size: 11px; letter-spacing: 1px; text-transform: uppercase;">${blog.date} • ${blog.readTime}</div>
-                        <h3 class="font-serif fw-medium mb-3" style="font-size: 1.35rem; line-height: 1.3;">${blog.title}</h3>
-                        <p class="text-muted mb-4" style="font-size: 15px; line-height: 1.6;">${blog.desc}</p>
-                        <div class="text-muted fw-semibold d-flex align-items-center mt-auto" style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">
-                            Read Prompt List <i class="fa-solid fa-chevron-right ms-2 small"></i>
-                        </div>
+                <a href="${dynamicUrl}" id="blog-card-${blog.id}" class="custom-card text-dark skeleton-bg text-decoration-none d-block p-0 overflow-hidden" style="transition: transform 0.3s ease;">
+                    <div class="w-100" style="min-height: 450px; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-muted fw-semibold" style="opacity: 0.6; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">Loading Prompt UI...</span>
                     </div>
                 </a>
             `;
@@ -578,7 +779,7 @@
             
             product.images.forEach((src, idx) => {
                 html += `
-                    <div class="snap-item carousel-item-img bg-light border">
+                    <div class="snap-item carousel-item-img border">
                         ${isKDP ? `<div class="kdp-spine-overlay"></div>` : ''}
                         <img src="${src}" alt="Preview" loading="lazy">
                     </div>

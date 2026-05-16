@@ -30,6 +30,7 @@
             background-color: var(--bg-light);
             color: var(--text-main);
             overflow-x: hidden;
+            width: 100%;
         }
 
         .font-serif {
@@ -44,7 +45,7 @@
         .container-custom {
             max-width: 80rem;
             margin: 0 auto;
-            padding: 0 10px; /* 10px margins on left and right for mobile */
+            padding: 0 5px; /* 10px margins on left and right for mobile */
         }
         @media (min-width: 768px) {
             .container-custom { padding: 0 40px; }
@@ -80,27 +81,30 @@
         }
         @media (min-width: 768px) { .main-nav { padding: 10px 32px; } }
 
-        /* Floating Filter Menu */
-        .floating-filter {
-            position: fixed;
-            top: 72px;
-            left: 0;
-            right: 0;
-            z-index: 1040;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transform: translateY(-100%);
-            opacity: 0;
-            transition: all 0.4s ease;
-            pointer-events: none;
+        /* Responsive Search Bar */
+        .nav-search-wrapper { width: 180px; padding: 8px 16px; }
+        .nav-search-text { font-size: 13px; font-weight: 600; }
+        .hero-search-bar { transition: transform 0.2s, box-shadow 0.2s; border-color: #e5e5e5 !important; }
+        .hero-search-bar i { font-size: 13px; }
+        .hero-search-bar:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important; }
+        
+        @media (min-width: 768px) {
+            .nav-search-wrapper { width: 240px; padding: 10px 20px; }
+            .nav-search-text { font-size: 14px; }
+            .hero-search-bar i { font-size: 14px; }
         }
-        .floating-filter.show {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
+        @media (min-width: 992px) {
+            .nav-search-wrapper { width: 280px; padding: 12px 24px; }
+            .nav-search-text { font-size: 15px; }
+            .hero-search-bar i { font-size: 15px; }
         }
+
+        /* Sticky Filter Components - absolute relative to sticky nav */
+        #sticky-filter-btn { position: absolute; right: 15px; top: calc(100% + 10px); }
+        @media (min-width: 768px) { #sticky-filter-btn { right: 32px; } }
+        #sticky-filter-btn:hover { background: #f8f9fa !important; }
+        
+        #sticky-filter-panel { position: absolute; top: 100%; left: 0; width: 100%; }
 
         /* Horizontal Scroll Containers */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -109,7 +113,7 @@
         .snap-item { scroll-snap-align: center; scroll-snap-stop: always; }
 
         /* Card Styling */
-        .custom-card {
+        .custom-card, .prompt-card {
             background: #fff;
             border-radius: 1rem;
             border: 1px solid rgba(0,0,0,0.04);
@@ -271,16 +275,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        /* Search Bar Styles */
-        .hero-search-bar {
-            transition: transform 0.2s, box-shadow 0.2s;
-            border-color: #e5e5e5 !important;
-        }
-        .hero-search-bar:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
-        }
-
         /* Lazy Loading & Skeleton */
         .skeleton-bg {
             background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
@@ -291,56 +285,53 @@
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
-        
-        /* Sticky Filter specific overrides */
-        .filter-btn-sticky {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-right: 4px;
-        }
-        @media (min-width: 768px) {
-            .filter-btn-sticky { font-size: 15px; }
-            .nav-search-wrapper { width: 220px !important; padding: 8px 16px !important; }
-            .nav-search-text { font-size: 13px !important; }
-        }
 
     </style>
 </head>
 <body>
     <!-- Top Banner -->
     <div class="accent-bar"></div>
-    <div class="bg-light border-bottom text-muted text-center py-2" style="font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+    <div class="bg-light border-bottom text-muted text-center py-2 px-3" style="font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
         Free Journal Prompts & Minimalist Digital Stationery
     </div>
 
-    <!-- Main Navigation -->
+    <!-- Main Navigation (Sticky Container) -->
     <nav class="main-nav d-flex justify-content-between align-items-center w-100">
         <a href="?type=all"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="28"></a>
         
         <div class="d-flex align-items-center gap-4">
-            <!-- Stacked Search + Filter Actions -->
             <div id="sticky-actions-container" class="d-flex flex-column align-items-end justify-content-center opacity-0 pointer-events-none" style="transition: opacity 0.3s; gap: 4px; margin-top: 2px;">
                 <a href="search.html" class="text-decoration-none d-block">
-                    <div class="nav-search-wrapper d-flex align-items-center bg-white border rounded-pill px-3 py-1.5 shadow-sm text-muted hero-search-bar" style="width: 150px;">
-                        <i class="fa-solid fa-magnifying-glass me-2 text-brand" style="font-size: 11px;"></i>
-                        <span class="nav-search-text" style="font-size: 11px; font-weight: 600;">Search...</span>
+                    <div class="nav-search-wrapper d-flex align-items-center bg-white border rounded-pill shadow-sm text-muted hero-search-bar">
+                        <i class="fa-solid fa-magnifying-glass me-2 text-brand"></i>
+                        <span class="nav-search-text">Search...</span>
                     </div>
                 </a>
-                <button id="sticky-filter-toggle" class="btn btn-link text-decoration-none d-flex align-items-center justify-content-end gap-2 p-0 w-100 filter-btn-sticky">
-                    <i class="fa-solid fa-filter text-brand" id="filter-icon"></i> <span class="text-dark">Filter</span>
-                </button>
+            </div>
+        </div>
+
+        <!-- Floating Filter Button (Nested inside Nav so it aligns directly below) -->
+        <button id="sticky-filter-btn" class="btn btn-white border shadow-sm rounded-pill d-flex align-items-center justify-content-center opacity-0 pointer-events-none" style="z-index: 1040; background: #fff; color: #1a1a1a; font-size: 13px; font-weight: 600; padding: 8px 18px; transition: opacity 0.3s, background 0.2s;" onclick="openFilter()">
+            <i class="fa-solid fa-sliders me-2"></i> Filter
+        </button>
+
+        <!-- Full Width Floating Filter Panel (Nested inside Nav) -->
+        <div id="sticky-filter-panel" class="bg-white border-bottom shadow-sm d-none" style="padding: 1.25rem 0; z-index: 1045; opacity: 0; transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.3s ease;">
+            <div class="container-custom">
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                    <h6 class="m-0 fw-bold font-serif" style="color: #1a1a1a; font-size: 16px;">Filter by Categories</h6>
+                    <button class="btn btn-sm btn-light rounded-circle d-flex align-items-center justify-content-center p-0" style="width: 28px; height: 28px;" onclick="closeFilter()">
+                        <i class="fa-solid fa-times text-muted"></i>
+                    </button>
+                </div>
+                <div class="filter-content">
+                    <div id="dynamic-filter-container" class="d-flex flex-nowrap gap-2 overflow-x-auto hide-scrollbar pb-2" style="-webkit-overflow-scrolling: touch;">
+                        <!-- Dynamic categories injected here -->
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
-
-    <!-- Floating Filter Menu -->
-    <div id="floating-filter-menu" class="floating-filter">
-        <div class="container-custom py-4">
-            <div id="floating-filter-container"></div>
-        </div>
-    </div>
 
     <!-- Hero Section -->
     <header class="bg-white border-bottom text-center px-3" style="padding-top: 2rem; padding-bottom: 2rem;">
@@ -405,6 +396,44 @@
 
     <!-- Application Logic -->
     <script>
+        // ==========================================
+        // UI FILTER TOGGLE LOGIC
+        // ==========================================
+        function openFilter() {
+            const btn = document.getElementById('sticky-filter-btn');
+            const panel = document.getElementById('sticky-filter-panel');
+            
+            btn.classList.remove('d-flex');
+            btn.classList.add('d-none');
+            
+            panel.classList.remove('d-none');
+            setTimeout(() => {
+                panel.style.opacity = '1';
+                panel.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        function closeFilter() {
+            const btn = document.getElementById('sticky-filter-btn');
+            const panel = document.getElementById('sticky-filter-panel');
+            
+            panel.style.opacity = '0';
+            panel.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                panel.classList.add('d-none');
+                
+                // Only re-show the button if we are currently scrolled past the threshold
+                const stickyActions = document.getElementById('sticky-actions-container');
+                if (!stickyActions.classList.contains('opacity-0')) {
+                    btn.classList.remove('d-none');
+                    btn.classList.add('d-flex');
+                } else {
+                    btn.classList.remove('d-none');
+                    btn.classList.add('d-flex'); // Re-add class but it will be hidden by opacity-0
+                }
+            }, 300);
+        }
+
         // ==========================================
         // DATA DEFINITIONS
         // ==========================================
@@ -496,7 +525,8 @@
             `;
 
             document.getElementById('main-filter-container').innerHTML = getHtml(false);
-            document.getElementById('floating-filter-container').innerHTML = getHtml(true);
+            const dynamicFilter = document.getElementById('dynamic-filter-container');
+            if(dynamicFilter) dynamicFilter.innerHTML = getHtml(true);
         }
 
         function renderGrid() {
@@ -658,9 +688,11 @@
         // ==========================================
         
         function generateBlogHtml(blog) {
-            // Encode the URL parameter so '+' signs are preserved when navigating
-            const safeQuery = encodeURIComponent(blog.url);
+            // Encode the string, strictly preserving explicit literal '+' signs
+            const rawQuery = (blog.url || blog.title).replace(/ /g, '+');
+            const safeQuery = rawQuery.split('+').map(part => encodeURIComponent(part)).join('+');
             const dynamicUrl = `show.html?title=${safeQuery}`;
+            
             return `
                 <a href="${dynamicUrl}" id="blog-card-${blog.id}" class="custom-card text-dark skeleton-bg text-decoration-none d-block p-0 overflow-hidden" style="transition: transform 0.3s ease;">
                     <div class="w-100" style="min-height: 450px; display: flex; align-items: center; justify-content: center;">
@@ -770,32 +802,27 @@
         // ==========================================
         async function fetchAndRenderBlog(blog) {
             try {
-                // Encode '+' as '%2B' to ensure local servers don't interpret them as spaces
-                const safePath = blog.url.replace(/\+/g, '%2B');
+                // Encode '+' as '%2B' for file fetching
+                const safePath = (blog.url || blog.title).replace(/\+/g, '%2B');
                 const response = await fetch(`data/list/${safePath}.json`);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 
                 const rawData = await response.json();
                 
-                // Smart check to handle if JSON is an array (e.g. [{ css:..., html:... }]) or a direct object
                 const data = Array.isArray(rawData) ? rawData[0] : rawData;
 
-                // Make sure css and html actually exist to prevent errors
                 if (!data || !data.css || !data.html) {
                     throw new Error('JSON is missing required css or html keys');
                 }
                 
-                // Parse HTML
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(data.html, 'text/html');
                 
-                // Remove description completely for the feed
                 const descContainer = doc.querySelector('.description-container');
                 if (descContainer) {
                     descContainer.remove();
                 }
 
-                // Limit prompts to 3
                 const promptItems = doc.querySelectorAll('.prompt-item');
                 let remaining = 0;
                 promptItems.forEach((item, index) => {
@@ -805,7 +832,6 @@
                     }
                 });
                 
-                // Add '+n more prompts' casual text
                 if (remaining > 0) {
                     const promptList = doc.querySelector('.prompt-list');
                     if (promptList) {
@@ -816,33 +842,27 @@
                     }
                 }
                 
-                // Adjust card styles specifically for fitting inside the feed
                 const innerCard = doc.querySelector('.prompt-card');
                 if (innerCard) {
-                    // Inject explicit styles to override any JSON styles so the outer custom-card dictates layout
                     innerCard.style.setProperty('margin', '0', 'important');
-                    innerCard.style.setProperty('border-radius', '0', 'important'); // Flat edges to match outer container
-                    innerCard.style.setProperty('box-shadow', 'none', 'important'); // Outer a-tag container handles shadow
+                    innerCard.style.setProperty('border-radius', '0', 'important'); 
+                    innerCard.style.setProperty('box-shadow', 'none', 'important'); 
                     innerCard.style.setProperty('max-width', '100%', 'important');
                     innerCard.style.setProperty('width', '100%', 'important');
                 }
 
-                // Inject Scoped CSS (Only inject if not already present)
                 if (!document.getElementById(`css-${blog.id}`)) {
                     const style = document.createElement('style');
                     style.id = `css-${blog.id}`;
-                    // Crucial: Replace global dynamic container id with this specific card's ID
                     style.innerHTML = data.css.replace(/#dynamic-content/g, `#blog-card-${blog.id}`);
                     document.head.appendChild(style);
                 }
                 
-                // Render into outer container
                 const container = document.getElementById(`blog-card-${blog.id}`);
                 if (container) {
                     container.innerHTML = doc.body.innerHTML;
-                    container.classList.remove('skeleton-bg'); // Remove loading background
+                    container.classList.remove('skeleton-bg'); 
                     
-                    // Add subtle hover lift effect to inner HTML
                     container.addEventListener('mouseenter', () => {
                         const card = container.querySelector('.prompt-card');
                         if (card) {
@@ -858,7 +878,6 @@
             } catch (error) {
                 console.error("Failed to load JSON UI for blog:", blog.title, error);
                 
-                // Fallback: If JSON fetch fails, show a clean title placeholder
                 const container = document.getElementById(`blog-card-${blog.id}`);
                 if (container) {
                     container.classList.remove('skeleton-bg');
@@ -899,38 +918,22 @@
         }
 
         function setupScrollListener() {
-            const filterRef = document.getElementById('filter-ref');
             const heroSearch = document.getElementById('hero-search');
             const stickyActions = document.getElementById('sticky-actions-container');
-            const filterMenu = document.getElementById('floating-filter-menu');
-            const toggleBtn = document.getElementById('sticky-filter-toggle');
-            const filterIcon = document.getElementById('filter-icon');
+            const stickyFilterBtn = document.getElementById('sticky-filter-btn');
 
             window.addEventListener('scroll', () => {
                 const searchRect = heroSearch.getBoundingClientRect();
                 
                 if (searchRect.bottom < 72) {
                     stickyActions.classList.remove('opacity-0', 'pointer-events-none');
+                    stickyFilterBtn.classList.remove('opacity-0', 'pointer-events-none');
                 } else {
                     stickyActions.classList.add('opacity-0', 'pointer-events-none');
-                    if (isFilterMenuOpen) toggleFilter();
+                    stickyFilterBtn.classList.add('opacity-0', 'pointer-events-none');
+                    closeFilter();
                 }
             });
-
-            toggleBtn.addEventListener('click', toggleFilter);
-
-            function toggleFilter() {
-                isFilterMenuOpen = !isFilterMenuOpen;
-                if (isFilterMenuOpen) {
-                    filterMenu.classList.add('show');
-                    filterIcon.classList.remove('fa-filter', 'text-brand');
-                    filterIcon.classList.add('fa-xmark', 'text-danger');
-                } else {
-                    filterMenu.classList.remove('show');
-                    filterIcon.classList.remove('fa-xmark', 'text-danger');
-                    filterIcon.classList.add('fa-filter', 'text-brand');
-                }
-            }
         }
 
         // Boot up
