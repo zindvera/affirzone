@@ -1,148 +1,82 @@
 [
-  {
-    "title": "10 Journal Prompts to Make You Stop Caring What Others Think",
-    "file": "10+Journal+Prompts+to+Make+You+Stop+Caring+What+Others+Think.json",
-    "type": "prompt-list",
-    "tags": [
-      "Anxiety"
-    ],
-    "pinterest_img": "",
-    "color": "#f3eef3"
-  },
-  {
-    "title": "12 Healing Journal Prompts for Emotional Recovery",
-    "file": "12+Healing+Journal+Prompts+for+Emotional+Recovery.json",
-    "type": "prompt-list",
-    "tags": [
-      "Healing",
-      "Inner Peace"
-    ],
-    "pinterest_img": "",
-    "color": "#fbf5ef"
-  },
-  {
-    "title": "10 Manifestation Journal Prompts for Goal Setting & Alignment",
-    "file": "10+Manifestation+Journal+Prompts+for+Goal+Setting+&+Alignment.json",
-    "type": "prompt-list",
-    "tags": [
-      "Manifestation",
-      "Self Discovery"
-    ],
-    "pinterest_img": "",
-    "color": "#f8f2ff"
-  },
-  {
-    "title": "10 Calming Journal Prompts for Managing Daily Anxiety",
-    "file": "10+Calming+Journal+Prompts+for+Managing+Daily+Anxiety.json",
-    "type": "prompt-list",
-    "tags": [
-      "Anxiety",
-      "Inner Peace",
-      "Mindfulness"
-    ],
-    "pinterest_img": "",
-    "color": "#f7fff9"
-  },
-  {
-    "title": "10 Strategic Journal Prompts for Peak Productivity",
-    "file": "10+Strategic+Journal+Prompts+for+Peak+Productivity.json",
-    "type": "prompt-list",
-    "tags": [
-      "Productivity",
-      "Career Growth",
-      "Motivation"
-    ],
-    "pinterest_img": "",
-    "color": "#fff9ec"
-  },
-  {
-    "title": "10 Morning Gratitude Prompts for a Positive and Focused Day",
-    "file": "10+Morning+Gratitude+Prompts+for+a+Positive+and+Focused+Day.json",
-    "type": "prompt-list",
-    "tags": [
-      "Gratitude",
-      "Mindfulness",
-      "Anxiety"
-    ],
-    "pinterest_img": "",
-    "color": "#fffdf7"
-  },
-  {
-    "title": "12 Compassionate Journal Prompts for Navigating Grief",
-    "file": "12+Compassionate+Journal+Prompts+for+Navigating+Grief.json",
-    "type": "prompt-list",
-    "tags": [
-      "Grief",
-      "Inner Peace",
-      "Self Discovery"
-    ],
-    "pinterest_img": "",
-    "color": "#f4f7fb"
-  },
-  {
-    "title": "15 Journal Prompts for Long Career Gap Since Graduation: Remove Shame & Build Positivity",
-    "file": "15+Journal+Prompts+for+Long+Career+Gap+Since+Graduation.json",
-    "type": "prompt-list",
-    "tags": [
-      "Career",
-      "Self Confidence",
-      "Anxiety"
-    ],
-    "pinterest_img": "",
-    "color": "#f4f6f8"
-  },
-  {
-    "title": "April Month: 15 Journal Prompts for Work Focus and Motivation",
-    "file": "April+Month+15+Journal+Prompts+for+Work+Focus+and+Motivation.json",
-    "type": "prompt-list",
-    "tags": [
-      "Career",
-      "Productivity"
-    ],
-    "pinterest_img": "",
-    "color": "#eef7e9"
-  },
-  {
-    "title": "12 Thoughtful Bible Journal Prompts for Spiritual Reflection",
-    "file": "12+Thoughtful+Bible+Journal+Prompts+for+Spiritual+Reflection.json",
-    "type": "prompt-list",
-    "tags": [
-      "Faith",
-      "Inner Peace",
-      "Mindfulness"
-    ],
-    "pinterest_img": "",
-    "color": "#fdfdf2"
-  },
-  {
-    "title": "10 Deep Prayer Journal Prompts for Spiritual Connection",
-    "file": "10+Deep+Prayer+Journal+Prompts+for+Spiritual+Connection.json",
-    "type": "prompt-list",
-    "tags": [
-      "Faith",
-      "Inner Peace"
-    ],
-    "pinterest_img": "",
-    "color": "#fffdf0"
-  },
-  {
-    "title": "12 Creative Art Journal Prompts to Express Your Inner Artist",
-    "file": "12+Creative+Art+Journal+Prompts+to+Express+Your+Inner+Artist.json",
-    "type": "prompt-list",
-    "tags": [
-      "Art"
-    ],
-    "pinterest_img": "",
-    "color": "#f0faff"
-  },
-  {
-    "title": "10 Meaningful Journal Prompts for Couples to Strengthen Their Bond",
-    "file": "10+Meaningful+Journal+Prompts+for+Couples+to+Strengthen+Their+Bond.json",
-    "type": "prompt-list",
-    "tags": [
-      "Relationships"
-    ],
-    "pinterest_img": "",
-    "color": "#fff5f8"
-  }
+{
+"id": "b1",
+"title": "10 Journal Prompts to Make You Stop Caring What Others Think",
+"url": "10+Journal+Prompts+to+Make+You+Stop+Caring+What+Others+Think",
+"desc": "Start your day with clarity and unpack morning anxiety.",
+"image": "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
+"category": "healing, confidence"
+},
+{
+  "id": "b2",
+  "title": "12 Healing Journal Prompts for Emotional Recovery",
+  "url": "12+Healing+Journal+Prompts+for+Emotional+Recovery",
+  "desc": "Start your day with clarity and unpack morning anxiety.",
+  "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800",
+  "category": "healing, emotional-recovery"
+},
+{
+  "id": "b3",
+  "title": "10 Manifestation Journal Prompts for Goal Setting & Alignment",
+  "url": "10+Manifestation+Journal+Prompts+for+Goal+Setting+Alignment",
+  "desc": "Bridge the gap between your daily actions and your ultimate life goals.",
+  "image": "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=800",
+  "category": "manifestation, mindset"
+},
+{
+  "id": "b4",
+  "title": "10 Calming Journal Prompts for Managing Daily Anxiety",
+  "url": "10+Calming+Journal+Prompts+for+Managing+Daily+Anxiety",
+  "desc": "Relax, focus on the present, and feel more in control of your day.",
+  "image": "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&q=80&w=800",
+  "category": "anxiety, mental-health"
+},
+{
+  "id": "b5",
+  "title": "10 Strategic Journal Prompts for Peak Productivity",
+  "url": "10+Strategic+Journal+Prompts+for+Peak+Productivity",
+  "desc": "Audit your time, eliminate distractions, and design your daily flow for peak execution.",
+  "image": "https://images.unsplash.com/photo-1484480974693-2ca0a79fb36b?auto=format&fit=crop&q=80&w=800",
+  "category": "productivity, focus"
+},
+{
+  "id": "b6",
+  "title": "10 Morning Gratitude Prompts for a Positive and Focused Day",
+  "url": "10+Morning+Gratitude+Prompts+for+a+Positive+and+Focused+Day",
+  "desc": "Shift your focus from what's missing to what's present and design a clearer morning mindset.",
+  "image": "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=800",
+  "category": "gratitude, morning-routine"
+},
+{
+  "id": "b7",
+  "title": "12 Compassionate Journal Prompts for Navigating Grief",
+  "url": "12+Compassionate+Journal+Prompts+for+Navigating+Grief",
+  "desc": "A gentle space to honor your feelings, remember your loss, and find steady ground.",
+  "image": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=800",
+  "category": "grief, emotional-recovery"
+},
+{
+  "id": "b8",
+  "title": "15 Journal Prompts for Long Career Gap Since Graduation: Remove Shame & Build Positivity",
+  "url": "15+Journal+Prompts+for+Long+Career+Gaps",
+  "desc": "Release the guilt of an unconventional timeline, dismantle professional shame, and own your journey.",
+  "image": "https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&q=80&w=800",
+  "category": "career-gap, career, mindset"
+},
+{
+  "id": "b9",
+  "title": "June Month: 15 Journal Prompts for Work Focus and Motivation",
+  "url": "15+June+Journal+Prompts+for+Work+Focus",
+  "desc": "Audit your workplace habits, elevate your daily motivation, and focus fully on professional growth.",
+  "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800",
+  "category": "work-focus, productivity"
+},
+{
+  "id": "b10",
+  "title": "12 Thoughtful Bible Journal Prompts for Spiritual Reflection",
+  "url": "12+Bible+Journal+Prompts+for+Spiritual+Reflection",
+  "desc": "Reflect on your spiritual journey, find deep peace in scripture, and walk with intentional faith.",
+  "image": "https://images.unsplash.com/photo-1504052434569-70ad58565b90?auto=format&fit=crop&q=80&w=800",
+  "category": "bible-journaling, spiritual-reflection"
+}
 ]

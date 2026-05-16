@@ -1,0 +1,62 @@
+[
+  {
+    "groupId": "vol1",
+    "target_prompt": "gratitude, healing, productivity",
+    "title": "30 Affirmations Journal",
+    "images": [
+      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?auto=format&fit=crop&q=80&w=800"
+    ],
+    "digital": {
+      "id": "30-affirmation-journal-pdf",
+      "price": "$3.99",
+      "pages": "64 Pages • Digital PDF",
+      "desc": "A perfect introduction to mindful journaling. 30 unique prompts optimized for Goodnotes."
+    },
+    "kdp": {
+      "id": "30-affirmation-journal-kdp",
+      "price": "$6.99",
+      "pages": "64 Pages • Paperback Book",
+      "desc": "Hold your affirmations in your hands. A beautifully printed physical journal delivered by Amazon."
+    }
+  },
+  {
+    "groupId": "vol2",
+    "target_prompt": "productivity, career",
+    "title": "60 Affirmations Journal",
+    "images": [
+      "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800"
+    ],
+    "digital": {
+      "id": "60-affirmation-journal-pdf",
+      "price": "$5.99",
+      "pages": "128 Pages • Digital PDF",
+      "desc": "Build a consistent daily routine. This expanded digital journal gives you two months of reflection."
+    }
+  },
+  {
+    "groupId": "vol3",
+    "target_prompt": null,
+    "title": "90 Affirmations Journal",
+    "images": [
+      "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&q=80&w=800"
+    ],
+    "digital": {
+      "id": "90-affirmation-journal-pdf",
+      "price": "$7.99",
+      "pages": "190+ Pages • Digital PDF",
+      "desc": "Our complete collection for lasting transformation. A comprehensive digital toolkit for self-love."
+    },
+    "kdp": {
+      "id": "90-affirmation-journal-kdp",
+      "price": "$11.99",
+      "pages": "190+ Pages • Paperback Book",
+      "desc": "The ultimate physical journal for lasting transformation. A beautifully bound toolkit."
+    }
+  }
+]

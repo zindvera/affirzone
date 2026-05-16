@@ -1,0 +1,10 @@
+[
+  {
+    "id": "promo-digital-journal",
+    "html": "<div style='background: #fdfbfb; border: 1px solid rgba(35,180,142,0.15); border-radius: 1rem; padding: 2rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.03);'><span style='display: block; font-size: 10px; font-weight: 800; color: #23b48e; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;'>Daily Practice</span><h3 style='font-family: \"Playfair Display\", serif; font-size: 1.5rem; color: #1a1a1a; margin-bottom: 0.75rem;'>Take your journaling to Goodnotes</h3><p style='font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 1.5rem;'>Get our complete 30-day guided affirmations journal optimized for iPad and tablet use.</p><a href=\"index.html?type=digital-notebook\" style='display: inline-block; background: #1a1a1a; color: #fff; text-decoration: none; padding: 12px 30px; border-radius: 0.375rem; font-weight: 600; font-size: 13px; transition: all 0.2s;'>Shop Digital PDF</a></div>"
+  },
+  {
+    "id": "promo-kdp-paperback",
+    "html": "<div style='background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%); border: 1px solid #e5e5e5; border-radius: 1rem; padding: 2rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.03);'><span style='display: block; font-size: 10px; font-weight: 800; color: #FF9900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;'>Physical Edition</span><h3 style='font-family: \"Playfair Display\", serif; font-size: 1.5rem; color: #1a1a1a; margin-bottom: 0.75rem;'>Prefer writing on paper?</h3><p style='font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 1.5rem;'>Our journals are available as premium paperbacks delivered directly by Amazon to your doorstep.</p><a href=\"index.html?type=kdp-notebook\" style='display: inline-block; background: #FF9900; color: #fff; text-decoration: none; padding: 12px 30px; border-radius: 0.375rem; font-weight: 600; font-size: 13px; transition: all 0.2s;'>Browse on Amazon</a></div>"
+  }
+]

@@ -1,506 +1,641 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9MS4WCCB21"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-9MS4WCCB21');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discovery | Affirzone</title>
-    <link rel="icon" type="image/png" sizes="16x16" href="media/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32x32.png">
+    <meta name="description" content="Free guided journal prompts and minimalist digital stationery.">
+    <title>Loading Prompt... - Affirzone</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="media/favicon-180x180.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Base Styles for Layout and Feed -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
         :root {
-            --bg-base: #f7f7f7;
-            --glass-white: #ffffff;
-            --text-main: #111111;
-            --text-sub: #4b4b4b;
-            --text-muted: #888888;
-            --border-accent: rgba(0, 0, 0, 0.08);
-            --radius-bubble: 22px;
-            --radius-container: 32px;
-            --radius-card: 22px;
-            --brand-blue: #2563eb;
-            --pinterest-red: #e60023;
-        }
-
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            --brand-color: #23b48e;
+            --brand-hover: #1e9d7c;
+            --bg-light: #fafafa;
+            --text-main: #1a1a1a;
+            --text-muted: #6c757d;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-base);
-            background-image: radial-gradient(circle at 0 120px, #e3f2fd 0%, transparent 20%),
-                radial-gradient(circle at 100% 100%, #fdeaea 0%, transparent 15%);
-            background-attachment: fixed;
+            background-color: var(--bg-light);
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            background: #ffffff;
-            border-top: 1px solid #eeeeee;
-            margin-top: 40px;
+        #dynamic-content{
+            margin-top:0.3in;
         }
 
-        .footer-links {
-            margin-bottom: 15px;
+        .font-serif {
+            font-family: 'Playfair Display', serif;
         }
 
-        .footer-links a {
-            color: #666666;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: #00a896;
-        }
-
-        .copyright {
-            font-size: 0.85rem;
-            color: #999999;
-        }
-
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-            padding: 8px 0;
-            width: 100%;
-        }
-
-        .header-inner {
-            width: 100%;
-            max-width: 850px;
+        .text-brand { color: var(--brand-color); }
+        .bg-brand { background-color: var(--brand-color); color: white; }
+        
+        .container-custom {
+            max-width: 80rem;
             margin: 0 auto;
-            padding: 0 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 0px;
+        }
+        @media (min-width: 768px) {
+            .container-custom { padding: 0 40px; }
         }
 
-        .logo img {
-            height: 28px;
-            width: auto;
-            object-fit: contain;
+        .card-gap {
+            margin-bottom: 4rem;
+        }
+        @media (min-width: 768px) {
+            .card-gap { margin-bottom: 6rem; }
         }
 
-        .search-area-box {
-            position: relative;
-            width: 180px;
-            cursor: pointer;
-            flex-shrink: 0;
+        /* Nav Styles */
+        .accent-bar { height: 4px; background: linear-gradient(90deg, #23b48e, #2c8be4); width: 100%; }
+        .main-nav {
+            position: sticky; top: 0; z-index: 1050; min-height: 72px;
+            background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05); padding: 10px 15px;
+        }
+        @media (min-width: 768px) { .main-nav { padding: 10px 32px; } }
+
+        .hero-search-bar { transition: transform 0.2s, box-shadow 0.2s; border-color: #e5e5e5 !important; }
+        .hero-search-bar:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important; }
+
+        .nav-search-wrapper { width: 150px; }
+        .nav-search-text { font-size: 11px !important; }
+        @media (min-width: 768px) {
+            .nav-search-wrapper { width: 220px !important; padding: 8px 16px !important; }
+            .nav-search-text { font-size: 13px !important; }
         }
 
-        .search-area-box input {
-            width: 100%;
-            height: 44px;
-            padding: 0 45px 0 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            background: #fff;
-            font-size: 0.9rem;
-            color: var(--text-main);
-            outline: none;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+        /* Feed Card Styles */
+        .custom-card {
+            background: #fff; border-radius: 1rem; border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04); transition: all 0.3s ease;
+            display: flex; flex-direction: column; height: auto; 
         }
+        .custom-card:hover { box-shadow: 0 12px 40px rgba(35,180,142,0.08); }
+        .carousel-wrapper { position: relative; width: 100%; }
+        .carousel-item-img {
+            width: 90%; aspect-ratio: 4/3; flex-shrink: 0; position: relative;
+            border-radius: 0.75rem; overflow: hidden; box-sizing: border-box;
+        }
+        @media (min-width: 768px) { .carousel-item-img { width: 100%; } }
+        .carousel-item-img img { width: 100%; height: 100%; object-fit: cover; }
+        .kdp-spine-overlay {
+            position: absolute; left: 0; top: 0; bottom: 0; width: 24px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.08), transparent);
+            pointer-events: none; z-index: 10;
+        }
+        .scroll-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.9); border: 1px solid #eee; border-radius: 50%;
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; opacity: 0; transition: opacity 0.2s; z-index: 20; color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .carousel-wrapper:hover .scroll-arrow { opacity: 1; }
+        .scroll-arrow.left { left: 8px; }
+        .scroll-arrow.right { right: 8px; }
+        @media (max-width: 767px) { .scroll-arrow { display: none; } }
+        .format-toggle {
+            font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            padding: 14px 0; background: none; border: none; border-bottom: 2px solid transparent;
+            color: #adb5bd; transition: all 0.2s;
+        }
+        @media (min-width: 768px) { .format-toggle { font-size: 14px; } }
+        .format-toggle.active { color: var(--text-main); border-bottom-color: var(--text-main); }
+        .btn-action {
+            width: 100%; border-radius: 0.375rem; font-weight: 600; display: flex; align-items: center;
+            justify-content: center; gap: 8px; text-decoration: none; border: none; transition: all 0.2s;
+        }
+        .btn-dark-action { background: var(--text-main); color: #fff; }
+        .btn-dark-action:hover { background: #333; color: #fff; }
+        .btn-amazon { background: #FF9900; color: #fff; }
+        .btn-amazon:hover { background: #e68a00; color: #fff; }
+        .btn-outline-custom { border: 1px solid #e5e5e5; color: var(--text-muted); text-transform: uppercase; }
+        .btn-outline-custom:hover { background: #f8f9fa; color: var(--text-main); border-color: var(--text-main); }
+        .btn-outline-brand { border: 1px solid rgba(35,180,142,0.2); color: var(--brand-color); text-transform: uppercase; }
+        .btn-outline-brand:hover { background: rgba(35,180,142,0.05); }
 
-        .search-area-box .search-btn-icon {
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 40px;
-            background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%);
-            color: #2563eb;
-            border: none;
-            border-radius: 0 12px 12px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 850px;
-            margin: 0 auto;
-            padding: 30px 2px 100px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #statusArea {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            min-height: 300px;
-            text-align: center;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(0, 0, 0, 0.1);
-            border-top-color: var(--brand-blue);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 15px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .content-card {
-            background-color: #f2f2f2;
-            border-radius: var(--radius-container);
-            padding: 60px 45px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            display: none;
-            flex-direction: column;
-        }
-
-        .hero-section {
-            margin-bottom: 40px;
-            align-self: flex-start;
-        }
-
-        .pageTitle h2 {
-            margin: 0;
-            font-size: 1.7rem;
-            font-weight: 800;
-            line-height: 1.3;
-            letter-spacing: -0.03em;
-        }
-
-        .intro-text {
-            font-size: 1.15rem;
-            line-height: 1.7;
-            color: var(--text-sub);
-            margin-bottom: 50px;
-        }
-
-        .read-more-link {
-            color: var(--brand-blue);
-            cursor: pointer;
-            font-weight: 600;
-            text-decoration: underline;
-            margin-left: 5px;
-        }
-
-        .prompt-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 45px;
-        }
-
-        .prompt-item {
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-        }
-
-        .prompt-number {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #b0b0b0;
-            min-width: 24px;
-            flex-shrink: 0;
-        }
-
-        .journal-text {
-            font-size: 1.25rem;
-            line-height: 1.7;
-            color: var(--text-main);
-            font-weight: 500;
-            margin: 0;
-        }
-
-        .combo-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 45px;
-        }
-
-        .combo-item {
-            background-color: #fff;
-            padding: 40px 35px;
-            border-radius: var(--radius-card);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            margin: 0 10px;
-        }
-
-        .affirmation-text {
-            font-size: 1.35rem;
-            line-height: 1.45;
-            color: var(--text-main);
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .prompt-text {
-            font-size: 1.15rem;
-            line-height: 1.75;
-            color: var(--text-sub);
-            margin: 0;
-            padding-top: 18px;
-            border-top: 1px solid #f8f8f8;
-        }
-
-        .ad-recommendation {
-            position: relative;
-            border-radius: 18px;
-            padding: 35px;
-            margin: 50px 0;
-            background: #fcfcfc;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        #pageTitle {
-            font-size: 30px;
-        }
-
-        @media screen and (max-width: 600px) {
-            .content-card { padding: 45px 0; border-radius: 0; }
-            .hero-section, .intro-text { padding: 0 12px; }
-            .prompt-list { padding: 0 14px; }
-            .ad-recommendation { margin: 35px 0px; padding: 25px 20px; }
-            #pageTitle { font-size: 26px; }
-        }
     </style>
+
+    <!-- DYNAMIC STYLES: CSS fetched from the JSON will be injected here -->
+    <style id="dynamic-styles"></style>
+
 </head>
-
 <body>
-    <header>
-        <div class="header-inner">
-            <a href="index.html" class="logo"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo"></a>
-            <div class="search-area-box" onclick="performSearchRedirect()">
-                <input type="text" placeholder="Search..." readonly />
-                <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-            </div>
-        </div>
-    </header>
 
-    <div class="container" id="mainContainer">
-        <div id="statusArea">
-            <div class="spinner"></div>
-        </div>
-        <main class="content-card" id="contentCard">
-            <section class="hero-section">
-                <div class="pageTitle"><h2 id="pageTitle"></h2></div>
-            </section>
-            <div class="intro-text" id="pageIntroContainer">
-                <span id="pageIntro"></span>
-                <span id="readMoreBtn" class="read-more-link" onclick="toggleReadMore()">Read More</span>
-            </div>
-
-            <div id="renderArea"></div>
-
-            <div class="action-area" id="actionArea" style="margin-top: 60px; display: none; justify-content: center;">
-                <button class="btn-pinterest"
-                    style="background: var(--pinterest-red); border: none; padding: 18px 36px; border-radius: 50px; color: #ffffff; font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; gap: 12px; cursor: pointer; box-shadow: 0 12px 30px rgba(230, 0, 35, 0.2); transition: transform 0.2s;"
-                    onclick="saveToPinterest()">
-                    <i class="fa-brands fa-pinterest"></i> Save On Pinterest
-                </button>
-            </div>
-        </main>
+    <!-- Top Banner -->
+    <div class="accent-bar"></div>
+    <div class="bg-light border-bottom text-muted text-center py-2" style="font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+        Free Journal Prompts & Minimalist Digital Stationery
     </div>
 
-    <footer>
-        <div class="footer-links">
-            <a href="about.html">About Us</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms & Conditions</a>
+    <!-- Main Navigation -->
+    <nav class="main-nav d-flex justify-content-between align-items-center w-100">
+        <a href="index.html?type=all"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="28"></a>
+        
+        <div class="d-flex align-items-center gap-4">
+            <div id="sticky-actions-container" class="d-flex flex-column align-items-end justify-content-center" style="gap: 4px; margin-top: 2px;">
+                <a href="search.html" class="text-decoration-none d-block">
+                    <div class="nav-search-wrapper d-flex align-items-center bg-white border rounded-pill px-3 py-1.5 shadow-sm text-muted hero-search-bar" style="width: 150px;">
+                        <i class="fa-solid fa-magnifying-glass me-2 text-brand" style="font-size: 11px;"></i>
+                        <span class="nav-search-text" style="font-size: 11px; font-weight: 600;">Search...</span>
+                    </div>
+                </a>
+            </div>
         </div>
-        <div class="copyright">&copy; 2026 Affirzone. Made for mindful thinkers.</div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="container-custom">
+        
+   
+        <!-- DYNAMIC CONTENT: The fetched HTML card will be injected here -->
+        <div id="dynamic-content">
+            <div class="d-flex flex-column justify-content-center align-items-center py-5 my-5" style="min-height: 40vh;">
+                <div class="spinner-border text-brand mb-3" role="status"></div>
+                <p class="text-muted fw-semibold text-uppercase tracking-wider" style="letter-spacing: 1px; font-size: 12px;">Loading Prompt...</p>
+            </div>
+        </div>
+
+        <!-- DYNAMIC RELATED FEED -->
+        <section id="related-section" class="py-5 mt-5 border-top" style="display: none;">
+            <div class="row" id="related-grid">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Pagination -->
+            <div id="related-pagination" class="d-flex justify-content-center align-items-center gap-3 mt-4">
+                <!-- Pagination injected via JS -->
+            </div>
+
+            <!-- Explore More Homepage CTA -->
+            <div class="text-center mt-5 pt-4">
+                <a href="index.html" class="btn btn-dark rounded-pill px-5 py-3 fw-bold" style="font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
+                    Explore All Prompts & Journals
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="about" class="text-center text-white py-5 px-3" style="background-color: #1a1a1a; margin-top: 2rem;">
+        <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="32" class="mb-4" style="filter: brightness(0) invert(1) opacity(0.8);">
+        <p class="text-white mx-auto mb-5" style="max-width: 24rem; font-size: 1rem; line-height: 1.6; opacity: 0.9;">
+            Providing mindful tools for high-resolution minimal stationery and clear daily routines.
+        </p>
+        <div class="d-flex justify-content-center gap-4 mb-5" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+            <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Instagram</a>
+            <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Pinterest</a>
+            <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Contact</a>
+        </div>
+        <div class="pt-4 text-white" style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7;">
+            © <script>document.write(new Date().getFullYear())</script> Affirzone. All rights reserved.
+        </div>
     </footer>
 
+    <!-- Application Logic -->
     <script>
-        let pinTitle = "", fullDescription = "", isExpanded = false;
-        let globalAdCatalog = [];
-        let adsMasterActive = true;
-        const COOKIE_NAME = 'affirzone_seen_ads';
+        // ==========================================
+        // DATA ARRAYS (Fetched dynamically)
+        // ==========================================
+        let productsData = [];
+        let promptListData = [];
 
-        function setCookie(name, value, days) {
-            let expires = "";
-            if (days) {
-                const date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
+        // ==========================================
+        // STATE VARIABLES
+        // ==========================================
+        let currentBlogCategories = []; 
+        let currentBlogTitle = "";
+        
+        let currentPage = 1;
+        const itemsPerPage = 12; // Max 12 items for related feed
+        let cardFormats = {}; 
+
+        // ==========================================
+        // INITIALIZATION & FETCHING LOGIC
+        // ==========================================
+        async function init() {
+            const params = new URLSearchParams(window.location.search);
+            const titleParam = params.get('title');
+            const pageParam = parseInt(params.get('page'));
+            
+            if (pageParam && !isNaN(pageParam)) currentPage = pageParam;
+
+            // 1. Check URL Parameter
+            if (!titleParam) {
+                showError("No prompt specified. Please select a prompt from the homepage.");
+                return;
             }
-            document.cookie = name + "=" + (JSON.stringify(value) || "") + expires + "; path=/; SameSite=Lax";
+
+            // 2. Fetch the Dynamic JSON file for the Card
+            try {
+                // We need to convert them back to `+` to match your exact saved JSON file name on the server.
+                const fileName = titleParam.replace(/ /g, '+');
+                const response = await fetch(`data/list/${fileName}.json`);
+                
+                if (!response.ok) throw new Error('File not found');
+                
+                let data = await response.json();
+                
+                if (Array.isArray(data)) {
+                    data = data[0];
+                }
+                
+                // SEO: Update Meta Tag with Description
+                document.title = `${data.title || titleParam} - Affirzone`;
+                let metaDescription = document.querySelector('meta[name="description"]');
+                if (metaDescription && data.description) {
+                    metaDescription.setAttribute('content', data.description);
+                }
+
+                // Inject the Dynamic CSS & HTML
+                document.getElementById('dynamic-styles').innerHTML = data.css || '';
+                document.getElementById('dynamic-content').innerHTML = data.html || '';
+
+                // Text Trimming Logic for Description Container
+                const descEl = document.querySelector('#dynamic-content .description-text');
+                if (descEl) {
+                    const fullText = descEl.innerText;
+                    const words = fullText.split(' ');
+                    
+                    let wordLimit = 15; // Default word limit
+                    let shouldTruncate = true;
+
+                    if (data.cut_desc === "none") {
+                        shouldTruncate = false;
+                    } else if (data.cut_desc !== undefined && data.cut_desc !== null) {
+                        wordLimit = parseInt(data.cut_desc, 10);
+                    }
+                    
+                    if (shouldTruncate && words.length > wordLimit && !isNaN(wordLimit)) {
+                        const truncated = words.slice(0, wordLimit).join(' ') + '... ';
+                        descEl.innerText = truncated;
+                        
+                        const readMoreBtn = document.createElement('a');
+                        readMoreBtn.href = '#';
+                        readMoreBtn.className = 'text-brand fw-bold text-decoration-none ms-1';
+                        readMoreBtn.style.fontSize = '0.9em';
+                        readMoreBtn.innerText = 'Read More';
+                        readMoreBtn.onclick = function(e) {
+                            e.preventDefault();
+                            descEl.innerText = fullText; // Reverts to full text on click
+                        };
+                        descEl.appendChild(readMoreBtn);
+                    }
+                }
+
+                // Insert Promo Ads inside the prompt list content
+                await insertPromoAds();
+
+                // Save data for the related feed engine
+                currentBlogTitle = data.title || titleParam;
+                currentBlogCategories = data.category ? data.category.split(',').map(c => c.trim().toLowerCase()) : [];
+                
+                document.getElementById('related-section').style.display = 'block';
+
+            } catch (error) {
+                console.error(error);
+                showError("We couldn't find the prompt list you're looking for.");
+                return; // Stop execution if the main file fails
+            }
+
+            // 3. Fetch Related Data (Products & Topics) for the Feed below
+            try {
+                const [productsRes, topicsRes] = await Promise.all([
+                    fetch('data/products/list.json'),
+                    fetch('data/topics/list.json')
+                ]);
+                
+                if (productsRes.ok) productsData = await productsRes.json();
+                if (topicsRes.ok) promptListData = await topicsRes.json();
+            } catch (error) {
+                console.log("Could not load external feed data.");
+            }
+
+            renderRelatedFeed();
         }
 
-        function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) {
-                    try { return JSON.parse(c.substring(nameEQ.length, c.length)); } catch (e) { return []; }
-                }
-            }
+        // Display a clean error if URL is missing or JSON 404s
+        function showError(msg) {
+            document.getElementById('dynamic-content').innerHTML = `
+                <div class="text-center py-5 my-5">
+                    <div class="mb-4"><i class="fa-regular fa-file-lines text-muted" style="font-size: 3rem; opacity: 0.5;"></i></div>
+                    <h2 class="font-serif fw-bold mb-3" style="color: #1a1a1a;">${msg}</h2>
+                    <a href="index.html" class="btn btn-dark rounded-pill px-4 py-2 mt-3 font-semibold" style="font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Return to Home</a>
+                </div>
+            `;
+            document.getElementById('related-section').style.display = 'none';
+        }
+
+        // ==========================================
+        // COOKIE & VIEWPORT TRACKING UTILITIES
+        // ==========================================
+        function getSeenAds() {
+            const match = document.cookie.match(/(^| )ad_seen=([^;]+)/);
+            if (match && match[2]) return match[2].split(',');
             return [];
         }
 
-        function performSearchRedirect() { window.location.href = `search.html`; }
-        function showNotFound() {
-            document.getElementById('statusArea').innerHTML = `<div class="page-not-found">Page Not Found</div>`;
-            document.getElementById('contentCard').style.display = 'none';
-        }
-
-        function getUnseenAd(targetType, targetFile) {
-            if (!adsMasterActive || globalAdCatalog.length === 0) return "";
-            let seen = getCookie(COOKIE_NAME) || [];
-            const activeCatalog = globalAdCatalog.filter(ad => ad.adsActive !== false);
-            let pool = activeCatalog.filter(ad => 
-                (ad["target-title"] && ad["target-title"].includes(targetFile)) || 
-                (ad["target-type"] && ad["target-type"].includes(targetType))
-            );
-            let unseenPool = pool.filter(ad => !seen.includes(ad.id));
-            if (unseenPool.length === 0 && pool.length > 0) {
-                seen = seen.filter(id => !pool.find(a => a.id === id));
-                setCookie(COOKIE_NAME, seen, 30);
-                unseenPool = pool;
+        function addSeenAd(id) {
+            let seen = getSeenAds();
+            if (!seen.includes(id)) {
+                seen.push(id);
+                document.cookie = `ad_seen=${seen.join(',')};path=/;max-age=2592000`; // Expires in 30 days
             }
-            if (unseenPool.length === 0) return "";
-            const selected = unseenPool[Math.floor(Math.random() * unseenPool.length)];
-            seen.push(selected.id);
-            setCookie(COOKIE_NAME, seen, 30);
-            return `<div class="ad-recommendation">${selected.html}</div>`;
         }
 
-        async function initShowPage() {
-            const params = new URLSearchParams(window.location.search);
-            const rawTitle = params.get('title');
-            if (!rawTitle) return showNotFound();
-            const queryTitle = rawTitle.trim().toLowerCase();
+        function resetSeenAds() {
+            document.cookie = `ad_seen=;path=/;max-age=0`; // Clear cookie
+        }
 
+        // Observer to detect when an ad actually enters the screen
+        const adObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const adId = entry.target.getAttribute('data-promo-id');
+                    if (adId) {
+                        addSeenAd(adId);
+                        observer.unobserve(entry.target); // Stop observing once marked as seen
+                    }
+                }
+            });
+        }, { threshold: 0.5 }); // Triggers when at least 50% of the ad is visible
+
+        // ==========================================
+        // PROMO AD INJECTION
+        // ==========================================
+        async function insertPromoAds() {
             try {
-                const adsRes = await fetch('data/products/list.json');
-                const adsData = await adsRes.json();
-                adsMasterActive = adsData.adsActive !== undefined ? adsData.adsActive : true;
-                globalAdCatalog = adsData.products || [];
+                const response = await fetch('data/promo/list.json');
+                if (!response.ok) return;
+                
+                const promos = await response.json();
+                if (!promos || !Array.isArray(promos) || promos.length === 0) return;
 
-                const res = await fetch('data/topics/list.json');
-                const registry = await res.json();
+                const promptItems = document.querySelectorAll('#dynamic-content .prompt-item');
+                const count = promptItems.length;
 
-                const meta = registry.find(item => 
-                    (item.title && item.title.toLowerCase().trim() === queryTitle) ||
-                    (item.query && item.query.toLowerCase().trim() === queryTitle)
-                );
-                if (!meta) return showNotFound();
+                const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+                const getAdHtml = (promo) => typeof promo === 'string' ? promo : (promo.html || '');
 
-                document.getElementById('contentCard').style.backgroundColor = meta.color || "#f2f2f2";
-                const contentRes = await fetch(`data/prompts/${meta.file}`);
-                const data = await contentRes.json();
+                // Apply Cookie Filtering Logic
+                let seenAds = getSeenAds();
+                let availablePromos = promos.filter(p => !seenAds.includes(p.id));
 
-                pinTitle = data.title;
-                fullDescription = data.intro || "";
-                document.getElementById('pageTitle').innerText = pinTitle;
-                document.title = `${pinTitle} | Affirzone`;
-                updateIntroUI();
-
-                const renderArea = document.getElementById('renderArea');
-                let html = "";
-                const normalizedType = (meta.type && meta.type.includes('combo')) ? 'combo-list' : 'prompt-list';
-
-                // COMBO-LIST rendering
-                if (normalizedType === 'combo-list') {
-                    html += `<div class="combo-list">`;
-                    data.items.forEach((item, i) => {
-                        html += `<div class="combo-item"><p class="affirmation-text">"${item.affirmation}"</p><p class="prompt-text">${item.prompt}</p></div>`;
-                        if (i === 2) {
-                            const adHtml = getUnseenAd(normalizedType, meta.file);
-                            if (adHtml) html += adHtml;
-                        }
-                    });
-                    html += `</div>`;
-                } 
-                // STANDARD PROMPT-LIST rendering (Default for everything else)
-                else {
-                    html += `<ul class="prompt-list">`;
-                    data.items.forEach((item, i) => {
-                        const promptText = (typeof item === 'object') ? item.prompt : item;
-                        html += `<li class="prompt-item"><span class="prompt-number">${i + 1}.</span><p class="journal-text">${promptText}</p></li>`;
-                        if (i === 4) {
-                            const adHtml = getUnseenAd(normalizedType, meta.file);
-                            if (adHtml) html += `</ul>${adHtml}<ul class="prompt-list">`;
-                        }
-                    });
-                    html += `</ul>`;
+                // If all ads have been seen, reset the cycle
+                if (availablePromos.length === 0) {
+                    resetSeenAds();
+                    availablePromos = [...promos];
                 }
 
-                renderArea.innerHTML = html;
-                if (meta.pinterest_img) document.getElementById('actionArea').style.display = 'flex';
-                document.getElementById('statusArea').style.display = 'none';
-                document.getElementById('contentCard').style.display = 'flex';
-            } catch (err) { console.error("Load failed:", err); showNotFound(); }
-        }
+                // Helper to pop a random unseen ad from available pool
+                const popRandomPromo = () => {
+                    if (availablePromos.length === 0) return null;
+                    const idx = Math.floor(Math.random() * availablePromos.length);
+                    return availablePromos.splice(idx, 1)[0];
+                };
 
-        function updateIntroUI() {
-            const introEl = document.getElementById('pageIntro'), btn = document.getElementById('readMoreBtn');
-            const words = (fullDescription || "").split(' ');
-            if (words.length <= 10 || isExpanded) {
-                introEl.innerText = fullDescription;
-                btn.style.display = isExpanded && words.length > 10 ? "inline" : "none";
-                if (isExpanded) btn.innerText = " Show Less";
-            } else {
-                introEl.innerText = words.slice(0, 10).join(' ') + "...";
-                btn.style.display = "inline"; btn.innerText = "Read More";
+                if (count >= 10) {
+                    // First Ad: Place after a random prompt item between the 5th and 7th
+                    const insertPos1 = getRandomInt(5, 7) - 1; // 0-based index
+                    if (promptItems[insertPos1]) {
+                        const adPromo1 = popRandomPromo() || promos[0];
+                        const adDiv1 = document.createElement('div');
+                        adDiv1.className = 'w-100 my-4 promo-ad-container';
+                        adDiv1.setAttribute('data-promo-id', adPromo1.id);
+                        adDiv1.innerHTML = getAdHtml(adPromo1);
+                        promptItems[insertPos1].insertAdjacentElement('afterend', adDiv1);
+                        adObserver.observe(adDiv1); // Start tracking visibility
+                    }
+                }
+
+                if (count >= 20) {
+                    // Second Ad: Place after a random prompt item between the 14th and 16th
+                    const insertPos2 = getRandomInt(14, 16) - 1; // 0-based index
+                    if (promptItems[insertPos2]) {
+                        const adPromo2 = popRandomPromo() || promos[0];
+                        const adDiv2 = document.createElement('div');
+                        adDiv2.className = 'w-100 my-4 promo-ad-container';
+                        adDiv2.setAttribute('data-promo-id', adPromo2.id);
+                        adDiv2.innerHTML = getAdHtml(adPromo2);
+                        promptItems[insertPos2].insertAdjacentElement('afterend', adDiv2);
+                        adObserver.observe(adDiv2); // Start tracking visibility
+                    }
+                }
+            } catch (err) {
+                console.log("No promo ads loaded or promo list missing.");
             }
         }
 
-        function toggleReadMore() { isExpanded = !isExpanded; updateIntroUI(); }
-        window.onload = initShowPage;
+        // ==========================================
+        // DYNAMIC RELATED FEED GENERATION
+        // ==========================================
+        function renderRelatedFeed() {
+            const grid = document.getElementById('related-grid');
+            const pagination = document.getElementById('related-pagination');
+            let html = '';
+
+            // 1. Get related blogs (exclude current by title, match category)
+            let relatedBlogs = promptListData.filter(b => {
+                if (b.title === currentBlogTitle) return false; 
+                if (!b.category) return false;
+                
+                const cats = b.category.split(',').map(c => c.trim().toLowerCase());
+                return cats.some(c => currentBlogCategories.includes(c));
+            });
+
+            // 2. Get related products (target is null OR matches category)
+            let relatedProducts = productsData.filter(p => {
+                if (!p.target_prompt) return true; // Show universal ads
+                const targets = p.target_prompt.split(',').map(t => t.trim().toLowerCase());
+                return targets.some(t => currentBlogCategories.includes(t));
+            });
+
+            // 3. Interleave (3 blogs, 1 product)
+            let combinedItems = [];
+            let bIdx = 0, pIdx = 0;
+            while (bIdx < relatedBlogs.length || pIdx < relatedProducts.length) {
+                for(let i = 0; i < 3 && bIdx < relatedBlogs.length; i++) {
+                    combinedItems.push({ type: 'blog', data: relatedBlogs[bIdx++] });
+                }
+                if (pIdx < relatedProducts.length) {
+                    combinedItems.push({ type: 'product', data: relatedProducts[pIdx++] });
+                }
+            }
+
+            const totalPages = Math.ceil(combinedItems.length / itemsPerPage);
+            const indexOfLastItem = currentPage * itemsPerPage;
+            const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+            const currentItems = combinedItems.slice(indexOfFirstItem, indexOfLastItem);
+
+            currentItems.forEach(item => {
+                if (item.type === 'blog') {
+                    html += `
+                        <div class="col-12 col-md-4 card-gap align-self-start">
+                            ${generateBlogHtml(item.data)}
+                        </div>
+                    `;
+                } else if (item.type === 'product') {
+                    html += `
+                        <div class="col-12 col-md-4 card-gap align-self-start">
+                            ${generateProductHtml(item.data, 'digital')}
+                        </div>
+                    `;
+                }
+            });
+
+            grid.innerHTML = html;
+
+            // Render Pagination
+            if (totalPages > 1) {
+                pagination.innerHTML = `
+                    <button onclick="changePage(${currentPage - 1})" class="btn btn-outline-custom rounded-pill px-4 py-2 mx-2" style="font-size: 14px;" ${currentPage === 1 ? 'disabled style="opacity:0.3"' : ''}>
+                        <i class="fa-solid fa-chevron-left me-2"></i> Previous
+                    </button>
+                    <button onclick="changePage(${currentPage + 1})" class="btn btn-outline-custom rounded-pill px-4 py-2 mx-2" style="font-size: 14px;" ${currentPage === totalPages ? 'disabled style="opacity:0.3"' : ''}>
+                        Next <i class="fa-solid fa-chevron-right ms-2"></i>
+                    </button>
+                `;
+            }
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            const url = new URL(window.location);
+            url.searchParams.set('page', page);
+            window.history.pushState({}, '', url);
+            
+            // Scroll back up to the related section start
+            document.getElementById('related-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            renderRelatedFeed();
+        }
+
+        // ==========================================
+        // TEMPLATE GENERATORS FOR FEED
+        // ==========================================
+        
+        function generateBlogHtml(blog) {
+            // Note: Update to link to this dynamic show.html script!
+            const dynamicUrl = `show.html?title=${encodeURIComponent(blog.title)}`;
+            return `
+                <a href="${dynamicUrl}" class="custom-card text-decoration-none text-dark">
+                    <div class="w-100 overflow-hidden border-bottom" style="aspect-ratio: 4/3; border-radius: 1rem 1rem 0 0;">
+                        <img src="${blog.image}" alt="${blog.title}" class="w-100 h-100 object-fit-cover" style="transition: transform 0.7s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" loading="lazy">
+                    </div>
+                    <div class="p-4 md:p-5 d-flex flex-column">
+                        <div class="text-brand fw-bold mb-3" style="font-size: 11px; letter-spacing: 1px; text-transform: uppercase;">${blog.date} • ${blog.readTime}</div>
+                        <h3 class="font-serif fw-medium mb-3" style="font-size: 1.35rem; line-height: 1.3;">${blog.title}</h3>
+                        <p class="text-muted mb-4" style="font-size: 15px; line-height: 1.6;">${blog.desc}</p>
+                        <div class="text-muted fw-semibold d-flex align-items-center mt-auto" style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">
+                            Read Prompt List <i class="fa-solid fa-chevron-right ms-2 small"></i>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+
+        function generateProductHtml(product, defaultFormat) {
+            if (!cardFormats[product.groupId]) {
+                cardFormats[product.groupId] = defaultFormat;
+            }
+            
+            let currentFormat = cardFormats[product.groupId];
+            let isKDP = currentFormat === 'kdp';
+            let data = product[currentFormat];
+            
+            let html = `
+                <div class="custom-card position-relative" style="padding: 0.75rem;">
+            `;
+
+            html += `
+                <div class="d-flex border-bottom mx-1 mb-4">
+                    <button onclick="setCardFormat('${product.groupId}', 'digital')" class="flex-fill format-toggle ${!isKDP ? 'active' : ''}">Goodnotes PDF</button>
+                    <button onclick="setCardFormat('${product.groupId}', 'kdp')" class="flex-fill format-toggle ${isKDP ? 'active' : ''}">Amazon KDP</button>
+                </div>
+            `;
+
+            let carouselId = `carousel-${product.groupId}-grid`;
+            html += `
+                <div class="carousel-wrapper mb-4 px-1">
+                    <div id="${carouselId}" class="d-flex overflow-x-auto hide-scrollbar snap-container" style="gap: 12px; padding-bottom: 4px;">
+            `;
+            
+            product.images.forEach((src, idx) => {
+                html += `
+                    <div class="snap-item carousel-item-img bg-light border">
+                        ${isKDP ? `<div class="kdp-spine-overlay"></div>` : ''}
+                        <img src="${src}" alt="Preview" loading="lazy">
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                    <button onclick="scrollCarousel('${carouselId}', 'left')" class="scroll-arrow left"><i class="fa-solid fa-chevron-left small"></i></button>
+                    <button onclick="scrollCarousel('${carouselId}', 'right')" class="scroll-arrow right"><i class="fa-solid fa-chevron-right small"></i></button>
+                </div>
+            `;
+
+            html += `
+                <div class="d-flex flex-column px-2 pb-2">
+                    <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
+                        <h3 class="font-serif fw-medium m-0" style="font-size: 1.3rem; line-height: 1.2;">${product.title}</h3>
+                        <span class="fw-semibold m-0" style="font-size: 1.25rem;">${data.price}</span>
+                    </div>
+                    <p class="text-muted fw-semibold mb-3" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">${data.pages}</p>
+                    <p class="text-muted mb-4" style="font-size: 14px; line-height: 1.6;">${data.desc}</p>
+                    
+                    <div class="d-flex flex-column gap-3 mt-auto pt-2">
+                        <div class="d-flex gap-2">
+                            <a href="#preview-${data.id}" class="flex-fill btn-action btn-outline-custom py-3" style="font-size:13px;">Preview</a>
+                            ${!isKDP ? `<a href="#sample-${data.id}" class="flex-fill btn-action btn-outline-brand py-3" style="font-size:13px;">Free Sample</a>` : ''}
+                        </div>
+                        
+                        ${!isKDP ? `
+                            <a href="#buy-${data.id}" class="btn-action btn-dark-action py-3" style="font-size: 14px;"><i class="fa-solid fa-cart-shopping"></i> Purchase PDF</a>
+                        ` : `
+                            <a href="#amazon-${data.id}" class="btn-action btn-amazon py-3" style="font-size: 14px;"><i class="fa-solid fa-book"></i> Amazon KDP</a>
+                        `}
+                    </div>
+                </div>
+            </div>`;
+
+            return html;
+        }
+
+        // ==========================================
+        // UI HELPERS
+        // ==========================================
+        function setCardFormat(groupId, format) {
+            cardFormats[groupId] = format;
+            renderRelatedFeed();
+        }
+
+        function scrollCarousel(id, direction) {
+            const el = document.getElementById(id);
+            if (el) {
+                const scrollAmount = el.clientWidth * 0.8;
+                el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        window.onload = init;
     </script>
 </body>
 </html>

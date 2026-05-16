@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journals & Planners - Affirzone</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Base Styles for Layout -->
+    <style>
+        :root {
+            --brand-color: #23b48e;
+            --brand-hover: #1e9d7c;
+            --bg-light: #fafafa;
+            --text-main: #1a1a1a;
+            --text-muted: #6c757d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .text-brand { color: var(--brand-color); }
+        .bg-brand { background-color: var(--brand-color); color: white; }
+        
+        .container-custom {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 10px;
+        }
+        @media (min-width: 768px) {
+            .container-custom { padding: 0 40px; }
+        }
+
+        .card-gap { margin-bottom: 4rem; }
+        @media (min-width: 768px) { .card-gap { margin-bottom: 6rem; } }
+
+        /* Nav Styles */
+        .accent-bar { height: 4px; background: linear-gradient(90deg, #23b48e, #2c8be4); width: 100%; }
+        .main-nav {
+            position: sticky; top: 0; z-index: 1050; min-height: 72px;
+            background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05); padding: 10px 15px;
+        }
+        @media (min-width: 768px) { .main-nav { padding: 10px 32px; } }
+
+        .hero-search-bar { transition: transform 0.2s, box-shadow 0.2s; border-color: #e5e5e5 !important; }
+        .hero-search-bar:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important; }
+        .nav-search-wrapper { width: 150px; }
+        .nav-search-text { font-size: 11px !important; }
+        @media (min-width: 768px) {
+            .nav-search-wrapper { width: 220px !important; padding: 8px 16px !important; }
+            .nav-search-text { font-size: 13px !important; }
+        }
+
+        /* Product Card Styles */
+        .custom-card {
+            background: #fff; border-radius: 1rem; border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04); transition: all 0.3s ease;
+            display: flex; flex-direction: column; height: auto; 
+        }
+        .custom-card:hover { box-shadow: 0 12px 40px rgba(35,180,142,0.08); }
+        .carousel-wrapper { position: relative; width: 100%; }
+        .carousel-item-img {
+            width: 90%; aspect-ratio: 4/3; flex-shrink: 0; position: relative;
+            border-radius: 0.75rem; overflow: hidden; box-sizing: border-box;
+        }
+        @media (min-width: 768px) { .carousel-item-img { width: 100%; } }
+        .carousel-item-img img { width: 100%; height: 100%; object-fit: cover; }
+        .kdp-spine-overlay {
+            position: absolute; left: 0; top: 0; bottom: 0; width: 24px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.08), transparent);
+            pointer-events: none; z-index: 10;
+        }
+        .scroll-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.9); border: 1px solid #eee; border-radius: 50%;
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; opacity: 0; transition: opacity 0.2s; z-index: 20; color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .carousel-wrapper:hover .scroll-arrow { opacity: 1; }
+        .scroll-arrow.left { left: 8px; }
+        .scroll-arrow.right { right: 8px; }
+        @media (max-width: 767px) { .scroll-arrow { display: none; } }
+        
+        .format-toggle {
+            font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            padding: 14px 0; background: none; border: none; border-bottom: 2px solid transparent;
+            color: #adb5bd; transition: all 0.2s;
+        }
+        @media (min-width: 768px) { .format-toggle { font-size: 14px; } }
+        .format-toggle.active { color: var(--text-main); border-bottom-color: var(--text-main); }
+        
+        .btn-action {
+            width: 100%; border-radius: 0.375rem; font-weight: 600; display: flex; align-items: center;
+            justify-content: center; gap: 8px; text-decoration: none; border: none; transition: all 0.2s;
+        }
+        .btn-dark-action { background: var(--text-main); color: #fff; }
+        .btn-dark-action:hover { background: #333; color: #fff; }
+        .btn-amazon { background: #FF9900; color: #fff; }
+        .btn-amazon:hover { background: #e68a00; color: #fff; }
+        .btn-outline-custom { border: 1px solid #e5e5e5; color: var(--text-muted); text-transform: uppercase; }
+        .btn-outline-custom:hover { background: #f8f9fa; color: var(--text-main); border-color: var(--text-main); }
+        .btn-outline-brand { border: 1px solid rgba(35,180,142,0.2); color: var(--brand-color); text-transform: uppercase; }
+        .btn-outline-brand:hover { background: rgba(35,180,142,0.05); }
+
+        /* Hide scrollbar util */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; overflow-x: auto; }
+        .snap-container { scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+        .snap-item { scroll-snap-align: center; scroll-snap-stop: always; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Banner -->
+    <div class="accent-bar"></div>
+    <div class="bg-light border-bottom text-muted text-center py-2" style="font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+        Free Journal Prompts & Minimalist Digital Stationery
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav d-flex justify-content-between align-items-center w-100">
+        <a href="index.html?type=all"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="28"></a>
+        
+        <div class="d-flex align-items-center gap-4">
+            <div class="d-flex flex-column align-items-end justify-content-center" style="gap: 4px; margin-top: 2px;">
+                <a href="search.html" class="text-decoration-none d-block">
+                    <div class="nav-search-wrapper d-flex align-items-center bg-white border rounded-pill px-3 py-1.5 shadow-sm text-muted hero-search-bar">
+                        <i class="fa-solid fa-magnifying-glass me-2 text-brand" style="font-size: 11px;"></i>
+                        <span class="nav-search-text" style="font-size: 11px; font-weight: 600;">Search...</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section for Products -->
+    <header class="bg-white border-bottom text-center px-3" style="padding-top: 2.5rem; padding-bottom: 2.5rem;">
+        <div class="mx-auto" style="max-width: 60rem;">
+            <h1 class="font-serif text-dark mb-4 fw-medium" style="font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: -0.5px; line-height: 1.1;">
+                Premium Journals & <br class="d-md-none"> Workbooks.
+            </h1>
+            <p class="text-muted mx-auto" style="font-size: clamp(1rem, 2vw, 1.125rem); max-width: 42rem; line-height: 1.6;">
+                Tools thoughtfully designed for Goodnotes and available as high-quality physical paperbacks on Amazon.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Product Grid -->
+    <section class="bg-light py-4">
+        <div class="container-custom">
+            
+            <!-- Loader -->
+            <div id="loader" class="d-flex flex-column justify-content-center align-items-center py-5 my-5" style="min-height: 20vh;">
+                <div class="spinner-border text-brand mb-3" role="status"></div>
+                <p class="text-muted fw-semibold text-uppercase tracking-wider" style="letter-spacing: 1px; font-size: 12px;">Loading Products...</p>
+            </div>
+
+            <!-- Product Container -->
+            <div class="row pt-4" id="product-grid" style="display: none;">
+                <!-- Content injected via JS -->
+            </div>
+
+            <!-- Pagination Container -->
+            <div id="product-pagination" class="d-flex justify-content-center align-items-center gap-3 mt-4 w-100">
+                <!-- Pagination injected via JS -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-white py-5 px-3" style="background-color: #1a1a1a; margin-top: 2rem;">
+        <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="32" class="mb-4" style="filter: brightness(0) invert(1) opacity(0.8);">
+        <p class="text-white mx-auto mb-5" style="max-width: 24rem; font-size: 1rem; line-height: 1.6; opacity: 0.9;">
+            Providing mindful tools for high-resolution minimal stationery and clear daily routines.
+        </p>
+        <div class="d-flex justify-content-center gap-4 mb-5" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+            <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Instagram</a>
+            <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Pinterest</a>
+            <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Contact</a>
+        </div>
+        <div class="pt-4 text-white" style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7;">
+            © <script>document.write(new Date().getFullYear())</script> Affirzone. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Application Logic -->
+    <script>
+        // ==========================================
+        // DATA STATE (Strictly relies on JSON fetch)
+        // ==========================================
+        let productsData = [];
+
+        // Format State Manager
+        let cardFormats = {}; 
+        let currentPage = 1;
+        const itemsPerPage = 12;
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        async function init() {
+            // Fetch Products with cache busting to prevent stale JSON
+            try {
+                // Pointing to your exact path
+                const response = await fetch('data/products/list.json', { cache: 'no-store' });
+                if (response.ok) {
+                    productsData = await response.json();
+                } else {
+                    console.error("Failed to load products. Server returned: ", response.status);
+                }
+            } catch (error) {
+                console.error("Could not fetch JSON. Ensure you are running a local server (like Live Server).", error);
+            }
+
+            // Hide loader safely bypassing Bootstrap's !important d-flex display styling
+            const loader = document.getElementById('loader');
+            loader.classList.remove('d-flex');
+            loader.classList.add('d-none');
+            
+            // Show the product grid
+            document.getElementById('product-grid').style.display = 'flex';
+
+            // Show error state if JSON is empty or blocked by browser CORS
+            if (productsData.length === 0) {
+                document.getElementById('product-grid').innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <div class="mb-4"><i class="fa-solid fa-box-open text-muted" style="font-size: 3rem; opacity: 0.5;"></i></div>
+                        <h2 class="font-serif fw-bold mb-3">No Products Found</h2>
+                        <p class="text-muted mb-4">Could not load products. Please ensure <b>data/products/list.json</b> exists and you are running a local web server.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            renderProducts();
+        }
+
+        // ==========================================
+        // DOM RENDERING LOGIC
+        // ==========================================
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            const pagination = document.getElementById('product-pagination');
+            const params = new URLSearchParams(window.location.search);
+            
+            // Expected parameters: ?id=vol1 & type=digital
+            const idParam = params.get('id');
+            const typeParam = params.get('type');
+            const pageParam = parseInt(params.get('page'));
+            
+            if (pageParam && !isNaN(pageParam)) currentPage = pageParam;
+            
+            let defaultFormat = (typeParam === 'kdp' || typeParam === 'digital') ? typeParam : 'digital';
+            let html = '';
+
+            // Handle Specific Product Highlight
+            if (idParam) {
+                if (pagination) pagination.innerHTML = ''; // Ensure pagination is hidden here
+                const targetProduct = productsData.find(p => p.groupId === idParam || (p.digital && p.digital.id === idParam) || (p.kdp && p.kdp.id === idParam));
+                
+                if (targetProduct) {
+                    // Update format if URL implicitly suggests a format via the specific ID
+                    if (targetProduct.kdp && targetProduct.kdp.id === idParam) defaultFormat = 'kdp';
+                    if (targetProduct.digital && targetProduct.digital.id === idParam) defaultFormat = 'digital';
+
+                    // 1. Render Highlighted Target Product
+                    html += `
+                        <div class="col-12 d-flex justify-content-center w-100 mb-5 pb-4 border-bottom">
+                            <div style="width: 100%; max-width: 34rem;">
+                                ${generateProductHtml(targetProduct, defaultFormat, true)}
+                            </div>
+                        </div>
+                    `;
+
+                    // 2. Render Remaining Products Below
+                    const otherProducts = productsData.filter(p => p.groupId !== targetProduct.groupId);
+                    if (otherProducts.length > 0) {
+                        html += `<div class="col-12"><h4 class="font-serif fw-medium mb-4 mt-2" style="font-size: 1.5rem;">Explore More Journals</h4></div>`;
+                        otherProducts.forEach(prod => {
+                            html += `
+                                <div class="col-12 col-md-4 card-gap align-self-start">
+                                    ${generateProductHtml(prod, 'digital', false)}
+                                </div>
+                            `;
+                        });
+                    }
+                    
+                    grid.innerHTML = html;
+                    return;
+                } else {
+                    // ID was passed but not found
+                    grid.innerHTML = `
+                        <div class="col-12 text-center py-5">
+                            <div class="mb-4"><i class="fa-solid fa-box-open text-muted" style="font-size: 3rem; opacity: 0.5;"></i></div>
+                            <h2 class="font-serif fw-bold mb-3">Product Not Found</h2>
+                            <p class="text-muted mb-4">The journal you're looking for doesn't seem to exist.</p>
+                            <a href="products.html" class="btn btn-dark rounded-pill px-4 py-2" style="font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">View All Products</a>
+                        </div>
+                    `;
+                    return;
+                }
+            }
+
+            // Handle Default View (List All Products)
+            const totalPages = Math.ceil(productsData.length / itemsPerPage);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const currentProducts = productsData.slice(startIndex, startIndex + itemsPerPage);
+
+            currentProducts.forEach(prod => {
+                html += `
+                    <div class="col-12 col-md-4 card-gap align-self-start">
+                        ${generateProductHtml(prod, defaultFormat, false)}
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+
+            // Render Pagination
+            if (totalPages > 1 && pagination) {
+                pagination.innerHTML = `
+                    <button onclick="changePage(${currentPage - 1})" class="btn btn-outline-custom rounded-pill px-4 py-2 mx-2" style="font-size: 14px;" ${currentPage === 1 ? 'disabled style="opacity:0.3"' : ''}>
+                        <i class="fa-solid fa-chevron-left me-2"></i> Previous
+                    </button>
+                    <button onclick="changePage(${currentPage + 1})" class="btn btn-outline-custom rounded-pill px-4 py-2 mx-2" style="font-size: 14px;" ${currentPage === totalPages ? 'disabled style="opacity:0.3"' : ''}>
+                        Next <i class="fa-solid fa-chevron-right ms-2"></i>
+                    </button>
+                `;
+            } else if (pagination) {
+                pagination.innerHTML = '';
+            }
+        }
+
+        // ==========================================
+        // INTERACTION HANDLERS
+        // ==========================================
+        function changePage(page) {
+            currentPage = page;
+            const url = new URL(window.location);
+            url.searchParams.set('page', page);
+            window.history.pushState({}, '', url);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderProducts();
+        }
+
+        // ==========================================
+        // PRODUCT CARD GENERATOR (Reused from Main)
+        // ==========================================
+        function generateProductHtml(product, defaultFormat, isTopPriority) {
+            // Robust check to see if KDP actually exists and has an ID
+            let hasKDP = product.kdp && product.kdp.id ? true : false;
+
+            // Set initial state if we haven't rendered this group yet
+            if (!cardFormats[product.groupId]) {
+                cardFormats[product.groupId] = defaultFormat;
+            }
+
+            // Ensure we don't try to select KDP if it doesn't exist
+            if (cardFormats[product.groupId] === 'kdp' && !hasKDP) {
+                cardFormats[product.groupId] = 'digital';
+            }
+            
+            let currentFormat = cardFormats[product.groupId] || 'digital';
+            let isKDP = currentFormat === 'kdp';
+            let data = product[currentFormat] || product.digital; // Safe fallback
+            
+            let html = `
+                <div class="custom-card position-relative ${isTopPriority ? 'border-brand shadow-sm' : ''}" style="${isTopPriority ? 'padding: 1rem; border-width: 2px;' : 'padding: 0.75rem;'}">
+            `;
+
+            if (isTopPriority) {
+                html += `<div class="position-absolute bg-brand text-white fw-bold rounded-pill shadow-sm" style="top: -12px; left: 24px; font-size: 10px; padding: 6px 12px; letter-spacing: 1px; text-transform: uppercase; z-index: 20;">Selected Journal</div>`;
+            }
+
+            // Only show the toggle format options if Amazon KDP is actually available
+            if (hasKDP) {
+                html += `
+                    <div class="d-flex border-bottom mx-1 mb-4">
+                        <button onclick="setCardFormat('${product.groupId}', 'digital')" class="flex-fill format-toggle ${!isKDP ? 'active' : ''}">Goodnotes PDF</button>
+                        <button onclick="setCardFormat('${product.groupId}', 'kdp')" class="flex-fill format-toggle ${isKDP ? 'active' : ''}">Amazon KDP</button>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="d-flex border-bottom mx-1 mb-4">
+                        <span class="flex-fill format-toggle active text-center d-block w-100" style="cursor: default; color: var(--text-main); border-bottom-color: var(--text-main);">Goodnotes PDF</span>
+                    </div>
+                `;
+            }
+
+            let carouselId = `carousel-${product.groupId}-grid`;
+            html += `
+                <div class="carousel-wrapper mb-4 px-1">
+                    <div id="${carouselId}" class="d-flex overflow-x-auto hide-scrollbar snap-container" style="gap: 12px; padding-bottom: 4px;">
+            `;
+            
+            if (product.images && product.images.length > 0) {
+                product.images.forEach((src, idx) => {
+                    html += `
+                        <div class="snap-item carousel-item-img bg-light border">
+                            ${isKDP ? `<div class="kdp-spine-overlay"></div>` : ''}
+                            <img src="${src}" alt="Preview" loading="lazy">
+                        </div>
+                    `;
+                });
+            }
+
+            html += `
+                    </div>
+                    <button onclick="scrollCarousel('${carouselId}', 'left')" class="scroll-arrow left"><i class="fa-solid fa-chevron-left small"></i></button>
+                    <button onclick="scrollCarousel('${carouselId}', 'right')" class="scroll-arrow right"><i class="fa-solid fa-chevron-right small"></i></button>
+                </div>
+            `;
+
+            html += `
+                <div class="d-flex flex-column px-2 pb-2">
+                    <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
+                        <h3 class="font-serif fw-medium m-0" style="font-size: 1.3rem; line-height: 1.2;">${product.title}</h3>
+                        <span class="fw-semibold m-0" style="font-size: 1.25rem;">${data.price || ''}</span>
+                    </div>
+                    <p class="text-muted fw-semibold mb-3" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">${data.pages || ''}</p>
+                    <p class="text-muted mb-4" style="font-size: 14px; line-height: 1.6;">${data.desc || ''}</p>
+                    
+                    <div class="d-flex flex-column gap-3 mt-auto pt-2">
+                        <div class="d-flex gap-2">
+                            <a href="#preview-${data.id}" class="flex-fill btn-action btn-outline-custom py-3" style="font-size:13px;">Preview</a>
+                            ${!isKDP ? `<a href="#sample-${data.id}" class="flex-fill btn-action btn-outline-brand py-3" style="font-size:13px;">Free Sample</a>` : ''}
+                        </div>
+                        
+                        ${!isKDP ? `
+                            <a href="#buy-${data.id}" class="btn-action btn-dark-action py-3" style="font-size: 14px;"><i class="fa-solid fa-cart-shopping"></i> Purchase PDF</a>
+                        ` : `
+                            <a href="#amazon-${data.id}" class="btn-action btn-amazon py-3" style="font-size: 14px;"><i class="fa-solid fa-book"></i> Amazon KDP</a>
+                        `}
+                    </div>
+                </div>
+            </div>`;
+
+            return html;
+        }
+
+        // ==========================================
+        // UI HELPERS
+        // ==========================================
+        function setCardFormat(groupId, format) {
+            cardFormats[groupId] = format;
+            renderProducts();
+        }
+
+        function scrollCarousel(id, direction) {
+            const el = document.getElementById(id);
+            if (el) {
+                const scrollAmount = el.clientWidth * 0.8;
+                el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // Boot up
+        window.onload = init;
+    </script>
+</body>
+</html>

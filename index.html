@@ -1,725 +1,940 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9MS4WCCB21"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affirzone - Affirmations & Journal Prompts</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-  gtag('config', 'G-9MS4WCCB21');
-</script>
-
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" sizes="16x16" href="media/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32x32.png">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="media/favicon-180x180.png">
-    <title>Affirzone | Affirmation & Journal Prompts For Positive Mindset</title>
-    <meta name="p:domain_verify" content="6fa13fa4cb20f627282cc1df50e6a176"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
         :root {
-            --bg-base: #f7f7f7;
-            --glass-white: #ffffff;
-            --text-main: #111111;
-            --text-sub: #4b4b4b;
-            --text-muted: #888888;
-            --radius-container: 32px;
-            --radius-card: 22px;
-            --brand-blue: #2563eb;
-        }
-
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+            --brand-color: #23b48e;
+            --brand-hover: #1e9d7c;
+            --bg-light: #fafafa;
+            --text-main: #1a1a1a;
+            --text-muted: #6c757d;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-base);
-            background-image: radial-gradient(circle at 0 120px, #e3f2fd 0%, transparent 20%),
-                radial-gradient(circle at 100% 100%, #fdeaea 0%, transparent 15%);
-            background-attachment: fixed;
+            background-color: var(--bg-light);
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            letter-spacing: -0.01em;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* Footer Styles */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            background: #ffffff;
-            border-top: 1px solid #eeeeee;
-            margin-top: 40px;
+        .font-serif {
+            font-family: 'Playfair Display', serif;
         }
 
-        .footer-links {
-            margin-bottom: 15px;
-        }
-
-        .footer-links a {
-            color: #666666;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 0.9rem;
-            transition: color 0.2s ease;
-        }
-
-        .footer-links a:hover {
-            color: #00a896;
-        }
-
-        .copyright {
-            font-size: 0.85rem;
-            color: #999999;
-        }
-
-        header {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-            padding: 8px 0;
-            width: 100%;
-        }
-
-        .header-inner {
-            width: 100%;
-            max-width: 850px;
+        /* Utility Overrides & Custom Spacing */
+        .text-brand { color: var(--brand-color); }
+        .bg-brand { background-color: var(--brand-color); color: white; }
+        .bg-brand:hover { background-color: var(--brand-hover); color: white; }
+        
+        .container-custom {
+            max-width: 80rem;
             margin: 0 auto;
-            padding: 0 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 0 10px; /* 10px margins on left and right for mobile */
+        }
+        @media (min-width: 768px) {
+            .container-custom { padding: 0 40px; }
         }
 
-        .logo img {
-            height: 30px;
-            width: auto;
-            object-fit: contain;
+        /* Vertical Feed Card Wrapper */
+        .feed-card-wrapper {
+            width: 100%;
+            max-width: 720px; /* Increased from 550px for a wider, more immersive layout on tablet/desktop */
+            margin: 0 auto 3rem auto;
+        }
+        @media (min-width: 768px) {
+            .feed-card-wrapper { margin-bottom: 4rem; }
         }
 
-        /* GLOBAL STICKY HEADER */
-        .global-sticky-header {
-            position: fixed;
+        /* Top Accent Bar */
+        .accent-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #23b48e, #2c8be4);
+            width: 100%;
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: sticky;
             top: 0;
+            z-index: 1050;
+            min-height: 72px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 10px 15px;
+        }
+        @media (min-width: 768px) { .main-nav { padding: 10px 32px; } }
+
+        /* Floating Filter Menu */
+        .floating-filter {
+            position: fixed;
+            top: 72px;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.98);
+            z-index: 1040;
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(15px);
-            z-index: 2000;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            display: none;
-            flex-direction: column;
-            padding: 6px 0 0;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
-        }
-
-        .sticky-content-row {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            max-width: 1400px;
-            margin: 0 auto;
-            width: 100%;
-            padding: 0 15px 5px;
-            gap: 15px;
-        }
-
-        .sticky-logo img { height: 24px; width: auto; }
-
-        .search-area-box {
-            position: relative;
-            width: 240px;
-            cursor: pointer;
-            flex-shrink: 0;
-            order: 3;
-        }
-
-        .search-area-box input {
-            width: 100%;
-            height: 48px;
-            padding: 0 50px 0 20px;
-            border-radius: 14px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            background: #fff;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            outline: none;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-        }
-
-        .search-area-box .search-btn-icon {
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 50px;
-            background: linear-gradient(135deg, #d4eaff 0%, #e0f8f1 100%);
-            color: #2563eb;
-            border: none;
-            border-radius: 0 14px 14px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 850px;
-            margin: 0 auto;
-            padding: 30px 0 60px;
-            flex: 1;
-        }
-
-        .headline-wrapper {
-            text-align: center;
-            margin-bottom: 25px;
-            padding: 0 10px;
-        }
-
-        .main-headline {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        .controls-wrapper {
-            padding: 15px 12px 10px;
-            margin-bottom: 20px;
-        }
-
-        .main-search-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .mood-slider-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            flex: 1;
-            min-width: 0;
-            order: 2;
-        }
-
-        .mood-tags {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding: 8px 10px;
-            scrollbar-width: none;
-            scroll-behavior: smooth;
-            width: 100%;
-        }
-
-        .mood-tags::-webkit-scrollbar { display: none; }
-
-        .mood-pill {
-            background: #fff;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-sub);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            white-space: nowrap;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
-            user-select: none;
-        }
-
-        .mood-pill.active {
-            background: linear-gradient(135deg, #dcf0ff 0%, #e5fff5 100%);
-            color: var(--text-main);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            font-weight: 700;
-        }
-
-        .scroll-arrow {
-            width: 36px;
-            height: 36px;
-            background: #eeeeee;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            cursor: pointer;
-            z-index: 10;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            color: var(--text-muted);
-            transition: all 0.2s;
-            flex-shrink: 0;
-        }
-
-        .scroll-arrow:hover {
-            color: var(--brand-blue);
-            background: #e5e5e5;
-        }
-
-        .list-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 0 12px;
-            margin-bottom: 25px;
-            color: var(--text-muted);
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .chat-flow {
-            display: flex;
-            flex-direction: column;
-            gap: 80px;
-            padding: 0 12px;
-        }
-
-        .thread-container {
-            padding: 40px 30px 0;
-            border-radius: var(--radius-container);
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
-            text-decoration: none;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            overflow: hidden;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin: 0 0 5px 0;
-            line-height: 1.5;
-        }
-
-        .prompt-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 45px;
-        }
-
-        .prompt-item {
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-        }
-
-        .prompt-number {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: #b0b0b0;
-            min-width: 20px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .item-text {
-            font-size: 1.25rem;
-            line-height: 1.6;
-            color: var(--text-main);
-            font-weight: 500;
-            margin: 0;
-        }
-
-        .combo-item {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: var(--radius-card);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .affirmation-text {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-main);
-            line-height: 1.4;
-            margin-bottom: 12px;
-        }
-
-        .combo-prompt {
-            font-size: 1.1rem;
-            color: var(--text-sub);
-            line-height: 1.6;
-            padding-top: 15px;
-            border-top: 1px solid #f2f2f2;
-            margin: 0;
-        }
-
-        .prompt-blur {
-            position: relative;
-            max-height: 110px;
-            overflow: hidden;
-            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
-        }
-
-        .footer-fade-overlay {
-            margin-top: -60px;
-            padding: 80px 30px 25px;
-            position: relative;
-            z-index: 2;
-            background: linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0.6) 30%, white 65%, white 100%);
-            border-radius: 0 0 var(--radius-container) var(--radius-container);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: all 0.4s ease;
             pointer-events: none;
-            width: calc(100% + 60px);
-            margin-left: -30px;
+        }
+        .floating-filter.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        .gradient-link {
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            background: linear-gradient(90deg, #2563eb 70%, #e11d48 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 0.9rem;
-        }
+        /* Horizontal Scroll Containers */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; overflow-x: auto; }
+        .snap-container { scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+        .snap-item { scroll-snap-align: center; scroll-snap-stop: always; }
 
-        .pagination-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 60px 0 20px;
-            padding: 0 12px;
-        }
-
-        .page-btn {
-            padding: 14px 28px;
-            border-radius: 50px;
+        /* Card Styling */
+        .custom-card {
             background: #fff;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            color: var(--text-main);
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border-radius: 1rem;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
             display: flex;
+            flex-direction: column;
+            height: auto; 
+            overflow: hidden; /* Ensures image rounded corners aren't broken */
+        }
+        .custom-card:hover {
+            box-shadow: 0 12px 40px rgba(35,180,142,0.08);
+        }
+
+        /* Image Carousel */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .carousel-item-img {
+            width: 90%;
+            aspect-ratio: 4/3;
+            flex-shrink: 0;
+            position: relative;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        @media (min-width: 768px) { .carousel-item-img { width: 100%; } }
+        
+        .carousel-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* KDP Spine styling */
+        .kdp-spine-overlay {
+            position: absolute;
+            left: 0; top: 0; bottom: 0; width: 24px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.08), transparent);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Navigation Arrows */
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            border: 1px solid #eee;
+            border-radius: 50%;
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 20;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .carousel-wrapper:hover .scroll-arrow { opacity: 1; }
+        .scroll-arrow.left { left: 8px; }
+        .scroll-arrow.right { right: 8px; }
+        @media (max-width: 767px) { .scroll-arrow { display: none; } }
+
+        /* Buttons & Pills */
+        .btn-pill {
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid #e5e5e5;
+            background: #fff;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-pill.active {
+            background: var(--text-main);
+            color: #fff;
+            border-color: var(--text-main);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn-pill:hover:not(.active) {
+            border-color: var(--brand-color);
+            color: var(--brand-color);
+        }
+
+        /* Format Toggles */
+        .format-toggle {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 14px 0;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: #adb5bd;
+            transition: all 0.2s;
+        }
+        @media (min-width: 768px) { .format-toggle { font-size: 14px; } }
+        
+        .format-toggle.active {
+            color: var(--text-main);
+            border-bottom-color: var(--text-main);
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            width: 100%;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-dark-action { background: var(--text-main); color: #fff; }
+        .btn-dark-action:hover { background: #333; color: #fff; }
+        .btn-amazon { background: #FF9900; color: #fff; }
+        .btn-amazon:hover { background: #e68a00; color: #fff; }
+        .btn-outline-custom { border: 1px solid #e5e5e5; color: var(--text-muted); text-transform: uppercase; }
+        .btn-outline-custom:hover { background: #f8f9fa; color: var(--text-main); border-color: var(--text-main); }
+        .btn-outline-brand { border: 1px solid rgba(35,180,142,0.2); color: var(--brand-color); text-transform: uppercase; }
+        .btn-outline-brand:hover { background: rgba(35,180,142,0.05); }
+
+        /* Pagination Buttons */
+        .btn-pagination {
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #eaeaea;
+            background: #fff;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            display: inline-flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
         }
-
-        .page-btn:hover {
-            border-color: var(--brand-blue);
-            color: var(--brand-blue);
+        .btn-pagination:hover {
+            border-color: var(--text-main);
+            background: var(--text-main);
+            color: #fff;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        @media (max-width: 1024px) {
-            .scroll-arrow { display: none; }
-            .mood-tags { padding: 8px 15px; }
+        /* Search Bar Styles */
+        .hero-search-bar {
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-color: #e5e5e5 !important;
+        }
+        .hero-search-bar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
         }
 
-        @media (max-width: 600px) {
-            .container { padding: 10px 0 60px; }
-            .chat-flow { gap: 50px; padding: 0; }
-            .thread-container { padding: 30px 20px 0; border-radius: 0; border-left: none; border-right: none; }
-            .footer-fade-overlay { width: calc(100% + 40px); margin-left: -20px; }
-            .mood-pill { padding: 10px 16px; font-size: 0.85rem; }
-            .global-sticky-header { padding: 4px 0 0; }
-            .sticky-content-row { justify-content: space-between; gap: 4px; padding: 0 12px 2px; }
-            .search-area-box { order: 2; width: 120px; flex: 0 0 auto; }
-            .search-area-box input { height: 40px; padding: 0 40px 0 15px; }
-            .search-area-box .search-btn-icon { width: 40px; }
-            .mood-slider-container { order: 3; width: 100%; flex: 0 0 100%; margin-top: 2px; padding-bottom: 2px; }
-            .mood-tags { padding: 4px 10px; }
+        /* Lazy Loading & Skeleton */
+        .skeleton-bg {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeletonLoading 1.5s infinite;
         }
+        @keyframes skeletonLoading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Sticky Filter specific overrides */
+        .filter-btn-sticky {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-right: 4px;
+        }
+        @media (min-width: 768px) {
+            .filter-btn-sticky { font-size: 15px; }
+            .nav-search-wrapper { width: 220px !important; padding: 8px 16px !important; }
+            .nav-search-text { font-size: 13px !important; }
+        }
+
     </style>
 </head>
-
 <body>
-    <div id="globalStickyHeader" class="global-sticky-header">
-        <div class="sticky-content-row">
-            <a href="index.html" class="sticky-logo">
-                <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" />
-            </a>
-            <div class="mood-slider-container">
-                <div class="scroll-arrow arrow-left" onclick="scrollPills(-1, 'stickyMoodTags')">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </div>
-                <div class="mood-tags" id="stickyMoodTags"></div>
-                <div class="scroll-arrow arrow-right" onclick="scrollPills(1, 'stickyMoodTags')">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
+    <!-- Top Banner -->
+    <div class="accent-bar"></div>
+    <div class="bg-light border-bottom text-muted text-center py-2" style="font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+        Free Journal Prompts & Minimalist Digital Stationery
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="main-nav d-flex justify-content-between align-items-center w-100">
+        <a href="?type=all"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="28"></a>
+        
+        <div class="d-flex align-items-center gap-4">
+            <!-- Stacked Search + Filter Actions -->
+            <div id="sticky-actions-container" class="d-flex flex-column align-items-end justify-content-center opacity-0 pointer-events-none" style="transition: opacity 0.3s; gap: 4px; margin-top: 2px;">
+                <a href="search.html" class="text-decoration-none d-block">
+                    <div class="nav-search-wrapper d-flex align-items-center bg-white border rounded-pill px-3 py-1.5 shadow-sm text-muted hero-search-bar" style="width: 150px;">
+                        <i class="fa-solid fa-magnifying-glass me-2 text-brand" style="font-size: 11px;"></i>
+                        <span class="nav-search-text" style="font-size: 11px; font-weight: 600;">Search...</span>
+                    </div>
+                </a>
+                <button id="sticky-filter-toggle" class="btn btn-link text-decoration-none d-flex align-items-center justify-content-end gap-2 p-0 w-100 filter-btn-sticky">
+                    <i class="fa-solid fa-filter text-brand" id="filter-icon"></i> <span class="text-dark">Filter</span>
+                </button>
             </div>
-            <div class="search-area-box" onclick="performSearchRedirect()">
-                <input type="text" placeholder="Search..." readonly />
-                <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-            </div>
+        </div>
+    </nav>
+
+    <!-- Floating Filter Menu -->
+    <div id="floating-filter-menu" class="floating-filter">
+        <div class="container-custom py-4">
+            <div id="floating-filter-container"></div>
         </div>
     </div>
 
-    <header id="mainHeader">
-        <div class="header-inner">
-            <a href="index.html" class="logo">
-                <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" />
-            </a>
+    <!-- Hero Section -->
+    <header class="bg-white border-bottom text-center px-3" style="padding-top: 2rem; padding-bottom: 2rem;">
+        <div class="mx-auto" style="max-width: 60rem;">
+            <h1 class="font-serif text-dark mb-4 fw-medium" style="font-size: 40px; letter-spacing: -0.5px; line-height: 1.1;">
+                Affirmations & <br class="d-md-none"> Journal Prompts.
+            </h1>
+            <p class="text-muted mx-auto" style="font-size: clamp(1rem, 2vw, 1.125rem); max-width: 42rem; line-height: 1.6;">
+                Explore our curated collection of free guided prompts and premium digital journals designed to bring clarity to your daily routine.
+            </p>
+            
+            <!-- Hero Search Bar -->
+            <div id="hero-search" class="mx-auto mt-4" style="max-width: 30rem;">
+                <a href="search.html" class="text-decoration-none d-block">
+                    <div class="d-flex align-items-center bg-white border rounded-pill px-4 py-3 shadow-sm text-muted hero-search-bar">
+                        <i class="fa-solid fa-magnifying-glass me-3 text-brand"></i>
+                        <span style="font-size: 15px; font-weight: 500;">Search journals, prompts, or topics...</span>
+                    </div>
+                </a>
+            </div>
         </div>
     </header>
 
-    <div class="container">
-        <div class="headline-wrapper">
-            <h1 class="main-headline">Affirmations &amp; Prompts</h1>
-        </div>
-
-        <div class="controls-wrapper" id="mainControls">
-            <div class="main-search-container">
-                <div class="search-area-box" style="width: 100%; max-width: 500px;" onclick="performSearchRedirect()">
-                    <input type="text" placeholder="Search prompts..." readonly />
-                    <div class="search-btn-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-                </div>
-            </div>
-            <div class="mood-slider-container">
-                <div class="scroll-arrow arrow-left" onclick="scrollPills(-1, 'mainMoodTags')">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </div>
-                <div class="mood-tags" id="mainMoodTags">
-                    <div class="mood-pill active" data-tag="" onclick="handlePillClick(this, '')">All</div>
-                    <div class="mood-pill" data-tag="Gratitude" onclick="handlePillClick(this, 'Gratitude')">Gratitude</div>
-                    <div class="mood-pill" data-tag="Self Confidence" onclick="handlePillClick(this, 'Self Confidence')">Self Confidence</div>
-                    <div class="mood-pill" data-tag="Anxiety" onclick="handlePillClick(this, 'Anxiety')">Anxiety</div>
-                    <div class="mood-pill" data-tag="Career" onclick="handlePillClick(this, 'Career')">Career</div>
-                    <div class="mood-pill" data-tag="Healing" onclick="handlePillClick(this, 'Healing')">Healing</div>
-                    <div class="mood-pill" data-tag="Manifestation" onclick="handlePillClick(this, 'Manifestation')">Manifestation</div>
-                    <div class="mood-pill" data-tag="Productivity" onclick="handlePillClick(this, 'Productivity')">Productivity</div>
-                    <div class="mood-pill" data-tag="Mindfulness" onclick="handlePillClick(this, 'Mindfulness')">Mindfulness</div>
-                    <div class="mood-pill" data-tag="Self Discovery" onclick="handlePillClick(this, 'Self Discovery')">Self Discovery</div>
-                    <div class="mood-pill" data-tag="Inner Peace" onclick="handlePillClick(this, 'Inner Peace')">Inner Peace</div>
-                    <div class="mood-pill" data-tag="Relationships" onclick="handlePillClick(this, 'Relationships')">Relationships</div>
-                    <div class="mood-pill" data-tag="Art" onclick="handlePillClick(this, 'Art')">Art</div>
-                    <div class="mood-pill" data-tag="Grief" onclick="handlePillClick(this, 'Grief')">Grief</div>
-                    <div class="mood-pill" data-tag="Faith" onclick="handlePillClick(this, 'Faith')">Faith</div>
-                </div>
-                <div class="scroll-arrow arrow-right" onclick="scrollPills(1, 'mainMoodTags')">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
+    <!-- Main Content -->
+    <section id="collection" style="background-color: var(--bg-light);">
+        
+        <!-- Prompt Category Bar -->
+        <div id="filter-ref" class="border-bottom" style="padding-top: 2rem; padding-bottom: 1.5rem;">
+            <div class="container-custom" id="main-filter-container">
+                <!-- Prompt Pills injected via JS -->
             </div>
         </div>
 
-        <div class="list-header">
-            <span id="listHeaderLabel">Latest</span>
-            <i class="fa-solid fa-chevron-down"></i>
-        </div>
+        <!-- Dynamic Vertical Feed -->
+        <div class="container-custom py-5">
+            <div class="d-flex flex-column align-items-center w-100" id="content-grid">
+                <!-- Content injected via JS -->
+            </div>
 
-        <main class="chat-flow" id="responseFlow"></main>
-        <div class="pagination-container" id="paginationControls"></div>
-    </div>
-
-    <footer>
-        <div class="footer-links">
-            <a href="about.html">About Us</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms & Conditions</a>
+            <!-- Pagination -->
+            <div id="pagination-container" class="d-flex justify-content-center align-items-center gap-3 gap-md-4 mt-5 pt-5 border-top px-2">
+                <!-- Pagination injected via JS -->
+            </div>
         </div>
-        <div class="copyright">&copy; 2026 Affirzone. Made for mindful thinkers.</div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about" class="text-center text-white py-5 px-3" style="background-color: #1a1a1a; margin-top: 4rem;">
+        <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="32" class="mb-4" style="filter: brightness(0) invert(1) opacity(0.8);">
+        <p class="text-white mx-auto mb-5" style="max-width: 24rem; font-size: 1rem; line-height: 1.6; opacity: 0.9;">
+            Providing mindful tools for high-resolution minimal stationery and clear daily routines.
+        </p>
+        <div class="d-flex justify-content-center gap-4 mb-5" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+            <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Instagram</a>
+            <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Pinterest</a>
+            <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Contact</a>
+        </div>
+        <div class="pt-4 text-white" style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7;">
+            © <script>document.write(new Date().getFullYear())</script> Affirzone. All rights reserved.
+        </div>
     </footer>
 
+    <!-- Application Logic -->
     <script>
-        const CATEGORY_COOKIE = "affirzone_category";
-        const CARDS_PER_PAGE = 7;
-        let fullRegistry = [];
-        let currentFilter = "";
+        // ==========================================
+        // DATA DEFINITIONS
+        // ==========================================
+        let productsData = [];
+        let promptListData = [];
+
+        // ==========================================
+        // STATE VARIABLES
+        // ==========================================
+        let currentCat = 'all'; 
         let currentPage = 1;
+        const itemsPerPage = 5;
+        let urlRequestedType = 'digital';
+        let priorityProduct = null;
+        let isFilterMenuOpen = false;
+        
+        let cardFormats = {}; 
 
-        function setCookie(name, value, days = 30) {
-            const d = new Date();
-            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-            document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/;SameSite=Lax`;
-        }
-
-        function getCookie(name) {
-            const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-            return match ? decodeURIComponent(match[2]) : null;
-        }
-
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
         async function init() {
             try {
-                const mainTags = document.getElementById('mainMoodTags');
-                const stickyTags = document.getElementById('stickyMoodTags');
-                stickyTags.innerHTML = mainTags.innerHTML;
-                const res = await fetch(`data/topics/list.json`);
-                fullRegistry = await res.json();
-                const urlParams = new URLSearchParams(window.location.search);
-                currentPage = parseInt(urlParams.get('page')) || 1;
-                currentFilter = getCookie(CATEGORY_COOKIE) || "";
-                updatePillUI();
-                renderRegistry();
-            } catch (e) { console.error("Initialization Error:", e); }
+                // Fetch external JSON files
+                const [productsResponse, topicsResponse] = await Promise.all([
+                    fetch('data/products/list.json'),
+                    fetch('data/topics/list.json')
+                ]);
+                
+                if (productsResponse.ok) productsData = await productsResponse.json();
+                if (topicsResponse.ok) promptListData = await topicsResponse.json();
+            } catch (error) {
+                console.error("Error loading JSON data:", error);
+                // Basic fallback for products to avoid empty screen during local testing
+                if(productsData.length === 0) {
+                   productsData = [];
+                }
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const productParam = params.get('product');
+            const typeParam = params.get('type') || 'all';
+            const pageParam = parseInt(params.get('page'));
+
+            currentCat = typeParam;
+            if (currentCat === 'kdp-notebook') {
+                urlRequestedType = 'kdp';
+            } else {
+                urlRequestedType = 'digital';
+            }
+
+            if (pageParam && !isNaN(pageParam)) currentPage = pageParam;
+
+            if (productParam && productsData.length > 0) {
+                const foundProduct = productsData.find(p => (p.digital && p.digital.id === productParam) || (p.kdp && p.kdp.id === productParam));
+                if (foundProduct) {
+                    priorityProduct = foundProduct;
+                    const detectedFormat = (foundProduct.kdp && foundProduct.kdp.id === productParam) ? 'kdp' : 'digital';
+                    urlRequestedType = detectedFormat;
+                    cardFormats[foundProduct.groupId] = detectedFormat;
+                }
+            }
+
+            setupScrollListener();
+            renderUI();
         }
 
-        function updatePillUI() {
-            const containerIds = ['mainMoodTags', 'stickyMoodTags'];
-            
-            containerIds.forEach(id => {
-                const container = document.getElementById(id);
-                if (!container) return;
+        // ==========================================
+        // DOM RENDERING LOGIC
+        // ==========================================
+        
+        function renderUI() {
+            renderFilterButtons();
+            renderGrid();
+        }
 
-                const allPills = container.querySelectorAll('.mood-pill');
-                allPills.forEach(pill => {
-                    const isActive = (pill.getAttribute('data-tag') || "") === currentFilter;
-                    pill.classList.toggle('active', isActive);
-                    
-                    // Logic to show selected button: Scroll horizontally to active pill
-                    if (isActive) {
-                        pill.scrollIntoView({ 
-                            behavior: 'smooth', 
-                            block: 'nearest', 
-                            inline: 'center' 
+        function renderFilterButtons() {
+            const getHtml = (isMenu) => `
+                <div class="d-flex flex-column w-100 align-items-center">
+                    <div class="d-flex w-100 overflow-x-auto hide-scrollbar snap-container ${!isMenu ? 'px-2 px-md-0 justify-content-start justify-content-md-center' : ''}" style="gap: 12px;">
+                        <a href="?type=all" class="snap-item btn-pill ${currentCat === 'all' ? 'active' : ''}">All</a>
+                        <a href="?type=gratitude" class="snap-item btn-pill ${currentCat === 'gratitude' ? 'active' : ''}">Gratitude</a>
+                        <a href="?type=productivity" class="snap-item btn-pill ${currentCat === 'productivity' ? 'active' : ''}">Productivity</a>
+                        <a href="?type=confidence" class="snap-item btn-pill ${currentCat === 'confidence' ? 'active' : ''}">Confidence</a>
+                        <a href="?type=career" class="snap-item btn-pill ${currentCat === 'career' ? 'active' : ''}">Career</a>
+                        <a href="?type=healing" class="snap-item btn-pill ${currentCat === 'healing' ? 'active' : ''}">Healing</a>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('main-filter-container').innerHTML = getHtml(false);
+            document.getElementById('floating-filter-container').innerHTML = getHtml(true);
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('content-grid');
+            const pagination = document.getElementById('pagination-container');
+            let html = '';
+
+            let filteredBlogs = (currentCat === 'all' || currentCat.includes('notebook'))
+                ? [...promptListData] 
+                : promptListData.filter(b => {
+                    if (!b.category) return false;
+                    const cats = b.category.split(',').map(c => c.trim().toLowerCase());
+                    return cats.includes(currentCat);
+                });
+
+            let remainingProducts = [...productsData];
+            if (priorityProduct) {
+                remainingProducts = remainingProducts.filter(p => p.groupId !== priorityProduct.groupId);
+            }
+            if (currentCat !== 'all' && !currentCat.includes('notebook')) {
+                remainingProducts = remainingProducts.filter(p => {
+                    if (!p.target_prompt) return true;
+                    const targets = p.target_prompt.split(',').map(t => t.trim().toLowerCase());
+                    return targets.includes(currentCat);
+                });
+            }
+
+            // Logic 1: Priority Product dictates the flow
+            if (priorityProduct) {
+                html += `
+                    <div class="feed-card-wrapper">
+                        ${generateProductHtml(priorityProduct, urlRequestedType, true)}
+                    </div>
+                `;
+
+                if (currentCat === 'all' || currentCat.includes('notebook')) {
+                    if (remainingProducts.length > 0) {
+                        html += `<div class="feed-card-wrapper"><h4 class="font-serif fw-medium mb-4 mt-3" style="font-size: 1.5rem;">More Journals</h4></div>`;
+                        remainingProducts.forEach(prod => {
+                            html += `
+                                <div class="feed-card-wrapper">
+                                    ${generateProductHtml(prod, 'digital', false)}
+                                </div>
+                            `;
                         });
                     }
+                    if (filteredBlogs.length > 0) {
+                        html += `<div class="feed-card-wrapper"><h4 class="font-serif fw-medium mb-4 mt-5" style="font-size: 1.5rem;">Latest Prompt Lists</h4></div>`;
+                        filteredBlogs.forEach(blog => {
+                            html += `
+                                <div class="feed-card-wrapper">
+                                    ${generateBlogHtml(blog)}
+                                </div>
+                            `;
+                        });
+                    }
+                } else {
+                    html += `<div class="feed-card-wrapper"><h4 class="font-serif fw-medium mb-4 mt-3" style="font-size: 1.5rem;">${currentCat.charAt(0).toUpperCase() + currentCat.slice(1)} Prompts</h4></div>`;
+                    filteredBlogs.forEach(blog => {
+                        html += `
+                            <div class="feed-card-wrapper">
+                                ${generateBlogHtml(blog)}
+                            </div>
+                        `;
+                    });
+                }
+                
+                grid.innerHTML = html;
+                pagination.innerHTML = ''; 
+
+                // Fetch UIs for priority flow
+                if (currentCat === 'all' || currentCat.includes('notebook')) {
+                    filteredBlogs.forEach(blog => fetchAndRenderBlog(blog));
+                } else {
+                    filteredBlogs.forEach(blog => fetchAndRenderBlog(blog));
+                }
+
+            } 
+            // Logic 2: Standard Feed View
+            else {
+                let combinedItems = [];
+                
+                if (currentCat === 'notebook' || currentCat === 'digital-notebook' || currentCat === 'kdp-notebook') {
+                    combinedItems = remainingProducts.map(p => ({ type: 'product', data: p }));
+                } else {
+                    let bIdx = 0, pIdx = 0;
+                    while (bIdx < filteredBlogs.length || pIdx < remainingProducts.length) {
+                        for(let i = 0; i < 3 && bIdx < filteredBlogs.length; i++) {
+                            combinedItems.push({ type: 'blog', data: filteredBlogs[bIdx++] });
+                        }
+                        if (pIdx < remainingProducts.length) {
+                            combinedItems.push({ type: 'product', data: remainingProducts[pIdx++] });
+                        }
+                    }
+                }
+
+                const totalPages = Math.ceil(combinedItems.length / itemsPerPage);
+                const indexOfLastItem = currentPage * itemsPerPage;
+                const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+                const currentItems = combinedItems.slice(indexOfFirstItem, indexOfLastItem);
+
+                currentItems.forEach(item => {
+                    if (item.type === 'blog') {
+                        html += `
+                            <div class="feed-card-wrapper">
+                                ${generateBlogHtml(item.data)}
+                            </div>
+                        `;
+                    } else if (item.type === 'product') {
+                        html += `
+                            <div class="feed-card-wrapper">
+                                ${generateProductHtml(item.data, urlRequestedType, false)}
+                            </div>
+                        `;
+                    }
                 });
-            });
-        }
 
-        async function renderRegistry() {
-            const flow = document.getElementById('responseFlow');
-            const pagination = document.getElementById('paginationControls');
-            const label = document.getElementById('listHeaderLabel');
+                grid.innerHTML = html;
 
-            flow.innerHTML = "";
-            pagination.innerHTML = "";
+                // Load JSON UIs asynchronously for visible blogs
+                currentItems.forEach(item => {
+                    if (item.type === 'blog') {
+                        fetchAndRenderBlog(item.data);
+                    }
+                });
 
-            let filteredItems = currentFilter
-                ? fullRegistry.filter(i => i.tags && i.tags.some(t => t.toLowerCase() === currentFilter.toLowerCase()))
-                : fullRegistry;
-
-            label.innerText = currentFilter ? currentFilter : "Latest";
-
-            if (filteredItems.length === 0) {
-                flow.innerHTML = `<div style="text-align:center; padding: 60px 20px; color: var(--text-muted);">[No content available]</div>`;
-                return;
-            }
-
-            const totalPages = Math.ceil(filteredItems.length / CARDS_PER_PAGE);
-            const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
-            const itemsToRender = filteredItems.slice(startIndex, startIndex + CARDS_PER_PAGE);
-
-            for (let item of itemsToRender) {
-                try {
-                    const promptRes = await fetch(`data/prompts/${item.file}`);
-                    if (!promptRes.ok) continue;
-
-                    const rawData = await promptRes.json();
-                    const promptData = Array.isArray(rawData) ? rawData[0] : rawData;
-                    const prompts = promptData.items || (promptData["prompt-list"] ? Object.values(promptData["prompt-list"]) : []);
-
-                    const card = document.createElement('article');
-                    card.className = `thread-container`;
-                    card.style.backgroundColor = item.color || "#f2f2f2";
-                    card.onclick = () => window.location.href = `show.html?title=${encodeURIComponent(item.title).replace(/%20/g, '+')}`;
-
-                    let content = `<h2 class="card-title">${item.title}</h2>`;
-
-                    if (item.type && item.type.includes('combo')) {
-                        content += `<div class="prompt-list">${prompts.slice(0, 3).map((p, idx) => `
-                    <div class="combo-item ${idx === 2 ? 'prompt-blur' : ''}">
-                        <p class="affirmation-text">"${p.affirmation || ''}"</p>
-                        <p class="combo-prompt">${p.prompt || ''}</p>
-                    </div>`).join('')}</div>`;
-                    } else {
-                        content += `<ul class="prompt-list">${prompts.slice(0, 4).map((p, idx) => `
-                    <li class="prompt-item ${idx === 3 ? 'prompt-blur' : ''}">
-                        <span class="prompt-number">${idx + 1}.</span><p class="item-text">${p}</p>
-                    </li>`).join('')}</ul>`;
+                if (totalPages > 1) {
+                    let paginationHtml = '';
+                    
+                    if (currentPage > 1) {
+                        paginationHtml += `
+                            <button onclick="changePage(${currentPage - 1})" class="btn-pagination">
+                                <i class="fa-solid fa-arrow-left"></i> Previous
+                            </button>
+                        `;
                     }
 
-                    content += `<div class="footer-fade-overlay"><div style="text-align:right;"><span class="gradient-link">Show More <i class="fa-solid fa-arrow-right"></i></span></div></div>`;
-                    card.innerHTML = content;
-                    flow.appendChild(card);
+                    paginationHtml += `
+                        <span class="text-muted fw-bold px-3 d-none d-md-block" style="font-size: 13px; letter-spacing: 1px; text-transform: uppercase;">
+                            Page ${currentPage} of ${totalPages}
+                        </span>
+                    `;
 
-                } catch (e) { console.error("Error rendering:", item.file, e); }
-            }
+                    if (currentPage < totalPages) {
+                        paginationHtml += `
+                            <button onclick="changePage(${currentPage + 1})" class="btn-pagination">
+                                Next <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        `;
+                    }
 
-            if (totalPages > 1) {
-                if (currentPage > 1) {
-                    const btn = document.createElement('button');
-                    btn.className = 'page-btn'; btn.innerHTML = `<i class="fa-solid fa-arrow-left"></i> Previous`;
-                    btn.onclick = () => navigateToPage(currentPage - 1);
-                    pagination.appendChild(btn);
-                }
-                if (currentPage < totalPages) {
-                    const btn = document.createElement('button');
-                    btn.className = 'page-btn'; btn.innerHTML = `Next <i class="fa-solid fa-arrow-right"></i>`;
-                    btn.onclick = () => navigateToPage(currentPage + 1);
-                    pagination.appendChild(btn);
+                    pagination.innerHTML = paginationHtml;
                 }
             }
         }
 
-        function navigateToPage(p) {
-            currentPage = p;
+        // ==========================================
+        // TEMPLATE GENERATORS
+        // ==========================================
+        
+        function generateBlogHtml(blog) {
+            // Encode the URL parameter so '+' signs are preserved when navigating
+            const safeQuery = encodeURIComponent(blog.url);
+            const dynamicUrl = `show.html?title=${safeQuery}`;
+            return `
+                <a href="${dynamicUrl}" id="blog-card-${blog.id}" class="custom-card text-dark skeleton-bg text-decoration-none d-block p-0 overflow-hidden" style="transition: transform 0.3s ease;">
+                    <div class="w-100" style="min-height: 450px; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-muted fw-semibold" style="opacity: 0.6; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">Loading Prompt UI...</span>
+                    </div>
+                </a>
+            `;
+        }
+
+        function generateProductHtml(product, defaultFormat, isTopPriority) {
+            const hasDigital = !!product.digital;
+            const hasKDP = !!product.kdp;
+
+            if (!cardFormats[product.groupId]) {
+                if (defaultFormat === 'kdp' && hasKDP) {
+                    cardFormats[product.groupId] = 'kdp';
+                } else if ((defaultFormat === 'digital' || defaultFormat === 'all' || !defaultFormat) && hasDigital) {
+                    cardFormats[product.groupId] = 'digital';
+                } else {
+                    cardFormats[product.groupId] = hasDigital ? 'digital' : 'kdp';
+                }
+            }
+            
+            let currentFormat = cardFormats[product.groupId];
+            if (currentFormat === 'kdp' && !hasKDP) {
+                currentFormat = 'digital';
+                cardFormats[product.groupId] = 'digital';
+            } else if (currentFormat === 'digital' && !hasDigital) {
+                currentFormat = 'kdp';
+                cardFormats[product.groupId] = 'kdp';
+            }
+
+            let isKDP = currentFormat === 'kdp';
+            let data = product[currentFormat];
+            
+            let html = `
+                <div class="custom-card position-relative ${isTopPriority ? 'border-brand shadow-sm' : ''}" style="${isTopPriority ? 'padding: 1rem; border-width: 2px;' : 'padding: 0.75rem;'}">
+            `;
+
+            if (isTopPriority) {
+                html += `<div class="position-absolute bg-brand text-white fw-bold rounded-pill shadow-sm" style="top: -12px; left: 24px; font-size: 10px; padding: 6px 12px; letter-spacing: 1px; text-transform: uppercase; z-index: 20;">Selected Journal</div>`;
+            }
+
+            html += `<div class="d-flex border-bottom mx-1 mb-4">`;
+            
+            if (hasDigital) {
+                html += `<button onclick="setCardFormat('${product.groupId}', 'digital')" class="flex-fill format-toggle ${!isKDP ? 'active' : ''}" ${!hasKDP ? 'style="cursor: default;"' : ''}>Goodnotes PDF</button>`;
+            }
+            
+            if (hasKDP) {
+                html += `<button onclick="setCardFormat('${product.groupId}', 'kdp')" class="flex-fill format-toggle ${isKDP ? 'active' : ''}" ${!hasDigital ? 'style="cursor: default;"' : ''}>Amazon KDP</button>`;
+            }
+            
+            html += `</div>`;
+
+            let carouselId = `carousel-${product.groupId}-grid`;
+            html += `
+                <div class="carousel-wrapper mb-4 px-1">
+                    <div id="${carouselId}" class="d-flex overflow-x-auto hide-scrollbar snap-container" style="gap: 12px; padding-bottom: 4px;">
+            `;
+            
+            product.images.forEach((src, idx) => {
+                html += `
+                    <div class="snap-item carousel-item-img border">
+                        ${isKDP ? `<div class="kdp-spine-overlay"></div>` : ''}
+                        <img src="${src}" alt="Preview" loading="lazy">
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                    <button onclick="scrollCarousel('${carouselId}', 'left')" class="scroll-arrow left"><i class="fa-solid fa-chevron-left small"></i></button>
+                    <button onclick="scrollCarousel('${carouselId}', 'right')" class="scroll-arrow right"><i class="fa-solid fa-chevron-right small"></i></button>
+                </div>
+            `;
+
+            html += `
+                <div class="d-flex flex-column px-2 pb-2">
+                    <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
+                        <h3 class="font-serif fw-medium m-0" style="font-size: 1.3rem; line-height: 1.2;">${product.title}</h3>
+                        <span class="fw-semibold m-0" style="font-size: 1.25rem;">${data.price}</span>
+                    </div>
+                    <p class="text-muted fw-semibold mb-3" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">${data.pages}</p>
+                    <p class="text-muted mb-4" style="font-size: 14px; line-height: 1.6;">${data.desc}</p>
+                    
+                    <div class="d-flex flex-column gap-3 mt-auto pt-2">
+                        <div class="d-flex gap-2">
+                            <a href="#preview-${data.id}" class="flex-fill btn-action btn-outline-custom py-3" style="font-size:13px;">Preview</a>
+                            ${!isKDP ? `<a href="#sample-${data.id}" class="flex-fill btn-action btn-outline-brand py-3" style="font-size:13px;">Free Sample</a>` : ''}
+                        </div>
+                        
+                        ${!isKDP ? `
+                            <a href="#buy-${data.id}" class="btn-action btn-dark-action py-3" style="font-size: 14px;"><i class="fa-solid fa-cart-shopping"></i> Purchase PDF</a>
+                        ` : `
+                            <a href="#amazon-${data.id}" class="btn-action btn-amazon py-3" style="font-size: 14px;"><i class="fa-solid fa-book"></i> Amazon KDP</a>
+                        `}
+                    </div>
+                </div>
+            </div>`;
+
+            return html;
+        }
+
+        // ==========================================
+        // ASYNC JSON UI FETCHER FOR BLOGS
+        // ==========================================
+        async function fetchAndRenderBlog(blog) {
+            try {
+                // Encode '+' as '%2B' to ensure local servers don't interpret them as spaces
+                const safePath = blog.url.replace(/\+/g, '%2B');
+                const response = await fetch(`data/list/${safePath}.json`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const rawData = await response.json();
+                
+                // Smart check to handle if JSON is an array (e.g. [{ css:..., html:... }]) or a direct object
+                const data = Array.isArray(rawData) ? rawData[0] : rawData;
+
+                // Make sure css and html actually exist to prevent errors
+                if (!data || !data.css || !data.html) {
+                    throw new Error('JSON is missing required css or html keys');
+                }
+                
+                // Parse HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.html, 'text/html');
+                
+                // Remove description completely for the feed
+                const descContainer = doc.querySelector('.description-container');
+                if (descContainer) {
+                    descContainer.remove();
+                }
+
+                // Limit prompts to 3
+                const promptItems = doc.querySelectorAll('.prompt-item');
+                let remaining = 0;
+                promptItems.forEach((item, index) => {
+                    if (index >= 3) {
+                        item.remove();
+                        remaining++;
+                    }
+                });
+                
+                // Add '+n more prompts' casual text
+                if (remaining > 0) {
+                    const promptList = doc.querySelector('.prompt-list');
+                    if (promptList) {
+                        const textContainer = doc.createElement('div');
+                        textContainer.className = 'text-center mt-3 pb-2';
+                        textContainer.innerHTML = `<span style="color: #6c757d; font-size: 1.05rem; font-style: italic; font-weight: 500;">+ ${remaining} more prompts. Click to read the full list.</span>`;
+                        promptList.appendChild(textContainer);
+                    }
+                }
+                
+                // Adjust card styles specifically for fitting inside the feed
+                const innerCard = doc.querySelector('.prompt-card');
+                if (innerCard) {
+                    // Inject explicit styles to override any JSON styles so the outer custom-card dictates layout
+                    innerCard.style.setProperty('margin', '0', 'important');
+                    innerCard.style.setProperty('border-radius', '0', 'important'); // Flat edges to match outer container
+                    innerCard.style.setProperty('box-shadow', 'none', 'important'); // Outer a-tag container handles shadow
+                    innerCard.style.setProperty('max-width', '100%', 'important');
+                    innerCard.style.setProperty('width', '100%', 'important');
+                }
+
+                // Inject Scoped CSS (Only inject if not already present)
+                if (!document.getElementById(`css-${blog.id}`)) {
+                    const style = document.createElement('style');
+                    style.id = `css-${blog.id}`;
+                    // Crucial: Replace global dynamic container id with this specific card's ID
+                    style.innerHTML = data.css.replace(/#dynamic-content/g, `#blog-card-${blog.id}`);
+                    document.head.appendChild(style);
+                }
+                
+                // Render into outer container
+                const container = document.getElementById(`blog-card-${blog.id}`);
+                if (container) {
+                    container.innerHTML = doc.body.innerHTML;
+                    container.classList.remove('skeleton-bg'); // Remove loading background
+                    
+                    // Add subtle hover lift effect to inner HTML
+                    container.addEventListener('mouseenter', () => {
+                        const card = container.querySelector('.prompt-card');
+                        if (card) {
+                            card.style.transform = 'scale(1.02)';
+                            card.style.transition = 'transform 0.3s ease';
+                        }
+                    });
+                    container.addEventListener('mouseleave', () => {
+                        const card = container.querySelector('.prompt-card');
+                        if (card) card.style.transform = 'scale(1)';
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to load JSON UI for blog:", blog.title, error);
+                
+                // Fallback: If JSON fetch fails, show a clean title placeholder
+                const container = document.getElementById(`blog-card-${blog.id}`);
+                if (container) {
+                    container.classList.remove('skeleton-bg');
+                    container.innerHTML = `
+                        <div class="w-100 p-5 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; background: #fff;">
+                            <h3 class="font-serif fw-medium mb-4" style="font-size: 1.5rem; line-height: 1.3;">${blog.title}</h3>
+                            <span class="btn-pill active" style="font-size: 13px;">Read Prompts <i class="fa-solid fa-arrow-right ms-2"></i></span>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // ==========================================
+        // INTERACTION HANDLERS
+        // ==========================================
+
+        function setCardFormat(groupId, format) {
+            cardFormats[groupId] = format;
+            renderGrid();
+        }
+
+        function scrollCarousel(id, direction) {
+            const el = document.getElementById(id);
+            if (el) {
+                const scrollAmount = el.clientWidth * 0.8;
+                el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        function changePage(page) {
+            currentPage = page;
             const url = new URL(window.location);
-            url.searchParams.set('page', p);
+            url.searchParams.set('page', page);
             window.history.pushState({}, '', url);
-            window.scrollTo({ top: document.getElementById('mainControls').offsetTop - 10, behavior: 'smooth' });
-            renderRegistry();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderGrid();
         }
 
-        function handlePillClick(el, tag) {
-            setCookie(CATEGORY_COOKIE, tag);
-            currentFilter = tag;
-            currentPage = 1;
-            updatePillUI();
-            renderRegistry();
+        function setupScrollListener() {
+            const filterRef = document.getElementById('filter-ref');
+            const heroSearch = document.getElementById('hero-search');
+            const stickyActions = document.getElementById('sticky-actions-container');
+            const filterMenu = document.getElementById('floating-filter-menu');
+            const toggleBtn = document.getElementById('sticky-filter-toggle');
+            const filterIcon = document.getElementById('filter-icon');
+
+            window.addEventListener('scroll', () => {
+                const searchRect = heroSearch.getBoundingClientRect();
+                
+                if (searchRect.bottom < 72) {
+                    stickyActions.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    stickyActions.classList.add('opacity-0', 'pointer-events-none');
+                    if (isFilterMenuOpen) toggleFilter();
+                }
+            });
+
+            toggleBtn.addEventListener('click', toggleFilter);
+
+            function toggleFilter() {
+                isFilterMenuOpen = !isFilterMenuOpen;
+                if (isFilterMenuOpen) {
+                    filterMenu.classList.add('show');
+                    filterIcon.classList.remove('fa-filter', 'text-brand');
+                    filterIcon.classList.add('fa-xmark', 'text-danger');
+                } else {
+                    filterMenu.classList.remove('show');
+                    filterIcon.classList.remove('fa-xmark', 'text-danger');
+                    filterIcon.classList.add('fa-filter', 'text-brand');
+                }
+            }
         }
 
-        function performSearchRedirect() { window.location.href = `search.html`; }
-        function scrollPills(d, id) {
-            const c = document.getElementById(id);
-            c.scrollBy({ left: (c.clientWidth / 2) * d, behavior: 'smooth' });
-        }
-
-        window.addEventListener('scroll', () => {
-            const sticky = document.getElementById('globalStickyHeader');
-            const controls = document.getElementById('mainControls');
-            if (window.scrollY > (controls.offsetTop + controls.offsetHeight)) sticky.style.display = 'flex';
-            else sticky.style.display = 'none';
-        });
-
-        window.addEventListener('load', init);
+        // Boot up
+        window.onload = init;
     </script>
 </body>
-
 </html>
