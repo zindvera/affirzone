@@ -419,7 +419,8 @@
                 
                 let html = '';
                 topResults.forEach(blog => {
-                    const safeQuery = encodeURIComponent(blog.url);
+                    // Decode URL, then re-encode but ensure both encoded spaces (%20) AND encoded plus signs (%2B) become literal + signs
+                    const safeQuery = encodeURIComponent(decodeURIComponent(blog.url)).replace(/%20/g, '+').replace(/%2B/g, '+');
                     const dynamicUrl = `show.html?title=${safeQuery}`;
                     
                     html += `
