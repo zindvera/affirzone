@@ -112,8 +112,8 @@
         .snap-container { scroll-snap-type: x mandatory; scroll-behavior: smooth; }
         .snap-item { scroll-snap-align: center; scroll-snap-stop: always; }
 
-        /* Card Styling */
-        .custom-card, .prompt-card {
+        /* Card Styling for Universal Usage (Products) */
+        .custom-card {
             background: #fff;
             border-radius: 1rem;
             border: 1px solid rgba(0,0,0,0.04);
@@ -122,7 +122,7 @@
             display: flex;
             flex-direction: column;
             height: auto; 
-            overflow: hidden; /* Ensures image rounded corners aren't broken */
+            overflow: hidden; 
         }
         .custom-card:hover {
             box-shadow: 0 12px 40px rgba(35,180,142,0.08);
@@ -385,7 +385,6 @@
             Affirmations, Journal Prompts & Ideas
         </p>
         <div class="d-flex justify-content-center gap-4 mb-5" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
-            <!-- <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Instagram</a> -->
             <a href="https://www.pinterest.com/affirzone_journal/" class="text-white text-decoration-none" style="opacity: 0.9;">Pinterest</a>
             <a href="contact.html" class="text-white text-decoration-none" style="opacity: 0.9;">Contact</a>
         </div>
@@ -422,14 +421,13 @@
             setTimeout(() => {
                 panel.classList.add('d-none');
                 
-                // Only re-show the button if we are currently scrolled past the threshold
                 const stickyActions = document.getElementById('sticky-actions-container');
                 if (!stickyActions.classList.contains('opacity-0')) {
                     btn.classList.remove('d-none');
                     btn.classList.add('d-flex');
                 } else {
                     btn.classList.remove('d-none');
-                    btn.classList.add('d-flex'); // Re-add class but it will be hidden by opacity-0
+                    btn.classList.add('d-flex'); 
                 }
             }, 300);
         }
@@ -457,7 +455,6 @@
         // ==========================================
         async function init() {
             try {
-                // Fetch external JSON files
                 const [productsResponse, topicsResponse] = await Promise.all([
                     fetch('data/products/list.json'),
                     fetch('data/topics/list.json')
@@ -467,7 +464,6 @@
                 if (topicsResponse.ok) promptListData = await topicsResponse.json();
             } catch (error) {
                 console.error("Error loading JSON data:", error);
-                // Basic fallback for products to avoid empty screen during local testing
                 if(productsData.length === 0) {
                    productsData = [];
                 }
@@ -597,7 +593,6 @@
                 grid.innerHTML = html;
                 pagination.innerHTML = ''; 
 
-                // Fetch UIs for priority flow
                 if (currentCat === 'all' || currentCat.includes('notebook')) {
                     filteredBlogs.forEach(blog => fetchAndRenderBlog(blog));
                 } else {
@@ -646,7 +641,6 @@
 
                 grid.innerHTML = html;
 
-                // Load JSON UIs asynchronously for visible blogs
                 currentItems.forEach(item => {
                     if (item.type === 'blog') {
                         fetchAndRenderBlog(item.data);
@@ -688,14 +682,15 @@
         // ==========================================
         
         function generateBlogHtml(blog) {
-            // Encode the string, strictly preserving explicit literal '+' signs
-            const rawQuery = (blog.url || blog.title).replace(/ /g, '+');
-            const safeQuery = rawQuery.split('+').map(part => encodeURIComponent(part)).join('+');
+            const rawUrl = blog.url || '';
+            const safeQuery = rawUrl.split('+').map(part => encodeURIComponent(part)).join('+');
             const dynamicUrl = `show.html?title=${safeQuery}`;
+            const safeId = rawUrl.replace(/[^a-zA-Z0-9]/g, '-');
             
+            // Replaced outer custom-card wrapping to ensure inner dynamically fetched HTML/CSS renders exactly
             return `
-                <a href="${dynamicUrl}" id="blog-card-${blog.id}" class="custom-card text-dark skeleton-bg text-decoration-none d-block p-0 overflow-hidden" style="transition: transform 0.3s ease;">
-                    <div class="w-100" style="min-height: 450px; display: flex; align-items: center; justify-content: center;">
+                <a href="${dynamicUrl}" id="blog-card-${safeId}" class="text-dark text-decoration-none d-block overflow-visible" style="transition: transform 0.3s ease;">
+                    <div class="custom-card skeleton-bg w-100" style="min-height: 450px; display: flex; align-items: center; justify-content: center;">
                         <span class="text-muted fw-semibold" style="opacity: 0.6; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">Loading Prompt UI...</span>
                     </div>
                 </a>
@@ -801,14 +796,15 @@
         // ASYNC JSON UI FETCHER FOR BLOGS
         // ==========================================
         async function fetchAndRenderBlog(blog) {
+            const rawUrl = blog.url || '';
+            const safeId = rawUrl.replace(/[^a-zA-Z0-9]/g, '-');
+            
             try {
-                // Encode '+' as '%2B' for file fetching
-                const safePath = (blog.url || blog.title).replace(/\+/g, '%2B');
+                const safePath = rawUrl.replace(/\+/g, '%2B');
                 const response = await fetch(`data/list/${safePath}.json`);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 
                 const rawData = await response.json();
-                
                 const data = Array.isArray(rawData) ? rawData[0] : rawData;
 
                 if (!data || !data.css || !data.html) {
@@ -842,26 +838,24 @@
                     }
                 }
                 
-                const innerCard = doc.querySelector('.prompt-card');
-                if (innerCard) {
-                    innerCard.style.setProperty('margin', '0', 'important');
-                    innerCard.style.setProperty('border-radius', '0', 'important'); 
-                    innerCard.style.setProperty('box-shadow', 'none', 'important'); 
-                    innerCard.style.setProperty('max-width', '100%', 'important');
-                    innerCard.style.setProperty('width', '100%', 'important');
-                }
-
-                if (!document.getElementById(`css-${blog.id}`)) {
+                if (!document.getElementById(`css-${safeId}`)) {
                     const style = document.createElement('style');
-                    style.id = `css-${blog.id}`;
-                    style.innerHTML = data.css.replace(/#dynamic-content/g, `#blog-card-${blog.id}`);
+                    style.id = `css-${safeId}`;
+                    
+                    // Smart CSS scoping: target both #dynamic-content AND .prompt-card base classes to prevent global bleeding
+                    let scopedCss = data.css.replace(/#dynamic-content/g, `#blog-card-${safeId}`);
+                    // Only scope .prompt-card if it's the root definition to avoid double prefixing
+                    if (!scopedCss.includes(`#blog-card-${safeId}`)) {
+                         scopedCss = scopedCss.replace(/\.prompt-card/g, `#blog-card-${safeId} .prompt-card`);
+                    }
+                    
+                    style.innerHTML = scopedCss;
                     document.head.appendChild(style);
                 }
                 
-                const container = document.getElementById(`blog-card-${blog.id}`);
+                const container = document.getElementById(`blog-card-${safeId}`);
                 if (container) {
                     container.innerHTML = doc.body.innerHTML;
-                    container.classList.remove('skeleton-bg'); 
                     
                     container.addEventListener('mouseenter', () => {
                         const card = container.querySelector('.prompt-card');
@@ -876,14 +870,14 @@
                     });
                 }
             } catch (error) {
-                console.error("Failed to load JSON UI for blog:", blog.title, error);
+                console.error("Failed to load JSON UI for blog:", rawUrl, error);
                 
-                const container = document.getElementById(`blog-card-${blog.id}`);
+                const container = document.getElementById(`blog-card-${safeId}`);
                 if (container) {
-                    container.classList.remove('skeleton-bg');
+                    const fallbackTitle = rawUrl.replace(/\+/g, ' ');
                     container.innerHTML = `
-                        <div class="w-100 p-5 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; background: #fff;">
-                            <h3 class="font-serif fw-medium mb-4" style="font-size: 1.5rem; line-height: 1.3;">${blog.title}</h3>
+                        <div class="custom-card w-100 p-5 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; background: #fff;">
+                            <h3 class="font-serif fw-medium mb-4 text-capitalize" style="font-size: 1.5rem; line-height: 1.3;">${fallbackTitle}</h3>
                             <span class="btn-pill active" style="font-size: 13px;">Read Prompts <i class="fa-solid fa-arrow-right ms-2"></i></span>
                         </div>
                     `;

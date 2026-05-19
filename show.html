@@ -50,7 +50,7 @@
             width: 100%;
             max-width: 80rem;
             margin: 0 auto;
-            padding: 0; /* Removed horizontal padding on mobile for full width */
+            padding: 0;
         }
         @media (min-width: 768px) {
             .container-custom { padding: 0 40px; }
@@ -89,7 +89,6 @@
         .hero-search-bar { transition: transform 0.2s, box-shadow 0.2s; border-color: #e5e5e5 !important; }
         .hero-search-bar:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important; }
 
-        /* Responsive Search Bar */
         .nav-search-wrapper { width: 180px; padding: 8px 16px; }
         .nav-search-text { font-size: 13px; font-weight: 600; }
         .hero-search-bar i { font-size: 13px; }
@@ -108,14 +107,14 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Feed Card Styles & Global Prompt Card Overrides */
+        /* Feed Card Styles */
         .custom-card, .prompt-card {
             background: #fff; 
-            border-radius: 0; /* Full width flat edges on mobile */
+            border-radius: 0;
             border: 1px solid rgba(0,0,0,0.04);
             border-left: none;
             border-right: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03) !important; /* Subtle shadow */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03) !important;
             transition: all 0.3s ease;
         }
         .custom-card {
@@ -176,9 +175,7 @@
 
     </style>
 
-    <!-- DYNAMIC STYLES: CSS fetched from the JSON will be injected here -->
     <style id="dynamic-styles"></style>
-
 </head>
 <body>
 
@@ -207,7 +204,6 @@
     <!-- Main Content Area -->
     <main class="container-custom">
         
-        <!-- DYNAMIC CONTENT: The fetched HTML card will be injected here -->
         <div id="dynamic-content">
             <div class="d-flex flex-column justify-content-center align-items-center py-5 my-5 px-3" style="min-height: 40vh;">
                 <div class="spinner-border text-brand mb-3" role="status"></div>
@@ -226,12 +222,10 @@
                 <!-- Injected via JS -->
             </div>
 
-            <!-- Pagination -->
             <div id="related-pagination" class="d-flex justify-content-center align-items-center gap-3 mt-4 px-3">
                 <!-- Pagination injected via JS -->
             </div>
 
-            <!-- Explore More Homepage CTA -->
             <div class="text-center mt-5 pt-4 px-3">
                 <a href="index.html" class="btn btn-dark rounded-pill px-5 py-3 fw-bold" style="font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">
                     Explore More Prompts
@@ -250,7 +244,7 @@
         <div class="d-flex justify-content-center gap-4 mb-5" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
             <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Instagram</a>
             <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Pinterest</a>
-            <a href="#" class="text-white text-decoration-none" style="opacity: 0.9;">Contact</a>
+            <a href="contact.html" class="text-white text-decoration-none" style="opacity: 0.9;">Contact</a>
         </div>
         <div class="pt-4 text-white" style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7;">
             © <script>document.write(new Date().getFullYear())</script> Affirzone. All rights reserved.
@@ -260,7 +254,7 @@
     <!-- Application Logic -->
     <script>
         // ==========================================
-        // DATA ARRAYS (Fetched dynamically)
+        // DATA ARRAYS
         // ==========================================
         let productsData = [];
         let promptListData = [];
@@ -269,10 +263,8 @@
         // STATE VARIABLES
         // ==========================================
         let currentBlogCategories = []; 
-        let currentBlogTitle = "";
-        
         let currentPage = 1;
-        const itemsPerPage = 12; // Max 12 items for related feed
+        const itemsPerPage = 12; 
         let cardFormats = {}; 
 
         // ==========================================
@@ -285,13 +277,11 @@
             
             if (pageParam && !isNaN(pageParam)) currentPage = pageParam;
 
-            // 1. Check URL Parameter Existence
             if (!titleParam) {
                 showError("No prompt specified. Please select a prompt from the homepage.");
                 return;
             }
 
-            // Strictly enforce literal '+' strings (reject %20 or %2B encoded forms in the raw string)
             const rawTitleMatch = window.location.search.match(/[?&]title=([^&]+)/);
             if (rawTitleMatch) {
                 const rawParam = rawTitleMatch[1];
@@ -301,53 +291,37 @@
                 }
             }
 
-            // 2. Fetch the Dynamic JSON file for the Card
             try {
-                // We convert spaces (which are parsed by URLSearchParams automatically from +) back to + for exact file fetching
                 const fileName = titleParam.replace(/ /g, '+');
                 const response = await fetch(`data/list/${fileName}.json`);
                 
                 if (!response.ok) throw new Error('File not found');
                 
                 let data = await response.json();
+                if (Array.isArray(data)) data = data[0];
                 
-                if (Array.isArray(data)) {
-                    data = data[0];
-                }
-                
-                // SEO: Update Meta Tag with Description
-                document.title = `${data.title || titleParam} - Affirzone`;
+                document.title = `${titleParam.replace(/\+/g, ' ')} - Affirzone`;
                 let metaDescription = document.querySelector('meta[name="description"]');
                 if (metaDescription && data.description) {
                     metaDescription.setAttribute('content', data.description);
                 }
 
-                // Inject the Dynamic CSS & HTML
                 document.getElementById('dynamic-styles').innerHTML = data.css || '';
                 document.getElementById('dynamic-content').innerHTML = data.html || '';
 
-                // Text Trimming Logic for Description Container (Global Word Count & Read Less)
                 const descContainer = document.querySelector('#dynamic-content .description-container');
                 if (descContainer) {
-                    // Convert NodeList to an Array to freeze the references
                     const paragraphs = Array.from(descContainer.querySelectorAll('.description-text'));
                     
-                    // 1. Gather text data and count total words across all paragraphs
                     let totalWords = 0;
                     const paragraphsData = paragraphs.map(p => {
                         const text = p.innerText.trim();
                         const words = text ? text.split(/\s+/).filter(w => w.length > 0) : []; 
                         totalWords += words.length;
-                        
-                        return {
-                            element: p,
-                            originalHTML: p.innerHTML, // Keep original HTML formatting
-                            words: words
-                        };
+                        return { element: p, originalHTML: p.innerHTML, words: words };
                     });
 
-                    // 2. Determine the word limit dynamically
-                    let wordLimit = 15; // Default word limit
+                    let wordLimit = 15;
                     let shouldTruncate = true;
 
                     if (data.cut_desc === "none") {
@@ -356,40 +330,30 @@
                         wordLimit = parseInt(data.cut_desc, 10);
                     }
                     
-                    // 3. Apply global truncation if the threshold is crossed
                     if (shouldTruncate && totalWords > wordLimit && !isNaN(wordLimit)) {
-                        
                         const renderTruncated = () => {
                             let currentWordCount = 0;
                             let limitReached = false;
-
                             paragraphsData.forEach((pData, index) => {
                                 const p = pData.element;
-                                
-                                // Reset paragraph visibility completely
                                 p.style.setProperty('display', 'block', 'important'); 
                                 p.style.display = ''; 
                                 p.classList.remove('d-none');
 
                                 if (limitReached) {
-                                    // Hide subsequent paragraphs fully and bulletproof
                                     p.style.setProperty('display', 'none', 'important');
                                     p.classList.add('d-none');
                                     return;
                                 }
 
                                 if (currentWordCount + pData.words.length <= wordLimit) {
-                                    // This entire paragraph fits safely within the limit
                                     currentWordCount += pData.words.length;
                                     p.innerHTML = pData.originalHTML;
-                                    
-                                    // If paragraph perfectly aligns with word limit
                                     if (currentWordCount === wordLimit && index < paragraphsData.length - 1) {
                                         limitReached = true;
                                         appendReadMore(p);
                                     }
                                 } else {
-                                    // The word limit falls somewhere mid-paragraph
                                     const allowedWords = wordLimit - currentWordCount;
                                     p.innerText = pData.words.slice(0, allowedWords).join(' ') + '... ';
                                     limitReached = true;
@@ -405,11 +369,7 @@
                                 p.style.setProperty('display', 'block', 'important');
                                 p.style.display = '';
                                 p.classList.remove('d-none');
-
-                                // Append Read Less to the very last visible paragraph
-                                if (index === paragraphsData.length - 1) {
-                                    appendReadLess(p);
-                                }
+                                if (index === paragraphsData.length - 1) appendReadLess(p);
                             });
                         };
 
@@ -419,10 +379,7 @@
                             btn.className = 'text-brand fw-bold text-decoration-none ms-1';
                             btn.style.fontSize = '0.9em';
                             btn.innerText = 'Read More';
-                            btn.onclick = (e) => {
-                                e.preventDefault();
-                                renderFull();
-                            };
+                            btn.onclick = (e) => { e.preventDefault(); renderFull(); };
                             element.appendChild(document.createTextNode(' '));
                             element.appendChild(btn);
                         };
@@ -433,37 +390,28 @@
                             btn.className = 'text-brand fw-bold text-decoration-none ms-1';
                             btn.style.fontSize = '0.9em';
                             btn.innerText = 'Read Less';
-                            btn.onclick = (e) => {
-                                e.preventDefault();
-                                renderTruncated();
-                                // Scroll back up to the container slightly offset so the user isn't lost
+                            btn.onclick = (e) => { 
+                                e.preventDefault(); renderTruncated(); 
                                 descContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                             };
                             element.appendChild(document.createTextNode(' '));
                             element.appendChild(btn);
                         };
 
-                        // Start the view in a truncated state
                         renderTruncated();
                     }
                 }
 
-                // Insert Promo Ads inside the prompt list content
                 await insertPromoAds();
 
-                // Save data for the related feed engine
-                currentBlogTitle = data.title || titleParam;
-                currentBlogCategories = data.category ? data.category.split(',').map(c => c.trim().toLowerCase()) : [];
-                
                 document.getElementById('related-section').style.display = 'block';
 
             } catch (error) {
                 console.error(error);
                 showError("We couldn't find the prompt list you're looking for.");
-                return; // Stop execution if the main file fails
+                return; 
             }
 
-            // 3. Fetch Related Data (Products & Topics) for the Feed below
             try {
                 const [productsRes, topicsRes] = await Promise.all([
                     fetch('data/products/list.json'),
@@ -479,7 +427,6 @@
             renderRelatedFeed();
         }
 
-        // Display a clean error if URL is missing or JSON 404s
         function showError(msg) {
             document.getElementById('dynamic-content').innerHTML = `
                 <div class="text-center py-5 my-5 px-3">
@@ -492,7 +439,7 @@
         }
 
         // ==========================================
-        // COOKIE & VIEWPORT TRACKING UTILITIES
+        // COOKIE TRACKING UTILITIES
         // ==========================================
         function getSeenAds() {
             const match = document.cookie.match(/(^| )ad_seen=([^;]+)/);
@@ -504,26 +451,25 @@
             let seen = getSeenAds();
             if (!seen.includes(id)) {
                 seen.push(id);
-                document.cookie = `ad_seen=${seen.join(',')};path=/;max-age=2592000`; // Expires in 30 days
+                document.cookie = `ad_seen=${seen.join(',')};path=/;max-age=2592000`; 
             }
         }
 
         function resetSeenAds() {
-            document.cookie = `ad_seen=;path=/;max-age=0`; // Clear cookie
+            document.cookie = `ad_seen=;path=/;max-age=0`; 
         }
 
-        // Observer to detect when an ad actually enters the screen
         const adObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const adId = entry.target.getAttribute('data-promo-id');
                     if (adId) {
                         addSeenAd(adId);
-                        observer.unobserve(entry.target); // Stop observing once marked as seen
+                        observer.unobserve(entry.target); 
                     }
                 }
             });
-        }, { threshold: 0.5 }); // Triggers when at least 50% of the ad is visible
+        }, { threshold: 0.5 }); 
 
         // ==========================================
         // PROMO AD INJECTION
@@ -542,17 +488,14 @@
                 const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
                 const getAdHtml = (promo) => typeof promo === 'string' ? promo : (promo.html || '');
 
-                // Apply Cookie Filtering Logic
                 let seenAds = getSeenAds();
                 let availablePromos = promos.filter(p => !seenAds.includes(p.id));
 
-                // If all ads have been seen, reset the cycle
                 if (availablePromos.length === 0) {
                     resetSeenAds();
                     availablePromos = [...promos];
                 }
 
-                // Helper to pop a random unseen ad from available pool
                 const popRandomPromo = () => {
                     if (availablePromos.length === 0) return null;
                     const idx = Math.floor(Math.random() * availablePromos.length);
@@ -560,8 +503,7 @@
                 };
 
                 if (count >= 10) {
-                    // First Ad: Place after a random prompt item between the 5th and 7th
-                    const insertPos1 = getRandomInt(5, 7) - 1; // 0-based index
+                    const insertPos1 = getRandomInt(5, 7) - 1; 
                     if (promptItems[insertPos1]) {
                         const adPromo1 = popRandomPromo() || promos[0];
                         const adDiv1 = document.createElement('div');
@@ -569,13 +511,12 @@
                         adDiv1.setAttribute('data-promo-id', adPromo1.id);
                         adDiv1.innerHTML = getAdHtml(adPromo1);
                         promptItems[insertPos1].insertAdjacentElement('afterend', adDiv1);
-                        adObserver.observe(adDiv1); // Start tracking visibility
+                        adObserver.observe(adDiv1); 
                     }
                 }
 
                 if (count >= 20) {
-                    // Second Ad: Place after a random prompt item between the 14th and 16th
-                    const insertPos2 = getRandomInt(14, 16) - 1; // 0-based index
+                    const insertPos2 = getRandomInt(14, 16) - 1; 
                     if (promptItems[insertPos2]) {
                         const adPromo2 = popRandomPromo() || promos[0];
                         const adDiv2 = document.createElement('div');
@@ -583,118 +524,11 @@
                         adDiv2.setAttribute('data-promo-id', adPromo2.id);
                         adDiv2.innerHTML = getAdHtml(adPromo2);
                         promptItems[insertPos2].insertAdjacentElement('afterend', adDiv2);
-                        adObserver.observe(adDiv2); // Start tracking visibility
+                        adObserver.observe(adDiv2); 
                     }
                 }
             } catch (err) {
                 console.log("No promo ads loaded or promo list missing.");
-            }
-        }
-
-        // ==========================================
-        // ASYNC JSON UI FETCHER FOR BLOGS
-        // ==========================================
-        async function fetchAndRenderBlog(blog) {
-            try {
-                // Encode '+' as '%2B' to ensure local servers don't interpret them as spaces
-                const safePath = (blog.url || blog.title).replace(/\+/g, '%2B');
-                const response = await fetch(`data/list/${safePath}.json`);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                
-                const rawData = await response.json();
-                
-                // Smart check to handle if JSON is an array (e.g. [{ css:..., html:... }]) or a direct object
-                const data = Array.isArray(rawData) ? rawData[0] : rawData;
-
-                // Make sure css and html actually exist to prevent errors
-                if (!data || !data.css || !data.html) {
-                    throw new Error('JSON is missing required css or html keys');
-                }
-                
-                // Parse HTML
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(data.html, 'text/html');
-                
-                // Remove description completely for the feed
-                const descContainer = doc.querySelector('.description-container');
-                if (descContainer) {
-                    descContainer.remove();
-                }
-
-                // Limit prompts to 3
-                const promptItems = doc.querySelectorAll('.prompt-item');
-                let remaining = 0;
-                promptItems.forEach((item, index) => {
-                    if (index >= 3) {
-                        item.remove();
-                        remaining++;
-                    }
-                });
-                
-                // Add '+n more prompts' casual text
-                if (remaining > 0) {
-                    const promptList = doc.querySelector('.prompt-list');
-                    if (promptList) {
-                        const textContainer = doc.createElement('div');
-                        textContainer.className = 'text-center mt-3 pb-2';
-                        textContainer.innerHTML = `<span style="color: #6c757d; font-size: 1.05rem; font-style: italic; font-weight: 500;">+ ${remaining} more prompts. Click to read the full list.</span>`;
-                        promptList.appendChild(textContainer);
-                    }
-                }
-                
-                // Adjust card styles specifically for fitting inside the feed
-                const innerCard = doc.querySelector('.prompt-card');
-                if (innerCard) {
-                    // Inject explicit styles to override any JSON styles so the outer custom-card dictates layout
-                    innerCard.style.setProperty('margin', '0', 'important');
-                    innerCard.style.setProperty('border-radius', '0', 'important'); // Flat edges to match outer container
-                    innerCard.style.setProperty('box-shadow', 'none', 'important'); // Outer a-tag container handles shadow
-                    innerCard.style.setProperty('max-width', '100%', 'important');
-                    innerCard.style.setProperty('width', '100%', 'important');
-                }
-
-                // Inject Scoped CSS (Only inject if not already present)
-                if (!document.getElementById(`css-${blog.id}`)) {
-                    const style = document.createElement('style');
-                    style.id = `css-${blog.id}`;
-                    // Crucial: Replace global dynamic container id with this specific card's ID
-                    style.innerHTML = data.css.replace(/#dynamic-content/g, `#blog-card-${blog.id}`);
-                    document.head.appendChild(style);
-                }
-                
-                // Render into outer container
-                const container = document.getElementById(`blog-card-${blog.id}`);
-                if (container) {
-                    container.innerHTML = doc.body.innerHTML;
-                    container.classList.remove('skeleton-bg'); // Remove loading background
-                    
-                    // Add subtle hover lift effect to inner HTML
-                    container.addEventListener('mouseenter', () => {
-                        const card = container.querySelector('.prompt-card');
-                        if (card) {
-                            card.style.transform = 'scale(1.02)';
-                            card.style.transition = 'transform 0.3s ease';
-                        }
-                    });
-                    container.addEventListener('mouseleave', () => {
-                        const card = container.querySelector('.prompt-card');
-                        if (card) card.style.transform = 'scale(1)';
-                    });
-                }
-            } catch (error) {
-                console.error("Failed to load JSON UI for blog:", blog.title, error);
-                
-                // Fallback: If JSON fetch fails, show a clean title placeholder
-                const container = document.getElementById(`blog-card-${blog.id}`);
-                if (container) {
-                    container.classList.remove('skeleton-bg');
-                    container.innerHTML = `
-                        <div class="w-100 p-5 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; background: #fff;">
-                            <h3 class="font-serif fw-medium mb-4" style="font-size: 1.5rem; line-height: 1.3;">${blog.title}</h3>
-                            <span class="btn-pill active" style="font-size: 13px;">Read Prompts <i class="fa-solid fa-arrow-right ms-2"></i></span>
-                        </div>
-                    `;
-                }
             }
         }
 
@@ -706,28 +540,19 @@
             const pagination = document.getElementById('related-pagination');
             let html = '';
 
-            // FIX: Cross-reference with master list to populate missing categories or titles
             const params = new URLSearchParams(window.location.search);
             const titleParam = params.get('title') || "";
             const currentUrlKey = titleParam.replace(/ /g, '+');
 
-            const masterBlogMatch = promptListData.find(b => 
-                b.url === currentUrlKey || 
-                b.title.toLowerCase().trim() === currentBlogTitle.toLowerCase().trim()
-            );
+            const masterBlogMatch = promptListData.find(b => b.url === currentUrlKey);
 
-            if (masterBlogMatch) {
-                currentBlogTitle = masterBlogMatch.title;
-                if (masterBlogMatch.category) {
-                    currentBlogCategories = masterBlogMatch.category.split(',').map(c => c.trim().toLowerCase());
-                }
+            if (masterBlogMatch && masterBlogMatch.category) {
+                currentBlogCategories = masterBlogMatch.category.split(',').map(c => c.trim().toLowerCase());
             }
 
-            const cleanCurrentTitle = currentBlogTitle.toLowerCase().trim();
-
-            // 1. Get related blogs (exclude current by title, match category)
+            // 1. Get related blogs (exclude current by URL, match category)
             let relatedBlogs = promptListData.filter(b => {
-                if (b.title.toLowerCase().trim() === cleanCurrentTitle) return false; 
+                if (!b.url || b.url === currentUrlKey) return false; 
                 if (!b.category) return false;
                 
                 const cats = b.category.split(',').map(c => c.trim().toLowerCase());
@@ -738,20 +563,19 @@
             if (relatedBlogs.length > 4) {
                 relatedBlogs = relatedBlogs.slice(0, 4);
             } else if (relatedBlogs.length < 4) {
-                // Not enough matches, fill the rest with random available prompts
+                // Fill the rest with random available prompts
                 let pool = promptListData.filter(b => 
-                    b.title.toLowerCase().trim() !== cleanCurrentTitle && 
-                    !relatedBlogs.some(rb => rb.title === b.title)
+                    b.url && b.url !== currentUrlKey && 
+                    !relatedBlogs.some(rb => rb.url === b.url)
                 );
-                // Shuffle random pool
                 pool = pool.sort(() => 0.5 - Math.random());
                 const needed = 4 - relatedBlogs.length;
                 relatedBlogs = [...relatedBlogs, ...pool.slice(0, needed)];
             }
 
-            // 2. Get related products (target is null OR matches category)
+            // 2. Get related products
             let relatedProducts = productsData.filter(p => {
-                if (!p.target_prompt) return true; // Show universal ads
+                if (!p.target_prompt) return true; 
                 const targets = p.target_prompt.split(',').map(t => t.trim().toLowerCase());
                 return targets.some(t => currentBlogCategories.includes(t));
             });
@@ -791,14 +615,12 @@
 
             grid.innerHTML = html;
 
-            // Load JSON UIs asynchronously for visible blogs
             currentItems.forEach(item => {
                 if (item.type === 'blog') {
                     fetchAndRenderBlog(item.data);
                 }
             });
 
-            // Render Pagination
             if (totalPages > 1) {
                 pagination.innerHTML = `
                     <button onclick="changePage(${currentPage - 1})" class="btn btn-outline-custom rounded-pill px-4 py-2 mx-2" style="font-size: 14px;" ${currentPage === 1 ? 'disabled style="opacity:0.3"' : ''}>
@@ -816,8 +638,6 @@
             const url = new URL(window.location);
             url.searchParams.set('page', page);
             window.history.pushState({}, '', url);
-            
-            // Scroll back up to the related section start
             document.getElementById('related-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
             renderRelatedFeed();
         }
@@ -825,20 +645,111 @@
         // ==========================================
         // TEMPLATE GENERATORS FOR FEED
         // ==========================================
-        
         function generateBlogHtml(blog) {
-            // Encode the string, but strictly preserve explicit literal '+' signs instead of converting to %2B
-            const rawQuery = (blog.url || blog.title).replace(/ /g, '+');
+            // Only rely on URL
+            const rawQuery = blog.url || '';
             const safeQuery = rawQuery.split('+').map(part => encodeURIComponent(part)).join('+');
             const dynamicUrl = `show.html?title=${safeQuery}`;
+            const safeId = rawQuery.replace(/[^a-zA-Z0-9]/g, '-');
             
             return `
-                <a href="${dynamicUrl}" id="blog-card-${blog.id}" class="custom-card text-dark skeleton-bg text-decoration-none d-block p-0 overflow-hidden" style="transition: transform 0.3s ease;">
+                <a href="${dynamicUrl}" id="blog-card-${safeId}" class="custom-card text-dark skeleton-bg text-decoration-none d-block p-0 overflow-hidden" style="transition: transform 0.3s ease;">
                     <div class="w-100" style="min-height: 450px; display: flex; align-items: center; justify-content: center;">
                         <span class="text-muted fw-semibold" style="opacity: 0.6; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">Loading Prompt UI...</span>
                     </div>
                 </a>
             `;
+        }
+
+        async function fetchAndRenderBlog(blog) {
+            const rawUrl = blog.url || '';
+            const safeId = rawUrl.replace(/[^a-zA-Z0-9]/g, '-');
+            try {
+                const safePath = rawUrl.replace(/\+/g, '%2B');
+                const response = await fetch(`data/list/${safePath}.json`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const rawData = await response.json();
+                const data = Array.isArray(rawData) ? rawData[0] : rawData;
+
+                if (!data || !data.css || !data.html) {
+                    throw new Error('JSON is missing required css or html keys');
+                }
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.html, 'text/html');
+                
+                const descContainer = doc.querySelector('.description-container');
+                if (descContainer) descContainer.remove();
+
+                const promptItems = doc.querySelectorAll('.prompt-item');
+                let remaining = 0;
+                promptItems.forEach((item, index) => {
+                    if (index >= 3) {
+                        item.remove();
+                        remaining++;
+                    }
+                });
+                
+                if (remaining > 0) {
+                    const promptList = doc.querySelector('.prompt-list');
+                    if (promptList) {
+                        const textContainer = doc.createElement('div');
+                        textContainer.className = 'text-center mt-3 pb-2';
+                        textContainer.innerHTML = `<span style="color: #6c757d; font-size: 1.05rem; font-style: italic; font-weight: 500;">+ ${remaining} more prompts. Click to read the full list.</span>`;
+                        promptList.appendChild(textContainer);
+                    }
+                }
+                
+                const innerCard = doc.querySelector('.prompt-card');
+                if (innerCard) {
+                    innerCard.style.setProperty('margin', '0', 'important');
+                    innerCard.style.setProperty('border-radius', '0', 'important'); 
+                    innerCard.style.setProperty('box-shadow', 'none', 'important'); 
+                    innerCard.style.setProperty('max-width', '100%', 'important');
+                    innerCard.style.setProperty('width', '100%', 'important');
+                }
+
+                if (!document.getElementById(`css-${safeId}`)) {
+                    const style = document.createElement('style');
+                    style.id = `css-${safeId}`;
+                    style.innerHTML = data.css.replace(/#dynamic-content/g, `#blog-card-${safeId}`);
+                    document.head.appendChild(style);
+                }
+                
+                const container = document.getElementById(`blog-card-${safeId}`);
+                if (container) {
+                    container.innerHTML = doc.body.innerHTML;
+                    container.classList.remove('skeleton-bg'); 
+                    
+                    container.addEventListener('mouseenter', () => {
+                        const card = container.querySelector('.prompt-card');
+                        if (card) {
+                            card.style.transform = 'scale(1.02)';
+                            card.style.transition = 'transform 0.3s ease';
+                        }
+                    });
+                    container.addEventListener('mouseleave', () => {
+                        const card = container.querySelector('.prompt-card');
+                        if (card) card.style.transform = 'scale(1)';
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to load JSON UI for blog:", rawUrl, error);
+                
+                const container = document.getElementById(`blog-card-${safeId}`);
+                if (container) {
+                    container.classList.remove('skeleton-bg');
+                    // Fallback to title from URL
+                    const fallbackTitle = rawUrl.replace(/\+/g, ' ');
+                    container.innerHTML = `
+                        <div class="w-100 p-5 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; background: #fff;">
+                            <h3 class="font-serif fw-medium mb-4 text-capitalize" style="font-size: 1.5rem; line-height: 1.3;">${fallbackTitle}</h3>
+                            <span class="btn-pill active" style="font-size: 13px;">Read Prompts <i class="fa-solid fa-arrow-right ms-2"></i></span>
+                        </div>
+                    `;
+                }
+            }
         }
 
         function generateProductHtml(product, defaultFormat) {
