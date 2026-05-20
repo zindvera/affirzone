@@ -384,23 +384,21 @@
                 return;
             }
 
-            // Score items based on fuzzy matches in Title, Category, and Desc
+            // Score items based on fuzzy matches in URL and Category
             const scoredResults = topicsData.map(item => {
                 let score = 0;
-                const title = (item.title || "").toLowerCase();
-                const desc = (item.desc || "").toLowerCase();
+                // Create a readable title from the URL (replace + with space)
+                const readableTitle = (item.url || "").replace(/\+/g, ' ').toLowerCase();
                 const category = (item.category || "").toLowerCase(); 
 
                 terms.forEach(term => {
                     // Check against fuzzy matcher
-                    const titleScore = fuzzyMatchScore(term, title);
+                    const titleScore = fuzzyMatchScore(term, readableTitle);
                     const catScore = fuzzyMatchScore(term, category);
-                    const descScore = fuzzyMatchScore(term, desc);
 
                     // Multipliers
                     if (titleScore > 0) score += titleScore * 5;  // Max importance
                     if (catScore > 0) score += catScore * 3;      // Medium importance
-                    if (descScore > 0) score += descScore * 1;    // Lower importance
                 });
 
                 return { item, score };
@@ -419,14 +417,15 @@
                 
                 let html = '';
                 topResults.forEach(blog => {
-                    // Decode URL, then re-encode but ensure both encoded spaces (%20) AND encoded plus signs (%2B) become literal + signs
-                    const safeQuery = encodeURIComponent(decodeURIComponent(blog.url)).replace(/%20/g, '+').replace(/%2B/g, '+');
+                    const rawUrl = blog.url || '';
+                    const safeQuery = rawUrl.split('+').map(part => encodeURIComponent(part)).join('+');
                     const dynamicUrl = `show.html?title=${safeQuery}`;
+                    const safeId = rawUrl.replace(/[^a-zA-Z0-9]/g, '-');
                     
                     html += `
                         <div class="feed-card-wrapper">
-                            <a href="${dynamicUrl}" id="blog-card-${blog.id}" class="custom-card text-dark skeleton-bg text-decoration-none d-block p-0 overflow-hidden" style="transition: transform 0.3s ease;">
-                                <div class="w-100" style="min-height: 450px; display: flex; align-items: center; justify-content: center;">
+                            <a href="${dynamicUrl}" id="blog-card-${safeId}" class="text-dark text-decoration-none d-block overflow-visible" style="transition: transform 0.3s ease;">
+                                <div class="custom-card skeleton-bg w-100" style="min-height: 450px; display: flex; align-items: center; justify-content: center;">
                                     <span class="text-muted fw-semibold" style="opacity: 0.6; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">Loading Prompt UI...</span>
                                 </div>
                             </a>
@@ -453,18 +452,20 @@
         // ASYNC JSON UI FETCHER FOR BLOGS
         // ==========================================
         async function fetchAndRenderBlog(blog) {
+            const rawUrl = blog.url || '';
+            const safeId = rawUrl.replace(/[^a-zA-Z0-9]/g, '-');
+            
             try {
                 // Encode '+' as '%2B' to ensure local servers don't interpret them as spaces
-                const safePath = blog.url.replace(/\+/g, '%2B');
+                const safePath = rawUrl.replace(/\+/g, '%2B');
                 const response = await fetch(`data/list/${safePath}.json`);
                 if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 
                 const rawData = await response.json();
                 
-                // Smart check to handle if JSON is an array (e.g. [{ css:..., html:... }]) or a direct object
+                // Smart check to handle if JSON is an array
                 const data = Array.isArray(rawData) ? rawData[0] : rawData;
 
-                // Make sure css and html actually exist to prevent errors
                 if (!data || !data.css || !data.html) {
                     throw new Error('JSON is missing required css or html keys');
                 }
@@ -500,31 +501,26 @@
                     }
                 }
                 
-                // Adjust card styles specifically for fitting inside the feed
-                const innerCard = doc.querySelector('.prompt-card');
-                if (innerCard) {
-                    // Inject explicit styles to override any JSON styles so the outer custom-card dictates layout
-                    innerCard.style.setProperty('margin', '0', 'important');
-                    innerCard.style.setProperty('border-radius', '0', 'important'); // Flat edges to match outer container
-                    innerCard.style.setProperty('box-shadow', 'none', 'important'); // Outer a-tag container handles shadow
-                    innerCard.style.setProperty('max-width', '100%', 'important');
-                    innerCard.style.setProperty('width', '100%', 'important');
-                }
-
-                // Inject Scoped CSS (Only inject if not already present)
-                if (!document.getElementById(`css-${blog.id}`)) {
+                // Inject Scoped CSS
+                if (!document.getElementById(`css-${safeId}`)) {
                     const style = document.createElement('style');
-                    style.id = `css-${blog.id}`;
-                    // Crucial: Replace global dynamic container id with this specific card's ID
-                    style.innerHTML = data.css.replace(/#dynamic-content/g, `#blog-card-${blog.id}`);
+                    style.id = `css-${safeId}`;
+                    
+                    // Smart CSS scoping: target both #dynamic-content AND .prompt-card base classes to prevent global bleeding
+                    let scopedCss = data.css.replace(/#dynamic-content/g, `#blog-card-${safeId}`);
+                    // Only scope .prompt-card if it's the root definition to avoid double prefixing
+                    if (!scopedCss.includes(`#blog-card-${safeId}`)) {
+                         scopedCss = scopedCss.replace(/\.prompt-card/g, `#blog-card-${safeId} .prompt-card`);
+                    }
+                    
+                    style.innerHTML = scopedCss;
                     document.head.appendChild(style);
                 }
                 
                 // Render into outer container
-                const container = document.getElementById(`blog-card-${blog.id}`);
+                const container = document.getElementById(`blog-card-${safeId}`);
                 if (container) {
                     container.innerHTML = doc.body.innerHTML;
-                    container.classList.remove('skeleton-bg'); // Remove loading background
                     
                     // Add subtle hover lift effect to inner HTML
                     container.addEventListener('mouseenter', () => {
@@ -540,15 +536,15 @@
                     });
                 }
             } catch (error) {
-                console.error("Failed to load JSON UI for blog:", blog.title, error);
+                console.error("Failed to load JSON UI for blog:", rawUrl, error);
                 
                 // Fallback: If JSON fetch fails, show a clean title placeholder
-                const container = document.getElementById(`blog-card-${blog.id}`);
+                const container = document.getElementById(`blog-card-${safeId}`);
                 if (container) {
-                    container.classList.remove('skeleton-bg');
+                    const fallbackTitle = rawUrl.replace(/\+/g, ' ');
                     container.innerHTML = `
-                        <div class="w-100 p-5 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; background: #fff;">
-                            <h3 class="font-serif fw-medium mb-4" style="font-size: 1.5rem; line-height: 1.3;">${blog.title}</h3>
+                        <div class="custom-card w-100 p-5 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; background: #fff;">
+                            <h3 class="font-serif fw-medium mb-4 text-capitalize" style="font-size: 1.5rem; line-height: 1.3;">${fallbackTitle}</h3>
                             <span class="btn-pill active" style="font-size: 13px;">Read Prompts <i class="fa-solid fa-arrow-right ms-2"></i></span>
                         </div>
                     `;
