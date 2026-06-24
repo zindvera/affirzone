@@ -154,6 +154,7 @@
 
         .page-card {
             scroll-snap-align: center;
+            scroll-snap-stop: always; /* Forces mobile/tablet swipe to stop at the very next image */
             flex-shrink: 0;
             aspect-ratio: 1 / 1.414;
             background-color: white;
@@ -176,40 +177,6 @@
             height: 100%;
             object-fit: cover;
             pointer-events: none;
-        }
-
-        .page-card .overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.05);
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .page-card:hover .overlay {
-            opacity: 1;
-        }
-
-        .zoom-badge {
-            background: rgba(255, 255, 255, 0.95);
-            color: #000;
-            padding: 0.4rem 1rem;
-            border-radius: 50rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transform: scale(0.9);
-            transition: transform 0.2s ease;
-        }
-
-        .page-card:hover .zoom-badge {
-            transform: scale(1);
         }
 
         /* Responsive Sizing Rules */
@@ -244,7 +211,6 @@
             .page-card {
                 /* Show exactly 3 full cards + a precise subtle sliver of the 4th */
                 width: calc((100% - 4.5rem) / 3.1); 
-                /* Max-width removed to ensure cards scale up and don't leave empty right space */
             }
         }
 
@@ -324,7 +290,7 @@
             box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
             z-index: 50;
             animation: bounceTooltip 2s infinite ease-in-out;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.5s ease; /* Smooth fade in/out */
         }
         .custom-tooltip::after {
             content: '';
@@ -523,37 +489,79 @@
             {
                 id: '30-cursive', count: '30', countColor: 'text-rose-500', type: 'Cursive', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 3.99,
                 pages: [
-                    'media/journal/30 cursive/01-Journal-Cover.png', 'media/journal/30 cursive/02-Prompt-Showcase.png', 'media/journal/30 cursive/03-Writing-Space-Zoom.png', 'media/journal/30 cursive/04-Categories-Fan.png', 'media/journal/30 cursive/05-When-to-Use.png', 'media/journal/30 cursive/06-How-to-Use.png', 'media/journal/30 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/30 cursive/08-App-Compatibility.png', 'media/journal/30 cursive/09-Square-Cover-Focus.png'
+                    'media/journal/30 cursive/01-Journal-Cover.png', 
+                    'media/journal/30 cursive/02-Prompt-Showcase.png', 
+                    'media/journal/30 cursive/03-Writing-Space-Zoom.png', 
+                    'media/journal/30 cursive/04-Categories-Fan.png', 
+                    'media/journal/30 cursive/07-Complete-Bundle-Showcase.png', 
+                    'media/journal/30 cursive/08-App-Compatibility.png',
+                    'media/journal/30 cursive/05-When-to-Use.png', 
+                    'media/journal/30 cursive/06-How-to-Use.png'
                 ]
             },
             {
                 id: '30-normal', count: '30', countColor: 'text-rose-500', type: 'Normal', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 3.99,
                 pages: [
-                    'media/journal/30 normal/01-Journal-Cover.png', 'media/journal/30 normal/02-Prompt-Showcase.png', 'media/journal/30 normal/03-Writing-Space-Zoom.png', 'media/journal/30 normal/04-Categories-Fan.png', 'media/journal/30 normal/05-When-to-Use.png', 'media/journal/30 normal/06-How-to-Use.png', 'media/journal/30 normal/07-Complete-Bundle-Showcase.png', 'media/journal/30 normal/08-App-Compatibility.png', 'media/journal/30 normal/09-Square-Cover-Focus.png'
+                    'media/journal/30 normal/01-Journal-Cover.png', 
+                    'media/journal/30 normal/02-Prompt-Showcase.png', 
+                    'media/journal/30 normal/03-Writing-Space-Zoom.png', 
+                    'media/journal/30 normal/04-Categories-Fan.png', 
+                    'media/journal/30 normal/07-Complete-Bundle-Showcase.png', 
+                    'media/journal/30 normal/08-App-Compatibility.png',
+                    'media/journal/30 normal/05-When-to-Use.png', 
+                    'media/journal/30 normal/06-How-to-Use.png'
                 ]
             },
             {
                 id: '60-cursive', count: '60', countColor: 'text-emerald-500', type: 'Cursive', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 5.99,
                 pages: [
-                    'media/journal/60 cursive/01-Journal-Cover.png', 'media/journal/60 cursive/02-Prompt-Showcase.png', 'media/journal/60 cursive/03-Writing-Space-Zoom.png', 'media/journal/60 cursive/04-Categories-Fan.png', 'media/journal/60 cursive/05-When-to-Use.png', 'media/journal/60 cursive/06-How-to-Use.png', 'media/journal/60 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/60 cursive/08-App-Compatibility.png', 'media/journal/60 cursive/09-Square-Cover-Focus.png'
+                    'media/journal/60 cursive/01-Journal-Cover.png', 
+                    'media/journal/60 cursive/02-Prompt-Showcase.png', 
+                    'media/journal/60 cursive/03-Writing-Space-Zoom.png', 
+                    'media/journal/60 cursive/04-Categories-Fan.png', 
+                    'media/journal/60 cursive/07-Complete-Bundle-Showcase.png', 
+                    'media/journal/60 cursive/08-App-Compatibility.png',
+                    'media/journal/60 cursive/05-When-to-Use.png', 
+                    'media/journal/60 cursive/06-How-to-Use.png'
                 ]
             },
             {
                 id: '60-normal', count: '60', countColor: 'text-emerald-500', type: 'Normal', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 5.99,
                 pages: [
-                    'media/journal/60 normal/01-Journal-Cover.png', 'media/journal/60 normal/02-Prompt-Showcase.png', 'media/journal/60 normal/03-Writing-Space-Zoom.png', 'media/journal/60 normal/04-Categories-Fan.png', 'media/journal/60 normal/05-When-to-Use.png', 'media/journal/60 normal/06-How-to-Use.png', 'media/journal/60 normal/07-Complete-Bundle-Showcase.png', 'media/journal/60 normal/08-App-Compatibility.png', 'media/journal/60 normal/09-Square-Cover-Focus.png'
+                    'media/journal/60 normal/01-Journal-Cover.png', 
+                    'media/journal/60 normal/02-Prompt-Showcase.png', 
+                    'media/journal/60 normal/03-Writing-Space-Zoom.png', 
+                    'media/journal/60 normal/04-Categories-Fan.png', 
+                    'media/journal/60 normal/07-Complete-Bundle-Showcase.png', 
+                    'media/journal/60 normal/08-App-Compatibility.png',
+                    'media/journal/60 normal/05-When-to-Use.png', 
+                    'media/journal/60 normal/06-How-to-Use.png'
                 ]
             },
             {
                 id: '90-cursive', count: '90', countColor: 'text-indigo-500', type: 'Cursive', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 7.99,
                 pages: [
-                    'media/journal/90 cursive/01-Journal-Cover.png', 'media/journal/90 cursive/02-Prompt-Showcase.png', 'media/journal/90 cursive/03-Writing-Space-Zoom.png', 'media/journal/90 cursive/04-Categories-Fan.png', 'media/journal/90 cursive/05-When-to-Use.png', 'media/journal/90 cursive/06-How-to-Use.png', 'media/journal/90 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/90 cursive/08-App-Compatibility.png', 'media/journal/90 cursive/09-Square-Cover-Focus.png'
+                    'media/journal/90 cursive/01-Journal-Cover.png', 
+                    'media/journal/90 cursive/02-Prompt-Showcase.png', 
+                    'media/journal/90 cursive/03-Writing-Space-Zoom.png', 
+                    'media/journal/90 cursive/04-Categories-Fan.png', 
+                    'media/journal/90 cursive/07-Complete-Bundle-Showcase.png', 
+                    'media/journal/90 cursive/08-App-Compatibility.png',
+                    'media/journal/90 cursive/05-When-to-Use.png', 
+                    'media/journal/90 cursive/06-How-to-Use.png'
                 ]
             },
             {
                 id: '90-normal', count: '90', countColor: 'text-indigo-500', type: 'Normal', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 7.99,
                 pages: [
-                    'media/journal/90 normal/01-Journal-Cover.png', 'media/journal/90 normal/02-Prompt-Showcase.png', 'media/journal/90 normal/03-Writing-Space-Zoom.png', 'media/journal/90 normal/04-Categories-Fan.png', 'media/journal/90 normal/05-When-to-Use.png', 'media/journal/90 normal/06-How-to-Use.png', 'media/journal/90 normal/07-Complete-Bundle-Showcase.png', 'media/journal/90 normal/08-App-Compatibility.png', 'media/journal/90 normal/09-Square-Cover-Focus.png'
+                    'media/journal/90 normal/01-Journal-Cover.png', 
+                    'media/journal/90 normal/02-Prompt-Showcase.png', 
+                    'media/journal/90 normal/03-Writing-Space-Zoom.png', 
+                    'media/journal/90 normal/04-Categories-Fan.png', 
+                    'media/journal/90 normal/07-Complete-Bundle-Showcase.png', 
+                    'media/journal/90 normal/08-App-Compatibility.png',
+                    'media/journal/90 normal/05-When-to-Use.png', 
+                    'media/journal/90 normal/06-How-to-Use.png'
                 ]
             }
         ];
@@ -601,7 +609,7 @@
             const activeSizePill = container.querySelector('.size-pill.active').textContent;
             const sizeKey = activeSizePill.includes('A4') ? 'A4' : 'letter';
             const formattedId = productId.replace('-', '+');
-            const pdfPath = `media/preview/${formattedId}+${sizeKey}.pdf`;
+            const pdfPath = `preview/${formattedId}+${sizeKey}.pdf`; // Path updated as requested
             window.open(pdfPath, '_blank');
         }
 
@@ -612,28 +620,27 @@
             const tooltip = document.getElementById('preview-tooltip');
             if (!tooltip) return;
 
-            // Prepare for fade-in
             tooltip.classList.remove('d-none');
             tooltip.classList.add('opacity-0');
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Reveal Tooltip
-                        setTimeout(() => tooltip.classList.remove('opacity-0'), 100);
+                        // Reveal Tooltip after exactly 1 second (1000ms)
+                        setTimeout(() => tooltip.classList.remove('opacity-0'), 1000);
                         observer.disconnect();
                     }
                 });
-            }, { threshold: 0.5 }); // Trigger when button is 50% visible
+            }, { threshold: 0.5 });
 
             observer.observe(tooltip.parentElement);
 
             // Handle Dismiss
             const closeBtn = tooltip.querySelector('.tooltip-close');
             closeBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Stop click from triggering the preview button
+                e.stopPropagation();
                 tooltip.classList.add('opacity-0');
-                setTimeout(() => tooltip.classList.add('d-none'), 300);
+                setTimeout(() => tooltip.classList.add('d-none'), 500); // Wait for fade out to complete
                 localStorage.setItem('previewTooltipDismissed', 'true');
             });
         }
@@ -651,15 +658,10 @@
 
                 let imagesHtml = '';
                 product.pages.forEach((imgUrl, iIndex) => {
+                    // Tap to enlarge overlay completely removed
                     imagesHtml += `
                         <div class="page-card" onclick="openModal('${imgUrl}')">
                             <img src="${imgUrl}" alt="Page ${iIndex + 1}" loading="lazy">
-                            <div class="overlay">
-                                <div class="zoom-badge">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                                    Tap to Enlarge
-                                </div>
-                            </div>
                         </div>
                     `;
                 });
@@ -739,7 +741,6 @@
 
             container.innerHTML = htmlContent;
             
-            // Initialize the tooltip logic after rendering the DOM
             initTooltip();
         }
 
