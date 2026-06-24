@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affirzone - Affirmations & Journal Prompts</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <style>
+        :root {
+            --brand-color: #23b48e;
+            --brand-hover: #1e9d7c;
+            --bg-light: #fafafa;
+            --text-main: #1a1a1a;
+            --text-muted: #6c757d;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Utility Overrides & Custom Spacing */
+        .text-brand { color: var(--brand-color); }
+        .bg-brand { background-color: var(--brand-color); color: white; }
+        .bg-brand:hover { background-color: var(--brand-hover); color: white; }
+        
+        .container-custom {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 0 5px; /* 10px margins on left and right for mobile */
+        }
+        @media (min-width: 768px) {
+            .container-custom { padding: 0 40px; }
+        }
+
+        /* Vertical Feed Card Wrapper */
+        .feed-card-wrapper {
+            width: 100%;
+            max-width: 720px; /* Increased from 550px for a wider, more immersive layout on tablet/desktop */
+            margin: 0 auto 3rem auto;
+        }
+        @media (min-width: 768px) {
+            .feed-card-wrapper { margin-bottom: 4rem; }
+        }
+
+        /* Top Accent Bar */
+        .accent-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #23b48e, #2c8be4);
+            width: 100%;
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+            min-height: 72px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 10px 15px;
+        }
+        @media (min-width: 768px) { .main-nav { padding: 10px 32px; } }
+
+        /* Responsive Search Bar */
+        .nav-search-wrapper { width: 180px; padding: 8px 16px; }
+        .nav-search-text { font-size: 13px; font-weight: 600; }
+        .hero-search-bar { transition: transform 0.2s, box-shadow 0.2s; border-color: #e5e5e5 !important; }
+        .hero-search-bar i { font-size: 13px; }
+        .hero-search-bar:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important; }
+        
+        @media (min-width: 768px) {
+            .nav-search-wrapper { width: 240px; padding: 10px 20px; }
+            .nav-search-text { font-size: 14px; }
+            .hero-search-bar i { font-size: 14px; }
+        }
+        @media (min-width: 992px) {
+            .nav-search-wrapper { width: 280px; padding: 12px 24px; }
+            .nav-search-text { font-size: 15px; }
+            .hero-search-bar i { font-size: 15px; }
+        }
+
+        /* Sticky Filter Components - absolute relative to sticky nav */
+        #sticky-filter-btn { position: absolute; right: 15px; top: calc(100% + 10px); }
+        @media (min-width: 768px) { #sticky-filter-btn { right: 32px; } }
+        #sticky-filter-btn:hover { background: #f8f9fa !important; }
+        
+        #sticky-filter-panel { position: absolute; top: 100%; left: 0; width: 100%; }
+
+        /* Horizontal Scroll Containers */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; overflow-x: auto; }
+        .snap-container { scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+        .snap-item { scroll-snap-align: center; scroll-snap-stop: always; }
+
+        /* Card Styling for Universal Usage (Products) */
+        .custom-card {
+            background: #fff;
+            border-radius: 1rem;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: auto; 
+            overflow: hidden; 
+        }
+        .custom-card:hover {
+            box-shadow: 0 12px 40px rgba(35,180,142,0.08);
+        }
+
+        /* Image Carousel */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .carousel-item-img {
+            width: 90%;
+            aspect-ratio: 4/3;
+            flex-shrink: 0;
+            position: relative;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        @media (min-width: 768px) { .carousel-item-img { width: 100%; } }
+        
+        .carousel-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* KDP Spine styling */
+        .kdp-spine-overlay {
+            position: absolute;
+            left: 0; top: 0; bottom: 0; width: 24px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.08), transparent);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Navigation Arrows */
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            border: 1px solid #eee;
+            border-radius: 50%;
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 20;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .carousel-wrapper:hover .scroll-arrow { opacity: 1; }
+        .scroll-arrow.left { left: 8px; }
+        .scroll-arrow.right { right: 8px; }
+        @media (max-width: 767px) { .scroll-arrow { display: none; } }
+
+        /* Buttons & Pills */
+        .btn-pill {
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid #e5e5e5;
+            background: #fff;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-pill.active {
+            background: var(--text-main);
+            color: #fff;
+            border-color: var(--text-main);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .btn-pill:hover:not(.active) {
+            border-color: var(--brand-color);
+            color: var(--brand-color);
+        }
+
+        /* Format Toggles */
+        .format-toggle {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 14px 0;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: #adb5bd;
+            transition: all 0.2s;
+        }
+        @media (min-width: 768px) { .format-toggle { font-size: 14px; } }
+        
+        .format-toggle.active {
+            color: var(--text-main);
+            border-bottom-color: var(--text-main);
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            width: 100%;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-dark-action { background: var(--text-main); color: #fff; }
+        .btn-dark-action:hover { background: #333; color: #fff; }
+        .btn-amazon { background: #FF9900; color: #fff; }
+        .btn-amazon:hover { background: #e68a00; color: #fff; }
+        .btn-outline-custom { border: 1px solid #e5e5e5; color: var(--text-muted); text-transform: uppercase; }
+        .btn-outline-custom:hover { background: #f8f9fa; color: var(--text-main); border-color: var(--text-main); }
+        .btn-outline-brand { border: 1px solid rgba(35,180,142,0.2); color: var(--brand-color); text-transform: uppercase; }
+        .btn-outline-brand:hover { background: rgba(35,180,142,0.05); }
+
+        /* Pagination Buttons */
+        .btn-pagination {
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #eaeaea;
+            background: #fff;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .btn-pagination:hover {
+            border-color: var(--text-main);
+            background: var(--text-main);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Lazy Loading & Skeleton */
+        .skeleton-bg {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: skeletonLoading 1.5s infinite;
+        }
+        @keyframes skeletonLoading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Top Banner -->
+    <div class="accent-bar"></div>
+    <div class="bg-light border-bottom text-muted text-center py-2 px-3" style="font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+        Affirmations, Journal Prompts & Ideas
+    </div>
+
+    <!-- Main Navigation (Sticky Container) -->
+    <nav class="main-nav d-flex justify-content-between align-items-center w-100">
+        <a href="?type=all"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="28"></a>
+        
+        <div class="d-flex align-items-center gap-4">
+            <div id="sticky-actions-container" class="d-flex flex-column align-items-end justify-content-center opacity-0 pointer-events-none" style="transition: opacity 0.3s; gap: 4px; margin-top: 2px;">
+                <a href="search.html" class="text-decoration-none d-block">
+                    <div class="nav-search-wrapper d-flex align-items-center bg-white border rounded-pill shadow-sm text-muted hero-search-bar">
+                        <i class="fa-solid fa-magnifying-glass me-2 text-brand"></i>
+                        <span class="nav-search-text">Search...</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Floating Filter Button (Nested inside Nav so it aligns directly below) -->
+        <button id="sticky-filter-btn" class="btn btn-white border shadow-sm rounded-pill d-flex align-items-center justify-content-center opacity-0 pointer-events-none" style="z-index: 1040; background: #fff; color: #1a1a1a; font-size: 13px; font-weight: 600; padding: 8px 18px; transition: opacity 0.3s, background 0.2s;" onclick="openFilter()">
+            <i class="fa-solid fa-sliders me-2"></i> Filter
+        </button>
+
+        <!-- Full Width Floating Filter Panel (Nested inside Nav) -->
+        <div id="sticky-filter-panel" class="bg-white border-bottom shadow-sm d-none" style="padding: 1.25rem 0; z-index: 1045; opacity: 0; transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.3s ease;">
+            <div class="container-custom">
+                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+                    <h6 class="m-0 fw-bold font-serif" style="color: #1a1a1a; font-size: 16px;">Filter by Categories</h6>
+                    <button class="btn btn-sm btn-light rounded-circle d-flex align-items-center justify-content-center p-0" style="width: 28px; height: 28px;" onclick="closeFilter()">
+                        <i class="fa-solid fa-times text-muted"></i>
+                    </button>
+                </div>
+                <div class="filter-content">
+                    <div id="dynamic-filter-container" class="d-flex flex-nowrap gap-2 overflow-x-auto hide-scrollbar pb-2" style="-webkit-overflow-scrolling: touch;">
+                        <!-- Dynamic categories injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-white border-bottom text-center px-3" style="padding-top: 2rem; padding-bottom: 2rem;">
+        <div class="mx-auto" style="max-width: 60rem;">
+            <h1 class="font-serif text-dark mb-4 fw-medium" style="font-size: 40px; letter-spacing: -0.5px; line-height: 1.1;">
+                Affirmations & <br class="d-md-none"> Journal Prompts.
+            </h1>
+            <p class="text-muted mx-auto" style="font-size: clamp(1rem, 2vw, 1.125rem); max-width: 42rem; line-height: 1.6;">
+                Explore our curated collection of free guided prompts and premium digital journals designed to bring clarity to your daily routine.
+            </p>
+            
+            <!-- Hero Search Bar -->
+            <div id="hero-search" class="mx-auto mt-4" style="max-width: 30rem;">
+                <a href="search.html" class="text-decoration-none d-block">
+                    <div class="d-flex align-items-center bg-white border rounded-pill px-4 py-3 shadow-sm text-muted hero-search-bar">
+                        <i class="fa-solid fa-magnifying-glass me-3 text-brand"></i>
+                        <span style="font-size: 15px; font-weight: 500;">Search journals, prompts, or topics...</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section id="collection" style="background-color: var(--bg-light);">
+        
+        <!-- Prompt Category Bar -->
+        <div id="filter-ref" class="border-bottom" style="padding-top: 2rem; padding-bottom: 1.5rem;">
+            <div class="container-custom" id="main-filter-container">
+                <!-- Prompt Pills injected via JS -->
+            </div>
+        </div>
+
+        <!-- Dynamic Vertical Feed -->
+        <div class="container-custom py-5">
+            <div class="d-flex flex-column align-items-center w-100" id="content-grid">
+                <!-- Content injected via JS -->
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination-container" class="d-flex justify-content-center align-items-center gap-3 gap-md-4 mt-5 pt-5 border-top px-2">
+                <!-- Pagination injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about" class="text-center text-white py-5 px-3" style="background-color: #1a1a1a; margin-top: 4rem;">
+        <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="32" class="mb-4" style="filter: brightness(0) invert(1) opacity(0.8);">
+        <p class="text-white mx-auto mb-5" style="max-width: 24rem; font-size: 1rem; line-height: 1.6; opacity: 0.9;">
+            Affirmations, Journal Prompts & Ideas
+        </p>
+        <div class="d-flex justify-content-center gap-4 mb-5" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+            <a href="https://www.pinterest.com/affirzone_journal/" class="text-white text-decoration-none" style="opacity: 0.9;">Pinterest</a>
+            <a href="contact.html" class="text-white text-decoration-none" style="opacity: 0.9;">Contact</a>
+        </div>
+        <div class="pt-4 text-white" style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7;">
+            © <script>document.write(new Date().getFullYear())</script> Affirzone. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Application Logic -->
+    <script>
+        // ==========================================
+        // UI FILTER TOGGLE LOGIC
+        // ==========================================
+        function openFilter() {
+            const btn = document.getElementById('sticky-filter-btn');
+            const panel = document.getElementById('sticky-filter-panel');
+            
+            btn.classList.remove('d-flex');
+            btn.classList.add('d-none');
+            
+            panel.classList.remove('d-none');
+            setTimeout(() => {
+                panel.style.opacity = '1';
+                panel.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        function closeFilter() {
+            const btn = document.getElementById('sticky-filter-btn');
+            const panel = document.getElementById('sticky-filter-panel');
+            
+            panel.style.opacity = '0';
+            panel.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                panel.classList.add('d-none');
+                
+                const stickyActions = document.getElementById('sticky-actions-container');
+                if (!stickyActions.classList.contains('opacity-0')) {
+                    btn.classList.remove('d-none');
+                    btn.classList.add('d-flex');
+                } else {
+                    btn.classList.remove('d-none');
+                    btn.classList.add('d-flex'); 
+                }
+            }, 300);
+        }
+
+        // ==========================================
+        // DATA DEFINITIONS
+        // ==========================================
+        let productsData = [];
+        let promptListData = [];
+
+        // ==========================================
+        // STATE VARIABLES
+        // ==========================================
+        let currentCat = 'all'; 
+        let currentPage = 1;
+        const itemsPerPage = 5;
+        let urlRequestedType = 'digital';
+        let priorityProduct = null;
+        let isFilterMenuOpen = false;
+        
+        let cardFormats = {}; 
+
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
+        async function init() {
+            try {
+                const [productsResponse, topicsResponse] = await Promise.all([
+                    fetch('data/products/list.json'),
+                    fetch('data/topics/list.json')
+                ]);
+                
+                if (productsResponse.ok) productsData = await productsResponse.json();
+                if (topicsResponse.ok) promptListData = await topicsResponse.json();
+            } catch (error) {
+                console.error("Error loading JSON data:", error);
+                if(productsData.length === 0) {
+                   productsData = [];
+                }
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const productParam = params.get('product');
+            const typeParam = params.get('type') || 'all';
+            const pageParam = parseInt(params.get('page'));
+
+            currentCat = typeParam;
+            if (currentCat === 'kdp-notebook') {
+                urlRequestedType = 'kdp';
+            } else {
+                urlRequestedType = 'digital';
+            }
+
+            if (pageParam && !isNaN(pageParam)) currentPage = pageParam;
+
+            if (productParam && productsData.length > 0) {
+                const foundProduct = productsData.find(p => (p.digital && p.digital.id === productParam) || (p.kdp && p.kdp.id === productParam));
+                if (foundProduct) {
+                    priorityProduct = foundProduct;
+                    const detectedFormat = (foundProduct.kdp && foundProduct.kdp.id === productParam) ? 'kdp' : 'digital';
+                    urlRequestedType = detectedFormat;
+                    cardFormats[foundProduct.groupId] = detectedFormat;
+                }
+            }
+
+            setupScrollListener();
+            renderUI();
+        }
+
+        // ==========================================
+        // DOM RENDERING LOGIC
+        // ==========================================
+        
+        function renderUI() {
+            renderFilterButtons();
+            renderGrid();
+        }
+
+        function renderFilterButtons() {
+            const getHtml = (isMenu) => `
+                <div class="d-flex flex-column w-100 align-items-center">
+                    <div class="d-flex w-100 overflow-x-auto hide-scrollbar snap-container ${!isMenu ? 'px-2 px-md-0 justify-content-start justify-content-md-center' : ''}" style="gap: 12px;">
+                        <a href="?type=all" class="snap-item btn-pill ${currentCat === 'all' ? 'active' : ''}">All</a>
+                        <a href="?type=gratitude" class="snap-item btn-pill ${currentCat === 'gratitude' ? 'active' : ''}">Gratitude</a>
+                        <a href="?type=productivity" class="snap-item btn-pill ${currentCat === 'productivity' ? 'active' : ''}">Productivity</a>
+                        <a href="?type=confidence" class="snap-item btn-pill ${currentCat === 'confidence' ? 'active' : ''}">Confidence</a>
+                        <a href="?type=career" class="snap-item btn-pill ${currentCat === 'career' ? 'active' : ''}">Career</a>
+                        <a href="?type=healing" class="snap-item btn-pill ${currentCat === 'healing' ? 'active' : ''}">Healing</a>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('main-filter-container').innerHTML = getHtml(false);
+            const dynamicFilter = document.getElementById('dynamic-filter-container');
+            if(dynamicFilter) dynamicFilter.innerHTML = getHtml(true);
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('content-grid');
+            const pagination = document.getElementById('pagination-container');
+            let html = '';
+
+            let filteredBlogs = (currentCat === 'all' || currentCat.includes('notebook'))
+                ? [...promptListData] 
+                : promptListData.filter(b => {
+                    if (!b.category) return false;
+                    const cats = b.category.split(',').map(c => c.trim().toLowerCase());
+                    return cats.includes(currentCat);
+                });
+
+            let remainingProducts = [...productsData];
+            if (priorityProduct) {
+                remainingProducts = remainingProducts.filter(p => p.groupId !== priorityProduct.groupId);
+            }
+            if (currentCat !== 'all' && !currentCat.includes('notebook')) {
+                remainingProducts = remainingProducts.filter(p => {
+                    if (!p.target_prompt) return true;
+                    const targets = p.target_prompt.split(',').map(t => t.trim().toLowerCase());
+                    return targets.includes(currentCat);
+                });
+            }
+
+            // Logic 1: Priority Product dictates the flow
+            if (priorityProduct) {
+                html += `
+                    <div class="feed-card-wrapper">
+                        ${generateProductHtml(priorityProduct, urlRequestedType, true)}
+                    </div>
+                `;
+
+                if (currentCat === 'all' || currentCat.includes('notebook')) {
+                    if (remainingProducts.length > 0) {
+                        html += `<div class="feed-card-wrapper"><h4 class="font-serif fw-medium mb-4 mt-3" style="font-size: 1.5rem;">More Journals</h4></div>`;
+                        remainingProducts.forEach(prod => {
+                            html += `
+                                <div class="feed-card-wrapper">
+                                    ${generateProductHtml(prod, 'digital', false)}
+                                </div>
+                            `;
+                        });
+                    }
+                    if (filteredBlogs.length > 0) {
+                        html += `<div class="feed-card-wrapper"><h4 class="font-serif fw-medium mb-4 mt-5" style="font-size: 1.5rem;">Latest Prompt Lists</h4></div>`;
+                        filteredBlogs.forEach(blog => {
+                            html += `
+                                <div class="feed-card-wrapper">
+                                    ${generateBlogHtml(blog)}
+                                </div>
+                            `;
+                        });
+                    }
+                } else {
+                    html += `<div class="feed-card-wrapper"><h4 class="font-serif fw-medium mb-4 mt-3" style="font-size: 1.5rem;">${currentCat.charAt(0).toUpperCase() + currentCat.slice(1)} Prompts</h4></div>`;
+                    filteredBlogs.forEach(blog => {
+                        html += `
+                            <div class="feed-card-wrapper">
+                                ${generateBlogHtml(blog)}
+                            </div>
+                        `;
+                    });
+                }
+                
+                grid.innerHTML = html;
+                pagination.innerHTML = ''; 
+
+                if (currentCat === 'all' || currentCat.includes('notebook')) {
+                    filteredBlogs.forEach(blog => fetchAndRenderBlog(blog));
+                } else {
+                    filteredBlogs.forEach(blog => fetchAndRenderBlog(blog));
+                }
+
+            } 
+            // Logic 2: Standard Feed View
+            else {
+                let combinedItems = [];
+                
+                if (currentCat === 'notebook' || currentCat === 'digital-notebook' || currentCat === 'kdp-notebook') {
+                    combinedItems = remainingProducts.map(p => ({ type: 'product', data: p }));
+                } else {
+                    let bIdx = 0, pIdx = 0;
+                    while (bIdx < filteredBlogs.length || pIdx < remainingProducts.length) {
+                        for(let i = 0; i < 3 && bIdx < filteredBlogs.length; i++) {
+                            combinedItems.push({ type: 'blog', data: filteredBlogs[bIdx++] });
+                        }
+                        if (pIdx < remainingProducts.length) {
+                            combinedItems.push({ type: 'product', data: remainingProducts[pIdx++] });
+                        }
+                    }
+                }
+
+                const totalPages = Math.ceil(combinedItems.length / itemsPerPage);
+                const indexOfLastItem = currentPage * itemsPerPage;
+                const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+                const currentItems = combinedItems.slice(indexOfFirstItem, indexOfLastItem);
+
+                currentItems.forEach(item => {
+                    if (item.type === 'blog') {
+                        html += `
+                            <div class="feed-card-wrapper">
+                                ${generateBlogHtml(item.data)}
+                            </div>
+                        `;
+                    } else if (item.type === 'product') {
+                        html += `
+                            <div class="feed-card-wrapper">
+                                ${generateProductHtml(item.data, urlRequestedType, false)}
+                            </div>
+                        `;
+                    }
+                });
+
+                grid.innerHTML = html;
+
+                currentItems.forEach(item => {
+                    if (item.type === 'blog') {
+                        fetchAndRenderBlog(item.data);
+                    }
+                });
+
+                if (totalPages > 1) {
+                    let paginationHtml = '';
+                    
+                    if (currentPage > 1) {
+                        paginationHtml += `
+                            <button onclick="changePage(${currentPage - 1})" class="btn-pagination">
+                                <i class="fa-solid fa-arrow-left"></i> Previous
+                            </button>
+                        `;
+                    }
+
+                    paginationHtml += `
+                        <span class="text-muted fw-bold px-3 d-none d-md-block" style="font-size: 13px; letter-spacing: 1px; text-transform: uppercase;">
+                            Page ${currentPage} of ${totalPages}
+                        </span>
+                    `;
+
+                    if (currentPage < totalPages) {
+                        paginationHtml += `
+                            <button onclick="changePage(${currentPage + 1})" class="btn-pagination">
+                                Next <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        `;
+                    }
+
+                    pagination.innerHTML = paginationHtml;
+                }
+            }
+        }
+
+        // ==========================================
+        // TEMPLATE GENERATORS
+        // ==========================================
+        
+        function generateBlogHtml(blog) {
+            const rawUrl = blog.url || '';
+            const safeQuery = rawUrl.split('+').map(part => encodeURIComponent(part)).join('+');
+            const dynamicUrl = `show.html?title=${safeQuery}`;
+            const safeId = rawUrl.replace(/[^a-zA-Z0-9]/g, '-');
+            
+            // Replaced outer custom-card wrapping to ensure inner dynamically fetched HTML/CSS renders exactly
+            return `
+                <a href="${dynamicUrl}" id="blog-card-${safeId}" class="text-dark text-decoration-none d-block overflow-visible" style="transition: transform 0.3s ease;">
+                    <div class="custom-card skeleton-bg w-100" style="min-height: 450px; display: flex; align-items: center; justify-content: center;">
+                        <span class="text-muted fw-semibold" style="opacity: 0.6; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">Loading Prompt UI...</span>
+                    </div>
+                </a>
+            `;
+        }
+
+        function generateProductHtml(product, defaultFormat, isTopPriority) {
+            const hasDigital = !!product.digital;
+            const hasKDP = !!product.kdp;
+
+            if (!cardFormats[product.groupId]) {
+                if (defaultFormat === 'kdp' && hasKDP) {
+                    cardFormats[product.groupId] = 'kdp';
+                } else if ((defaultFormat === 'digital' || defaultFormat === 'all' || !defaultFormat) && hasDigital) {
+                    cardFormats[product.groupId] = 'digital';
+                } else {
+                    cardFormats[product.groupId] = hasDigital ? 'digital' : 'kdp';
+                }
+            }
+            
+            let currentFormat = cardFormats[product.groupId];
+            if (currentFormat === 'kdp' && !hasKDP) {
+                currentFormat = 'digital';
+                cardFormats[product.groupId] = 'digital';
+            } else if (currentFormat === 'digital' && !hasDigital) {
+                currentFormat = 'kdp';
+                cardFormats[product.groupId] = 'kdp';
+            }
+
+            let isKDP = currentFormat === 'kdp';
+            let data = product[currentFormat];
+            
+            let html = `
+                <div class="custom-card position-relative ${isTopPriority ? 'border-brand shadow-sm' : ''}" style="${isTopPriority ? 'padding: 1rem; border-width: 2px;' : 'padding: 0.75rem;'}">
+            `;
+
+            if (isTopPriority) {
+                html += `<div class="position-absolute bg-brand text-white fw-bold rounded-pill shadow-sm" style="top: -12px; left: 24px; font-size: 10px; padding: 6px 12px; letter-spacing: 1px; text-transform: uppercase; z-index: 20;">Selected Journal</div>`;
+            }
+
+            html += `<div class="d-flex border-bottom mx-1 mb-4">`;
+            
+            if (hasDigital) {
+                html += `<button onclick="setCardFormat('${product.groupId}', 'digital')" class="flex-fill format-toggle ${!isKDP ? 'active' : ''}" ${!hasKDP ? 'style="cursor: default;"' : ''}>Goodnotes PDF</button>`;
+            }
+            
+            if (hasKDP) {
+                html += `<button onclick="setCardFormat('${product.groupId}', 'kdp')" class="flex-fill format-toggle ${isKDP ? 'active' : ''}" ${!hasDigital ? 'style="cursor: default;"' : ''}>Amazon KDP</button>`;
+            }
+            
+            html += `</div>`;
+
+            let carouselId = `carousel-${product.groupId}-grid`;
+            html += `
+                <div class="carousel-wrapper mb-4 px-1">
+                    <div id="${carouselId}" class="d-flex overflow-x-auto hide-scrollbar snap-container" style="gap: 12px; padding-bottom: 4px;">
+            `;
+            
+            product.images.forEach((src, idx) => {
+                html += `
+                    <div class="snap-item carousel-item-img border">
+                        ${isKDP ? `<div class="kdp-spine-overlay"></div>` : ''}
+                        <img src="${src}" alt="Preview" loading="lazy">
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                    <button onclick="scrollCarousel('${carouselId}', 'left')" class="scroll-arrow left"><i class="fa-solid fa-chevron-left small"></i></button>
+                    <button onclick="scrollCarousel('${carouselId}', 'right')" class="scroll-arrow right"><i class="fa-solid fa-chevron-right small"></i></button>
+                </div>
+            `;
+
+            html += `
+                <div class="d-flex flex-column px-2 pb-2">
+                    <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
+                        <h3 class="font-serif fw-medium m-0" style="font-size: 1.3rem; line-height: 1.2;">${product.title}</h3>
+                        <span class="fw-semibold m-0" style="font-size: 1.25rem;">${data.price}</span>
+                    </div>
+                    <p class="text-muted fw-semibold mb-3" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">${data.pages}</p>
+                    <p class="text-muted mb-4" style="font-size: 14px; line-height: 1.6;">${data.desc}</p>
+                    
+                    <div class="d-flex flex-column gap-3 mt-auto pt-2">
+                        <div class="d-flex gap-2">
+                            <a href="#preview-${data.id}" class="flex-fill btn-action btn-outline-custom py-3" style="font-size:13px;">Preview</a>
+                            ${!isKDP ? `<a href="#sample-${data.id}" class="flex-fill btn-action btn-outline-brand py-3" style="font-size:13px;">Free Sample</a>` : ''}
+                        </div>
+                        
+                        ${!isKDP ? `
+                            <a href="#buy-${data.id}" class="btn-action btn-dark-action py-3" style="font-size: 14px;"><i class="fa-solid fa-cart-shopping"></i> Purchase PDF</a>
+                        ` : `
+                            <a href="#amazon-${data.id}" class="btn-action btn-amazon py-3" style="font-size: 14px;"><i class="fa-solid fa-book"></i> Amazon KDP</a>
+                        `}
+                    </div>
+                </div>
+            </div>`;
+
+            return html;
+        }
+
+        // ==========================================
+        // ASYNC JSON UI FETCHER FOR BLOGS
+        // ==========================================
+        async function fetchAndRenderBlog(blog) {
+            const rawUrl = blog.url || '';
+            const safeId = rawUrl.replace(/[^a-zA-Z0-9]/g, '-');
+            
+            try {
+                const safePath = rawUrl.replace(/\+/g, '%2B');
+                const response = await fetch(`data/list/${safePath}.json`);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const rawData = await response.json();
+                const data = Array.isArray(rawData) ? rawData[0] : rawData;
+
+                if (!data || !data.css || !data.html) {
+                    throw new Error('JSON is missing required css or html keys');
+                }
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.html, 'text/html');
+                
+                const descContainer = doc.querySelector('.description-container');
+                if (descContainer) {
+                    descContainer.remove();
+                }
+
+                const promptItems = doc.querySelectorAll('.prompt-item');
+                let remaining = 0;
+                promptItems.forEach((item, index) => {
+                    if (index >= 3) {
+                        item.remove();
+                        remaining++;
+                    }
+                });
+                
+                if (remaining > 0) {
+                    const promptList = doc.querySelector('.prompt-list');
+                    if (promptList) {
+                        const textContainer = doc.createElement('div');
+                        textContainer.className = 'text-center mt-3 pb-2';
+                        textContainer.innerHTML = `<span style="color: #6c757d; font-size: 1.05rem; font-style: italic; font-weight: 500;">+ ${remaining} more prompts. Click to read the full list.</span>`;
+                        promptList.appendChild(textContainer);
+                    }
+                }
+                
+                if (!document.getElementById(`css-${safeId}`)) {
+                    const style = document.createElement('style');
+                    style.id = `css-${safeId}`;
+                    
+                    // Smart CSS scoping: target both #dynamic-content AND .prompt-card base classes to prevent global bleeding
+                    let scopedCss = data.css.replace(/#dynamic-content/g, `#blog-card-${safeId}`);
+                    // Only scope .prompt-card if it's the root definition to avoid double prefixing
+                    if (!scopedCss.includes(`#blog-card-${safeId}`)) {
+                         scopedCss = scopedCss.replace(/\.prompt-card/g, `#blog-card-${safeId} .prompt-card`);
+                    }
+                    
+                    style.innerHTML = scopedCss;
+                    document.head.appendChild(style);
+                }
+                
+                const container = document.getElementById(`blog-card-${safeId}`);
+                if (container) {
+                    container.innerHTML = doc.body.innerHTML;
+                    
+                    container.addEventListener('mouseenter', () => {
+                        const card = container.querySelector('.prompt-card');
+                        if (card) {
+                            card.style.transform = 'scale(1.02)';
+                            card.style.transition = 'transform 0.3s ease';
+                        }
+                    });
+                    container.addEventListener('mouseleave', () => {
+                        const card = container.querySelector('.prompt-card');
+                        if (card) card.style.transform = 'scale(1)';
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to load JSON UI for blog:", rawUrl, error);
+                
+                const container = document.getElementById(`blog-card-${safeId}`);
+                if (container) {
+                    const fallbackTitle = rawUrl.replace(/\+/g, ' ');
+                    container.innerHTML = `
+                        <div class="custom-card w-100 p-5 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; background: #fff;">
+                            <h3 class="font-serif fw-medium mb-4 text-capitalize" style="font-size: 1.5rem; line-height: 1.3;">${fallbackTitle}</h3>
+                            <span class="btn-pill active" style="font-size: 13px;">Read Prompts <i class="fa-solid fa-arrow-right ms-2"></i></span>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // ==========================================
+        // INTERACTION HANDLERS
+        // ==========================================
+
+        function setCardFormat(groupId, format) {
+            cardFormats[groupId] = format;
+            renderGrid();
+        }
+
+        function scrollCarousel(id, direction) {
+            const el = document.getElementById(id);
+            if (el) {
+                const scrollAmount = el.clientWidth * 0.8;
+                el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            const url = new URL(window.location);
+            url.searchParams.set('page', page);
+            window.history.pushState({}, '', url);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderGrid();
+        }
+
+        function setupScrollListener() {
+            const heroSearch = document.getElementById('hero-search');
+            const stickyActions = document.getElementById('sticky-actions-container');
+            const stickyFilterBtn = document.getElementById('sticky-filter-btn');
+
+            window.addEventListener('scroll', () => {
+                const searchRect = heroSearch.getBoundingClientRect();
+                
+                if (searchRect.bottom < 72) {
+                    stickyActions.classList.remove('opacity-0', 'pointer-events-none');
+                    stickyFilterBtn.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    stickyActions.classList.add('opacity-0', 'pointer-events-none');
+                    stickyFilterBtn.classList.add('opacity-0', 'pointer-events-none');
+                    closeFilter();
+                }
+            });
+        }
+
+        // Boot up
+        window.onload = init;
+    </script>
+</body>
+</html>

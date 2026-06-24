@@ -1,937 +1,846 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Affirzone - Affirmations & Journal Prompts</title>
-    
-    <!-- Google Fonts -->
+    <title>Affirzone - Digital Annotation Journals</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
-            --brand-color: #23b48e;
-            --brand-hover: #1e9d7c;
-            --bg-light: #fafafa;
-            --text-main: #1a1a1a;
-            --text-muted: #6c757d;
+            --brand-green: #1cc191;
+            --brand-blue: #1390f0;
+            --offer-bg: #f0fdf4;
+            --offer-border: #bbf7d0;
+            --offer-text: #166534;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-main);
-            overflow-x: hidden;
-            width: 100%;
+            /* Brought back to a near-white look with only a very subtle hint of color */
+            background: linear-gradient(to bottom right, rgba(239, 246, 255, 0.5), rgba(209, 250, 229, 0.25), rgba(255, 228, 230, 0.35));
+            min-height: 100vh;
+            color: #111827;
+            padding-bottom: 3rem;
+            position: relative;
         }
 
-        .font-serif {
-            font-family: 'Playfair Display', serif;
+        .brand-gradient-text {
+            background: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 2px;
         }
 
-        /* Utility Overrides & Custom Spacing */
-        .text-brand { color: var(--brand-color); }
-        .bg-brand { background-color: var(--brand-color); color: white; }
-        .bg-brand:hover { background-color: var(--brand-hover); color: white; }
-        
-        .container-custom {
-            max-width: 80rem;
-            margin: 0 auto;
-            padding: 0 5px; /* 10px margins on left and right for mobile */
-        }
-        @media (min-width: 768px) {
-            .container-custom { padding: 0 40px; }
-        }
-
-        /* Vertical Feed Card Wrapper */
-        .feed-card-wrapper {
-            width: 100%;
-            max-width: 720px; /* Increased from 550px for a wider, more immersive layout on tablet/desktop */
-            margin: 0 auto 3rem auto;
-        }
-        @media (min-width: 768px) {
-            .feed-card-wrapper { margin-bottom: 4rem; }
-        }
-
-        /* Top Accent Bar */
-        .accent-bar {
+        .brand-gradient-text::after {
+            content: "";
+            position: absolute;
+            left: -2%;
+            bottom: 0px;
+            width: 104%;
             height: 4px;
-            background: linear-gradient(90deg, #23b48e, #2c8be4);
-            width: 100%;
+            background: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
+            border-radius: 2px;
+            opacity: 0.25;
         }
 
-        /* Navigation */
-        .main-nav {
-            position: sticky;
+        .minimalist-offer {
+            background-color: var(--offer-bg);
+            border: 1px solid var(--offer-border);
+            color: var(--offer-text);
+            max-width: max-content;
+            margin: 0 auto;
+            border-radius: 50rem;
+            padding: 0.5rem 1.25rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+            letter-spacing: 0.01em;
+        }
+
+        #stickyNav {
+            position: fixed;
             top: 0;
-            z-index: 1050;
-            min-height: 72px;
+            left: 0;
+            right: 0;
             background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 10px 15px;
-        }
-        @media (min-width: 768px) { .main-nav { padding: 10px 32px; } }
-
-        /* Responsive Search Bar */
-        .nav-search-wrapper { width: 180px; padding: 8px 16px; }
-        .nav-search-text { font-size: 13px; font-weight: 600; }
-        .hero-search-bar { transition: transform 0.2s, box-shadow 0.2s; border-color: #e5e5e5 !important; }
-        .hero-search-bar i { font-size: 13px; }
-        .hero-search-bar:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important; }
-        
-        @media (min-width: 768px) {
-            .nav-search-wrapper { width: 240px; padding: 10px 20px; }
-            .nav-search-text { font-size: 14px; }
-            .hero-search-bar i { font-size: 14px; }
-        }
-        @media (min-width: 992px) {
-            .nav-search-wrapper { width: 280px; padding: 12px 24px; }
-            .nav-search-text { font-size: 15px; }
-            .hero-search-bar i { font-size: 15px; }
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid #f3f4f6;
+            z-index: 1040;
+            transition: transform 0.3s ease-in-out;
+            transform: translateY(-100%);
         }
 
-        /* Sticky Filter Components - absolute relative to sticky nav */
-        #sticky-filter-btn { position: absolute; right: 15px; top: calc(100% + 10px); }
-        @media (min-width: 768px) { #sticky-filter-btn { right: 32px; } }
-        #sticky-filter-btn:hover { background: #f8f9fa !important; }
-        
-        #sticky-filter-panel { position: absolute; top: 100%; left: 0; width: 100%; }
+        #stickyNav.visible {
+            transform: translateY(0);
+        }
 
-        /* Horizontal Scroll Containers */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; overflow-x: auto; }
-        .snap-container { scroll-snap-type: x mandatory; scroll-behavior: smooth; }
-        .snap-item { scroll-snap-align: center; scroll-snap-stop: always; }
+        .font-cursive {
+            font-family: 'Dancing Script', cursive;
+        }
 
-        /* Card Styling for Universal Usage (Products) */
-        .custom-card {
-            background: #fff;
-            border-radius: 1rem;
-            border: 1px solid rgba(0,0,0,0.04);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-            transition: all 0.3s ease;
+        .text-rose-500 { color: #f43f5e !important; }
+        .text-emerald-500 { color: #10b981 !important; }
+        .text-indigo-500 { color: #6366f1 !important; }
+
+        .bg-glass {
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+
+        .fw-black { font-weight: 900 !important; }
+
+        .app-highlight {
+            font-weight: 700;
+            color: #111827;
+            border-bottom: 3px solid rgba(254, 205, 211, 0.8);
+            margin: 0 0.2rem;
+            padding: 0 0.1rem;
+            display: inline-block;
+        }
+
+        .scroll-container-wrapper {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .scroll-fade-left,
+        .scroll-fade-right {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .scroll-fade-left {
+            left: 0;
+            background: linear-gradient(to right, #f8fafc, transparent);
+            mix-blend-mode: multiply;
+        }
+
+        .scroll-fade-right {
+            right: 0;
+            background: linear-gradient(to left, #f8fafc, transparent);
+            mix-blend-mode: multiply;
+        }
+
+        .image-scroll-row {
             display: flex;
-            flex-direction: column;
-            height: auto; 
-            overflow: hidden; 
-        }
-        .custom-card:hover {
-            box-shadow: 0 12px 40px rgba(35,180,142,0.08);
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
-        /* Image Carousel */
-        .carousel-wrapper {
-            position: relative;
-            width: 100%;
+        .image-scroll-row::-webkit-scrollbar {
+            display: none;
         }
-        .carousel-item-img {
-            width: 90%;
-            aspect-ratio: 4/3;
+
+        .page-card {
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
             flex-shrink: 0;
+            aspect-ratio: 1 / 1.414;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f3f4f6;
             position: relative;
-            border-radius: 0.75rem;
             overflow: hidden;
-            box-sizing: border-box;
         }
-        @media (min-width: 768px) { .carousel-item-img { width: 100%; } }
-        
-        .carousel-item-img img {
+
+        .page-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        /* KDP Spine styling */
-        .kdp-spine-overlay {
-            position: absolute;
-            left: 0; top: 0; bottom: 0; width: 24px;
-            background: linear-gradient(90deg, rgba(0,0,0,0.08), transparent);
             pointer-events: none;
-            z-index: 10;
         }
 
-        /* Navigation Arrows */
+        /* Responsive Sizing Rules */
+        @media (max-width: 767px) {
+            .image-scroll-row { gap: 1rem; padding: 1rem 1rem 2rem 1rem; }
+            .page-card { width: 82vw; }
+            .scroll-fade-left, .scroll-fade-right { width: 20px; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .image-scroll-row { gap: 1.5rem; padding: 1rem 1rem 2rem 1rem; }
+            .page-card { width: calc((100% - 3rem) / 2.3); }
+        }
+        @media (min-width: 1024px) {
+            .image-scroll-row { gap: 1.5rem; padding: 1rem 2rem 2rem 2rem; }
+            .page-card { width: calc((100% - 4.5rem) / 3.1); }
+        }
+
+        /* Desktop Scroll Arrows */
         .scroll-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255,255,255,0.9);
-            border: 1px solid #eee;
+            width: 48px;
+            height: 48px;
+            background: white;
+            border: 1px solid #e5e7eb;
             border-radius: 50%;
-            width: 36px; height: 36px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            transition: opacity 0.2s;
-            z-index: 20;
-            color: #333;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .carousel-wrapper:hover .scroll-arrow { opacity: 1; }
-        .scroll-arrow.left { left: 8px; }
-        .scroll-arrow.right { right: 8px; }
-        @media (max-width: 767px) { .scroll-arrow { display: none; } }
-
-        /* Buttons & Pills */
-        .btn-pill {
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 1px solid #e5e5e5;
-            background: #fff;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-        .btn-pill.active {
-            background: var(--text-main);
-            color: #fff;
-            border-color: var(--text-main);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .btn-pill:hover:not(.active) {
-            border-color: var(--brand-color);
-            color: var(--brand-color);
-        }
-
-        /* Format Toggles */
-        .format-toggle {
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 14px 0;
-            background: none;
-            border: none;
-            border-bottom: 2px solid transparent;
-            color: #adb5bd;
-            transition: all 0.2s;
-        }
-        @media (min-width: 768px) { .format-toggle { font-size: 14px; } }
-        
-        .format-toggle.active {
-            color: var(--text-main);
-            border-bottom-color: var(--text-main);
-        }
-
-        /* Action Buttons */
-        .btn-action {
-            width: 100%;
-            border-radius: 0.375rem;
-            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            text-decoration: none;
-            border: none;
-            transition: all 0.2s;
-        }
-        .btn-dark-action { background: var(--text-main); color: #fff; }
-        .btn-dark-action:hover { background: #333; color: #fff; }
-        .btn-amazon { background: #FF9900; color: #fff; }
-        .btn-amazon:hover { background: #e68a00; color: #fff; }
-        .btn-outline-custom { border: 1px solid #e5e5e5; color: var(--text-muted); text-transform: uppercase; }
-        .btn-outline-custom:hover { background: #f8f9fa; color: var(--text-main); border-color: var(--text-main); }
-        .btn-outline-brand { border: 1px solid rgba(35,180,142,0.2); color: var(--brand-color); text-transform: uppercase; }
-        .btn-outline-brand:hover { background: rgba(35,180,142,0.05); }
-
-        /* Pagination Buttons */
-        .btn-pagination {
-            padding: 10px 28px;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid #eaeaea;
-            background: #fff;
-            color: var(--text-main);
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
             cursor: pointer;
+            z-index: 20;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.2s ease, opacity 0.3s ease;
+            color: #111827;
         }
-        .btn-pagination:hover {
-            border-color: var(--text-main);
-            background: var(--text-main);
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .scroll-arrow:hover { background: #f8fafc; box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+        .scroll-arrow.left { left: -1.5rem; }
+        .scroll-arrow.right { right: -1.5rem; }
+
+        /* Custom Size Pills */
+        .size-pills {
+            position: relative;
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 4px;
+            border-radius: 50rem;
+            border: 1px solid rgba(229, 231, 235, 0.8);
+            margin-bottom: 1.5rem;
         }
 
-        /* Lazy Loading & Skeleton */
-        .skeleton-bg {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: skeletonLoading 1.5s infinite;
-        }
-        @keyframes skeletonLoading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+        .size-pill {
+            padding: 0.5rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 700;
+            border: none;
+            background: transparent;
+            border-radius: 50rem;
+            color: #6b7280;
+            transition: all 0.2s ease;
         }
 
+        .size-pill.active { 
+            background: #212529; 
+            color: white; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+        }
+
+        /* Tooltip Styles */
+        .preview-btn-wrapper { position: relative; display: flex; flex-grow: 1; }
+        
+        .custom-tooltip {
+            position: absolute; bottom: calc(100% + 14px); left: 50%; transform: translateX(-50%);
+            background: #1f2937; color: white; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem;
+            font-weight: 500; white-space: normal; width: 220px; text-align: center;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3); z-index: 50;
+            animation: bounceTooltip 2s infinite ease-in-out; transition: opacity 0.5s ease;
+        }
+        .custom-tooltip::after {
+            content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px;
+            border-width: 6px; border-style: solid; border-color: #1f2937 transparent transparent transparent;
+        }
+
+        /* New Format Tooltip Styles (Indigo color) */
+        .format-tooltip {
+            position: absolute; bottom: calc(100% + 14px); left: 50%; transform: translateX(-50%);
+            background: #4338ca; color: white; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem;
+            font-weight: 500; white-space: normal; width: 190px; text-align: center;
+            box-shadow: 0 10px 20px -5px rgba(67, 56, 202, 0.4); z-index: 50;
+            animation: bounceTooltip 2s infinite ease-in-out; transition: opacity 0.5s ease;
+        }
+        .format-tooltip::after {
+            content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px;
+            border-width: 6px; border-style: solid; border-color: #4338ca transparent transparent transparent;
+        }
+
+        .tooltip-close {
+            position: absolute; top: 2px; right: 4px; background: none; border: none; color: #9ca3af;
+            font-size: 1.2rem; cursor: pointer; line-height: 1; padding: 2px 6px;
+        }
+        .tooltip-close:hover { color: white; }
+        .opacity-0 { opacity: 0 !important; pointer-events: none; }
+        
+        @keyframes bounceTooltip {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, -4px); }
+        }
+
+        /* Modal Styles */
+        #imageModal {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(8px);
+            z-index: 1060; display: none; align-items: center; justify-content: center; overflow: hidden;
+        }
+        #imageModal.show { display: flex; }
+
+        .modal-controls { position: absolute; top: 1rem; right: 1rem; z-index: 1070; }
+        .modal-close-btn {
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white;
+            border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; transition: background 0.2s;
+        }
+        .modal-close-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+        .modal-nav-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none;
+            color: rgba(255, 255, 255, 0.5); z-index: 1070; padding: 1.5rem; cursor: pointer;
+            transition: color 0.2s, opacity 0.2s;
+        }
+        .modal-nav-arrow:hover { color: white; }
+        .modal-nav-arrow:disabled { opacity: 0; cursor: default; }
+        .modal-nav-arrow.left { left: 1rem; }
+        .modal-nav-arrow.right { right: 1rem; }
+        .modal-nav-arrow svg { width: 36px; height: 36px; }
+
+        .zoom-dock {
+            position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white; padding: 0.5rem 1.25rem; border-radius: 50rem; display: flex; align-items: center;
+            gap: 1.5rem; font-family: monospace; z-index: 1070; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .zoom-dock button { background: none; border: none; color: white; cursor: pointer; padding: 4px; transition: color 0.2s; }
+        .zoom-dock button:hover { color: #d1d5db; }
+
+        #modalPanArea {
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; 
+            cursor: grab; touch-action: none;
+        }
+        #modalPanArea:active { cursor: grabbing; }
+
+        #modalImage {
+            width: 85vw; max-width: 500px; object-fit: contain; background: white; border-radius: 4px; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); pointer-events: none; 
+            transform-origin: center center;
+        }
+
+        /* --- Breakpoints --- */
+        .app-highlight { font-size: 1.1rem; }
+        .hero-title { font-size: 2.25rem; }
+        .minimalist-offer { font-size: 0.8rem; padding: 0.4rem 1rem; }
+        .cta-price { font-size: 1.5rem; }
+
+        @media (min-width: 768px) {
+            .app-highlight { font-size: 1.35rem; }
+            .hero-title { font-size: 3.5rem; }
+            .minimalist-offer { font-size: 0.95rem; padding: 0.5rem 1.5rem; }
+            .cta-price { font-size: 1.75rem; }
+        }
+
+        @media (min-width: 1024px) {
+            .app-highlight { font-size: 1.5rem; }
+            .hero-title { font-size: 4rem; }
+            .cta-price { font-size: 2rem; }
+        }
     </style>
 </head>
-<body>
-    <!-- Top Banner -->
-    <div class="accent-bar"></div>
-    <div class="bg-light border-bottom text-muted text-center py-2 px-3" style="font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
-        Affirmations, Journal Prompts & Ideas
-    </div>
 
-    <!-- Main Navigation (Sticky Container) -->
-    <nav class="main-nav d-flex justify-content-between align-items-center w-100">
-        <a href="?type=all"><img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="28"></a>
-        
-        <div class="d-flex align-items-center gap-4">
-            <div id="sticky-actions-container" class="d-flex flex-column align-items-end justify-content-center opacity-0 pointer-events-none" style="transition: opacity 0.3s; gap: 4px; margin-top: 2px;">
-                <a href="search.html" class="text-decoration-none d-block">
-                    <div class="nav-search-wrapper d-flex align-items-center bg-white border rounded-pill shadow-sm text-muted hero-search-bar">
-                        <i class="fa-solid fa-magnifying-glass me-2 text-brand"></i>
-                        <span class="nav-search-text">Search...</span>
-                    </div>
+<body>
+
+    <!-- Sticky Nav -->
+    <div id="stickyNav">
+        <div class="container pt-2 pb-2">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" style="height: 28px; object-fit: contain;">
+                
+                <a href="prompts.html" target="_blank" class="text-decoration-none fw-semibold d-flex align-items-center gap-1 text-dark" style="font-size: 0.95rem;">
+                    <span>Prompts</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
                 </a>
             </div>
-        </div>
-
-        <!-- Floating Filter Button (Nested inside Nav so it aligns directly below) -->
-        <button id="sticky-filter-btn" class="btn btn-white border shadow-sm rounded-pill d-flex align-items-center justify-content-center opacity-0 pointer-events-none" style="z-index: 1040; background: #fff; color: #1a1a1a; font-size: 13px; font-weight: 600; padding: 8px 18px; transition: opacity 0.3s, background 0.2s;" onclick="openFilter()">
-            <i class="fa-solid fa-sliders me-2"></i> Filter
-        </button>
-
-        <!-- Full Width Floating Filter Panel (Nested inside Nav) -->
-        <div id="sticky-filter-panel" class="bg-white border-bottom shadow-sm d-none" style="padding: 1.25rem 0; z-index: 1045; opacity: 0; transform: translateY(-10px); transition: opacity 0.3s ease, transform 0.3s ease;">
-            <div class="container-custom">
-                <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
-                    <h6 class="m-0 fw-bold font-serif" style="color: #1a1a1a; font-size: 16px;">Filter by Categories</h6>
-                    <button class="btn btn-sm btn-light rounded-circle d-flex align-items-center justify-content-center p-0" style="width: 28px; height: 28px;" onclick="closeFilter()">
-                        <i class="fa-solid fa-times text-muted"></i>
-                    </button>
-                </div>
-                <div class="filter-content">
-                    <div id="dynamic-filter-container" class="d-flex flex-nowrap gap-2 overflow-x-auto hide-scrollbar pb-2" style="-webkit-overflow-scrolling: touch;">
-                        <!-- Dynamic categories injected here -->
-                    </div>
+            <div class="text-center">
+                <div class="minimalist-offer" style="transform: scale(0.9); transform-origin: top;">
+                    <span>The first 100 people will get the PDF <strong style="color: var(--brand-green);">100% FREE</strong></span>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Static Top Nav -->
+    <nav class="container pt-4 pb-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" style="height: 36px; object-fit: contain;">
+            
+            <a href="prompts.html" target="_blank" class="text-decoration-none fw-semibold d-flex align-items-center gap-1 text-dark">
+                <span>Prompts</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+            </a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="bg-white border-bottom text-center px-3" style="padding-top: 2rem; padding-bottom: 2rem;">
-        <div class="mx-auto" style="max-width: 60rem;">
-            <h1 class="font-serif text-dark mb-4 fw-medium" style="font-size: 40px; letter-spacing: -0.5px; line-height: 1.1;">
-                Affirmations & <br class="d-md-none"> Journal Prompts.
-            </h1>
-            <p class="text-muted mx-auto" style="font-size: clamp(1rem, 2vw, 1.125rem); max-width: 42rem; line-height: 1.6;">
-                Explore our curated collection of free guided prompts and premium digital journals designed to bring clarity to your daily routine.
-            </p>
-            
-            <!-- Hero Search Bar -->
-            <div id="hero-search" class="mx-auto mt-4" style="max-width: 30rem;">
-                <a href="search.html" class="text-decoration-none d-block">
-                    <div class="d-flex align-items-center bg-white border rounded-pill px-4 py-3 shadow-sm text-muted hero-search-bar">
-                        <i class="fa-solid fa-magnifying-glass me-3 text-brand"></i>
-                        <span style="font-size: 15px; font-weight: 500;">Search journals, prompts, or topics...</span>
-                    </div>
-                </a>
+    <!-- Header -->
+    <header id="mainHeader" class="container text-center py-5 mb-3">
+        <div class="text-center mb-5">
+            <div class="minimalist-offer shadow-sm py-2 px-4">
+                <span>The first 100 people will get the PDF <strong style="color: var(--brand-green);">100% FREE</strong></span>
             </div>
         </div>
+        <h1 class="hero-title fw-bolder mb-5" style="letter-spacing: -0.02em; line-height: 1.2;">
+            Minimalist Journals for <br class="d-none d-sm-block">
+            <span class="brand-gradient-text mt-2">Digital Annotation</span>
+        </h1>
+        <p class="lead text-secondary mx-auto mb-4 lh-lg" style="max-width: 48rem; font-weight: 500; font-size: 1.15rem;">
+            Beautifully crafted PDF prompts designed to build positivity. Ready to import instantly into
+            <span class="app-highlight px-1">GoodNotes</span>,
+            <span class="app-highlight px-1">Notability</span>,
+            or any
+            <span class="app-highlight px-1">other tablet app</span>.
+        </p>
     </header>
 
-    <!-- Main Content -->
-    <section id="collection" style="background-color: var(--bg-light);">
-        
-        <!-- Prompt Category Bar -->
-        <div id="filter-ref" class="border-bottom" style="padding-top: 2rem; padding-bottom: 1.5rem;">
-            <div class="container-custom" id="main-filter-container">
-                <!-- Prompt Pills injected via JS -->
-            </div>
-        </div>
+    <main id="products-container" class="container pb-5"></main>
 
-        <!-- Dynamic Vertical Feed -->
-        <div class="container-custom py-5">
-            <div class="d-flex flex-column align-items-center w-100" id="content-grid">
-                <!-- Content injected via JS -->
-            </div>
-
-            <!-- Pagination -->
-            <div id="pagination-container" class="d-flex justify-content-center align-items-center gap-3 gap-md-4 mt-5 pt-5 border-top px-2">
-                <!-- Pagination injected via JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="about" class="text-center text-white py-5 px-3" style="background-color: #1a1a1a; margin-top: 4rem;">
-        <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone" height="32" class="mb-4" style="filter: brightness(0) invert(1) opacity(0.8);">
-        <p class="text-white mx-auto mb-5" style="max-width: 24rem; font-size: 1rem; line-height: 1.6; opacity: 0.9;">
-            Affirmations, Journal Prompts & Ideas
-        </p>
-        <div class="d-flex justify-content-center gap-4 mb-5" style="font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
-            <a href="https://www.pinterest.com/affirzone_journal/" class="text-white text-decoration-none" style="opacity: 0.9;">Pinterest</a>
-            <a href="contact.html" class="text-white text-decoration-none" style="opacity: 0.9;">Contact</a>
-        </div>
-        <div class="pt-4 text-white" style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.7;">
-            © <script>document.write(new Date().getFullYear())</script> Affirzone. All rights reserved.
+    <footer class="text-center text-muted py-5 mt-5">
+        <div class="d-flex flex-column align-items-center gap-3">
+            <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" style="height: 24px; filter: grayscale(100%); opacity: 0.4;">
+            <p class="text-uppercase fw-semibold mb-0" style="font-size: 0.75rem; letter-spacing: 0.1em;">© <span id="year"></span> Affirzone. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Application Logic -->
+    <!-- Full Image Viewer Modal -->
+    <div id="imageModal">
+        <div class="modal-controls">
+            <button class="modal-close-btn" onclick="closeModal()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+
+        <button id="modalLeftArrow" class="modal-nav-arrow left d-none d-lg-block" onclick="slidePrev()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button id="modalRightArrow" class="modal-nav-arrow right d-none d-lg-block" onclick="slideNext()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
+        <div class="zoom-dock">
+            <button onclick="handleZoomOut()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            </button>
+            <span id="zoomLevelText" style="width: 48px; text-align: center; font-weight: bold;">100%</span>
+            <button onclick="handleZoomIn()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            </button>
+        </div>
+
+        <div id="modalPanArea">
+            <img id="modalImage" src="" alt="Preview Document">
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        // ==========================================
-        // UI FILTER TOGGLE LOGIC
-        // ==========================================
-        function openFilter() {
-            const btn = document.getElementById('sticky-filter-btn');
-            const panel = document.getElementById('sticky-filter-panel');
-            
-            btn.classList.remove('d-flex');
-            btn.classList.add('d-none');
-            
-            panel.classList.remove('d-none');
-            setTimeout(() => {
-                panel.style.opacity = '1';
-                panel.style.transform = 'translateY(0)';
-            }, 10);
-        }
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-        function closeFilter() {
-            const btn = document.getElementById('sticky-filter-btn');
-            const panel = document.getElementById('sticky-filter-panel');
-            
-            panel.style.opacity = '0';
-            panel.style.transform = 'translateY(-10px)';
-            setTimeout(() => {
-                panel.classList.add('d-none');
-                
-                const stickyActions = document.getElementById('sticky-actions-container');
-                if (!stickyActions.classList.contains('opacity-0')) {
-                    btn.classList.remove('d-none');
-                    btn.classList.add('d-flex');
-                } else {
-                    btn.classList.remove('d-none');
-                    btn.classList.add('d-flex'); 
+        // --- DATA STRUCTURE ---
+        const productsData = [
+            { id: '30-cursive', count: '30', countColor: 'text-rose-500', type: 'Cursive', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 3.99, pages: ['media/journal/30 cursive/01-Journal-Cover.png', 'media/journal/30 cursive/02-Prompt-Showcase.png', 'media/journal/30 cursive/03-Writing-Space-Zoom.png', 'media/journal/30 cursive/04-Categories-Fan.png', 'media/journal/30 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/30 cursive/08-App-Compatibility.png', 'media/journal/30 cursive/05-When-to-Use.png', 'media/journal/30 cursive/06-How-to-Use.png'] },
+            { id: '30-normal', count: '30', countColor: 'text-rose-500', type: 'Normal', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 3.99, pages: ['media/journal/30 normal/01-Journal-Cover.png', 'media/journal/30 normal/02-Prompt-Showcase.png', 'media/journal/30 normal/03-Writing-Space-Zoom.png', 'media/journal/30 normal/04-Categories-Fan.png', 'media/journal/30 normal/07-Complete-Bundle-Showcase.png', 'media/journal/30 normal/08-App-Compatibility.png', 'media/journal/30 normal/05-When-to-Use.png', 'media/journal/30 normal/06-How-to-Use.png'] },
+            { id: '60-cursive', count: '60', countColor: 'text-emerald-500', type: 'Cursive', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 5.99, pages: ['media/journal/60 cursive/01-Journal-Cover.png', 'media/journal/60 cursive/02-Prompt-Showcase.png', 'media/journal/60 cursive/03-Writing-Space-Zoom.png', 'media/journal/60 cursive/04-Categories-Fan.png', 'media/journal/60 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/60 cursive/08-App-Compatibility.png', 'media/journal/60 cursive/05-When-to-Use.png', 'media/journal/60 cursive/06-How-to-Use.png'] },
+            { id: '60-normal', count: '60', countColor: 'text-emerald-500', type: 'Normal', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 5.99, pages: ['media/journal/60 normal/01-Journal-Cover.png', 'media/journal/60 normal/02-Prompt-Showcase.png', 'media/journal/60 normal/03-Writing-Space-Zoom.png', 'media/journal/60 normal/04-Categories-Fan.png', 'media/journal/60 normal/07-Complete-Bundle-Showcase.png', 'media/journal/60 normal/08-App-Compatibility.png', 'media/journal/60 normal/05-When-to-Use.png', 'media/journal/60 normal/06-How-to-Use.png'] },
+            { id: '90-cursive', count: '90', countColor: 'text-indigo-500', type: 'Cursive', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 7.99, pages: ['media/journal/90 cursive/01-Journal-Cover.png', 'media/journal/90 cursive/02-Prompt-Showcase.png', 'media/journal/90 cursive/03-Writing-Space-Zoom.png', 'media/journal/90 cursive/04-Categories-Fan.png', 'media/journal/90 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/90 cursive/08-App-Compatibility.png', 'media/journal/90 cursive/05-When-to-Use.png', 'media/journal/90 cursive/06-How-to-Use.png'] },
+            { id: '90-normal', count: '90', countColor: 'text-indigo-500', type: 'Normal', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 7.99, pages: ['media/journal/90 normal/01-Journal-Cover.png', 'media/journal/90 normal/02-Prompt-Showcase.png', 'media/journal/90 normal/03-Writing-Space-Zoom.png', 'media/journal/90 normal/04-Categories-Fan.png', 'media/journal/90 normal/07-Complete-Bundle-Showcase.png', 'media/journal/90 normal/08-App-Compatibility.png', 'media/journal/90 normal/05-When-to-Use.png', 'media/journal/90 normal/06-How-to-Use.png'] }
+        ];
+
+        // --- URL LOGIC ---
+        function getSortedProducts() {
+            let sorted = [...productsData];
+            const urlParams = new URLSearchParams(window.location.search);
+            const journalQuery = urlParams.get('journal');
+            if (journalQuery) {
+                const lowerQuery = journalQuery.toLowerCase().trim().replace(/\s+/g, ' ');
+                const mapping = {
+                    '30 cursive affirmation journal letter': '30-cursive', '30 normal affirmation journal letter': '30-normal',
+                    '60 cursive affirmation journal letter': '60-cursive', '60 normal affirmation journal letter': '60-normal',
+                    '90 cursive affirmation journal letter': '90-cursive', '90 normal affirmation journal letter': '90-normal'
+                };
+                const targetId = mapping[lowerQuery];
+                if (targetId) {
+                    const targetProduct = sorted.find(p => p.id === targetId);
+                    if (targetProduct) { sorted = [targetProduct, ...sorted.filter(p => p.id !== targetId)]; }
                 }
-            }, 300);
+            }
+            return sorted;
         }
 
-        // ==========================================
-        // DATA DEFINITIONS
-        // ==========================================
-        let productsData = [];
-        let promptListData = [];
+        // --- CAROUSEL LOGIC (MAIN PAGE) ---
+        window.scrollCarousel = function(btn, direction) {
+            const wrapper = btn.closest('.scroll-container-wrapper');
+            const row = wrapper.querySelector('.image-scroll-row');
+            const cardWidth = row.querySelector('.page-card').offsetWidth;
+            const scrollAmount = (cardWidth + 24) * 2;
+            row.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+        }
 
-        // ==========================================
-        // STATE VARIABLES
-        // ==========================================
-        let currentCat = 'all'; 
-        let currentPage = 1;
-        const itemsPerPage = 5;
-        let urlRequestedType = 'digital';
-        let priorityProduct = null;
-        let isFilterMenuOpen = false;
-        
-        let cardFormats = {}; 
+        function updateCarouselArrows(wrapper) {
+            const row = wrapper.querySelector('.image-scroll-row');
+            const leftBtn = wrapper.querySelector('.scroll-arrow.left');
+            const rightBtn = wrapper.querySelector('.scroll-arrow.right');
+            
+            if (row.scrollLeft <= 5) leftBtn.classList.add('opacity-0', 'pe-none');
+            else leftBtn.classList.remove('opacity-0', 'pe-none');
+            
+            if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 5) rightBtn.classList.add('opacity-0', 'pe-none');
+            else rightBtn.classList.remove('opacity-0', 'pe-none');
+        }
 
-        // ==========================================
-        // INITIALIZATION
-        // ==========================================
-        async function init() {
-            try {
-                const [productsResponse, topicsResponse] = await Promise.all([
-                    fetch('data/products/list.json'),
-                    fetch('data/topics/list.json')
-                ]);
-                
-                if (productsResponse.ok) productsData = await productsResponse.json();
-                if (topicsResponse.ok) promptListData = await topicsResponse.json();
-            } catch (error) {
-                console.error("Error loading JSON data:", error);
-                if(productsData.length === 0) {
-                   productsData = [];
+        // --- PDF PREVIEW ---
+        window.openPreview = function(productId, btnElement) {
+            const container = btnElement.closest('.py-5');
+            const activeSizePill = container.querySelector('.size-pill.active').textContent;
+            const sizeKey = activeSizePill.includes('A4') ? 'A4' : 'letter';
+            window.open(`preview/${productId.replace('-', '+')}+${sizeKey}.pdf`, '_blank');
+        }
+
+        // --- RENDER PRODUCTS ---
+        function renderProducts() {
+            const container = document.getElementById('products-container');
+            const products = getSortedProducts();
+            let htmlContent = '';
+
+            products.forEach((product, pIndex) => {
+                const isCursive = product.type === 'Cursive';
+                const typeClasses = isCursive ? "font-cursive fw-bold text-decoration-underline" : "fw-bolder text-dark";
+                const typeStyle = isCursive ? "text-underline-offset: 6px; text-decoration-thickness: 2px;" : "";
+
+                let imagesHtml = '';
+                product.pages.forEach((imgUrl, iIndex) => {
+                    imagesHtml += `<div class="page-card" onclick="openModal('${product.id}', ${iIndex})">
+                                       <img src="${imgUrl}" alt="Page ${iIndex + 1}" loading="lazy">
+                                   </div>`;
+                });
+
+                htmlContent += `
+                    <div id="product-card-${product.id}" data-size="letter" class="py-5 border-bottom ${pIndex === products.length - 1 ? 'border-0' : 'border-light-subtle'}">
+                        <div class="px-0 px-md-4 mx-auto" style="max-width: 1060px;">
+                            <h2 class="display-6 mb-4 d-flex flex-wrap align-items-baseline gap-2 px-3 px-md-0">
+                                <span class="fw-black ${product.countColor}" style="font-weight: 900;">${product.count}</span>
+                                <span class="${typeClasses}" style="${typeStyle}">${product.type}</span>
+                                <span class="fs-4 fw-medium text-secondary">${product.titleSuffix}</span>
+                            </h2>
+                            <div class="scroll-container-wrapper">
+                                <button class="scroll-arrow left d-none d-lg-flex opacity-0 pe-none" onclick="scrollCarousel(this, -1)">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                </button>
+                                <button class="scroll-arrow right d-none d-lg-flex" onclick="scrollCarousel(this, 1)">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </button>
+                                <div class="scroll-fade-left"></div>
+                                <div class="scroll-fade-right"></div>
+                                <div class="image-scroll-row">${imagesHtml}<div style="flex-shrink: 0; width: 1px;"></div></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-center justify-content-md-start px-3 px-md-0 position-relative">
+                                <div class="size-pills">
+                                    <button class="size-pill active" onclick="toggleSize(this, '${product.id}', 'letter')">US Letter</button>
+                                    <button class="size-pill" onclick="toggleSize(this, '${product.id}', 'a4')">A4 Size</button>
+                                    ${pIndex === 0 ? `<div id="format-tooltip" class="format-tooltip opacity-0 d-none"><button class="tooltip-close" aria-label="Dismiss">&times;</button><div class="pt-1 pb-1">Select your paper format!</div></div>` : ''}
+                                </div>
+                            </div>
+                            
+                            <div class="bg-glass rounded-4 p-3 p-md-5 mx-3 mx-md-0 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 gap-md-5">
+                                <div class="text-center text-md-end d-flex flex-column align-items-center align-items-md-end">
+                                    <span class="text-uppercase fw-bold text-muted mb-1" style="font-size: 11px; letter-spacing: 1px;">Launch Offer</span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="cta-price text-secondary fw-bolder text-decoration-line-through opacity-75">$${product.price}</span>
+                                        <span class="display-5 fw-black text-dark lh-1">FREE</span>
+                                    </div>
+                                </div>
+                                <div class="d-none d-md-block border-end border-2" style="height: 50px; border-color: rgba(0,0,0,0.05) !important;"></div>
+                                <div class="d-flex gap-2 gap-md-3 w-100 justify-content-center" style="max-width: 400px;">
+                                    <div class="preview-btn-wrapper">
+                                        <button class="btn w-100 btn-light border fw-bold py-2 py-md-3 px-2 px-md-4 d-flex align-items-center justify-content-center gap-2 text-nowrap" onclick="openPreview('${product.id}', this)">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> Preview
+                                        </button>
+                                        ${pIndex === 0 ? `<div id="preview-tooltip" class="custom-tooltip opacity-0 d-none"><button class="tooltip-close" aria-label="Dismiss">&times;</button><div class="pt-1 pb-1">Take a peek inside the PDF before downloading!</div></div>` : ''}
+                                    </div>
+                                    <a id="gumroad-link-${product.id}" href="https://affirzone.gumroad.com/l/${product.id}/FIRST100" target="_blank" class="btn btn-dark fw-bold py-2 py-md-3 px-2 px-md-4 flex-grow-1 d-flex align-items-center justify-content-center gap-2 text-nowrap">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Get PDF
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            container.innerHTML = htmlContent;
+
+            // Attach scroll listeners for arrows
+            document.querySelectorAll('.image-scroll-row').forEach(row => {
+                row.addEventListener('scroll', () => updateCarouselArrows(row.closest('.scroll-container-wrapper')));
+                updateCarouselArrows(row.closest('.scroll-container-wrapper')); // Init
+            });
+            
+            initTooltips();
+        }
+
+        function toggleSize(btn, productId, sizeFormat) {
+            const pillsContainer = btn.parentElement;
+            pillsContainer.querySelectorAll('.size-pill').forEach(el => { el.classList.remove('active'); });
+            btn.classList.add('active');
+
+            const productCard = document.getElementById(`product-card-${productId}`);
+            if (productCard) { productCard.setAttribute('data-size', sizeFormat); }
+
+            const gumroadLink = document.getElementById(`gumroad-link-${productId}`);
+            if (gumroadLink) {
+                if (sizeFormat === 'a4') {
+                    gumroadLink.href = `https://affirzone.gumroad.com/l/${productId}-a4/FIRST100`;
+                } else {
+                    gumroadLink.href = `https://affirzone.gumroad.com/l/${productId}/FIRST100`;
+                }
+            }
+        }
+
+        // --- TOOLTIP LOGIC ---
+        function initTooltips() {
+            // Preview Tooltip
+            if (localStorage.getItem('previewTooltipDismissed') !== 'true') {
+                const previewTooltip = document.getElementById('preview-tooltip');
+                if (previewTooltip) {
+                    previewTooltip.classList.remove('d-none');
+                    const observer1 = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                setTimeout(() => previewTooltip.classList.remove('opacity-0'), 1300);
+                                observer1.disconnect();
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    observer1.observe(previewTooltip.parentElement);
+
+                    previewTooltip.querySelector('.tooltip-close').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        previewTooltip.classList.add('opacity-0');
+                        setTimeout(() => previewTooltip.classList.add('d-none'), 500);
+                        localStorage.setItem('previewTooltipDismissed', 'true');
+                    });
                 }
             }
 
-            const params = new URLSearchParams(window.location.search);
-            const productParam = params.get('product');
-            const typeParam = params.get('type') || 'all';
-            const pageParam = parseInt(params.get('page'));
+            // Format Tooltip
+            if (localStorage.getItem('formatTooltipDismissed') !== 'true') {
+                const formatTooltip = document.getElementById('format-tooltip');
+                if (formatTooltip) {
+                    formatTooltip.classList.remove('d-none');
+                    const observer2 = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                setTimeout(() => formatTooltip.classList.remove('opacity-0'), 1000);
+                                observer2.disconnect();
+                            }
+                        });
+                    }, { threshold: 0.5 });
+                    observer2.observe(formatTooltip.parentElement);
 
-            currentCat = typeParam;
-            if (currentCat === 'kdp-notebook') {
-                urlRequestedType = 'kdp';
+                    formatTooltip.querySelector('.tooltip-close').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        formatTooltip.classList.add('opacity-0');
+                        setTimeout(() => formatTooltip.classList.add('d-none'), 500);
+                        localStorage.setItem('formatTooltipDismissed', 'true');
+                    });
+                }
+            }
+        }
+
+        // --- MODAL, ZOOM & PANNING LOGIC ---
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const zoomLevelText = document.getElementById('zoomLevelText');
+        const modalPanArea = document.getElementById('modalPanArea');
+        const modalLeftArrow = document.getElementById('modalLeftArrow');
+        const modalRightArrow = document.getElementById('modalRightArrow');
+
+        let currentModalImages = [];
+        let currentModalIndex = 0;
+        let isModalOpen = false;
+
+        let scale = 1, posX = 0, posY = 0, isDragging = false, hasMoved = false;
+        let startX = 0, startY = 0, dragStartX = 0, dragStartY = 0;
+        let initialDistance = null, initialScale = 1, lastTapTime = 0;
+        const ZOOM_MAX = 1.6;
+
+        function loadModalImage() {
+            modalImage.src = currentModalImages[currentModalIndex];
+            scale = 1; posX = 0; posY = 0;
+            updateTransform(false);
+            
+            modalLeftArrow.disabled = currentModalIndex === 0;
+            modalRightArrow.disabled = currentModalIndex === currentModalImages.length - 1;
+        }
+
+        window.slideNext = function() {
+            if (currentModalIndex < currentModalImages.length - 1) { currentModalIndex++; loadModalImage(); }
+        }
+        window.slidePrev = function() {
+            if (currentModalIndex > 0) { currentModalIndex--; loadModalImage(); }
+        }
+
+        window.openModal = function(productId, index) {
+            const product = productsData.find(p => p.id === productId);
+            currentModalImages = product.pages;
+            currentModalIndex = index;
+            loadModalImage();
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            
+            if (!isModalOpen) {
+                history.pushState({ modalOpen: true }, "");
+                isModalOpen = true;
+            }
+        }
+
+        window.closeModal = function(fromHistory = false) {
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+            setTimeout(() => { modalImage.src = ''; }, 200);
+            
+            if (isModalOpen && !fromHistory) history.back();
+            isModalOpen = false;
+        }
+
+        window.addEventListener('popstate', (e) => {
+            if (isModalOpen) closeModal(true);
+        });
+
+        function updateTransform(smooth = false) {
+            modalImage.style.transition = smooth ? 'transform 0.2s ease-out' : 'none';
+            modalImage.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+            zoomLevelText.innerText = Math.round(scale * 100) + '%';
+        }
+
+        function constrainBounds() {
+            if (scale === 1) { posX = 0; posY = 0; return; }
+            
+            const imgW = modalImage.clientWidth * scale;
+            const imgH = modalImage.clientHeight * scale;
+            const vW = window.innerWidth;
+            const vH = window.innerHeight;
+
+            const maxX = imgW > vW ? (imgW - vW) / 2 : 0;
+            const maxY = imgH > vH ? (imgH - vH) / 2 : 0;
+
+            posX = Math.min(Math.max(posX, -maxX), maxX);
+            posY = Math.min(Math.max(posY, -maxY), maxY);
+        }
+
+        function handleDoubleTap(e) {
+            if (scale > 1 || posX !== 0 || posY !== 0) {
+                scale = 1; posX = 0; posY = 0;
             } else {
-                urlRequestedType = 'digital';
+                scale = ZOOM_MAX;
+                const rect = modalImage.getBoundingClientRect();
+                const imgCenterX = rect.left + rect.width / 2;
+                const imgCenterY = rect.top + rect.height / 2;
+                
+                posX = -(e.clientX - imgCenterX) * (ZOOM_MAX - 1);
+                posY = -(e.clientY - imgCenterY) * (ZOOM_MAX - 1);
             }
-
-            if (pageParam && !isNaN(pageParam)) currentPage = pageParam;
-
-            if (productParam && productsData.length > 0) {
-                const foundProduct = productsData.find(p => (p.digital && p.digital.id === productParam) || (p.kdp && p.kdp.id === productParam));
-                if (foundProduct) {
-                    priorityProduct = foundProduct;
-                    const detectedFormat = (foundProduct.kdp && foundProduct.kdp.id === productParam) ? 'kdp' : 'digital';
-                    urlRequestedType = detectedFormat;
-                    cardFormats[foundProduct.groupId] = detectedFormat;
-                }
-            }
-
-            setupScrollListener();
-            renderUI();
+            constrainBounds();
+            updateTransform(true);
         }
 
-        // ==========================================
-        // DOM RENDERING LOGIC
-        // ==========================================
-        
-        function renderUI() {
-            renderFilterButtons();
-            renderGrid();
-        }
+        window.handleZoomIn = function() { scale = Math.min(scale + 0.2, 3); constrainBounds(); updateTransform(true); }
+        window.handleZoomOut = function() { scale = Math.max(scale - 0.2, 0.5); constrainBounds(); updateTransform(true); }
 
-        function renderFilterButtons() {
-            const getHtml = (isMenu) => `
-                <div class="d-flex flex-column w-100 align-items-center">
-                    <div class="d-flex w-100 overflow-x-auto hide-scrollbar snap-container ${!isMenu ? 'px-2 px-md-0 justify-content-start justify-content-md-center' : ''}" style="gap: 12px;">
-                        <a href="?type=all" class="snap-item btn-pill ${currentCat === 'all' ? 'active' : ''}">All</a>
-                        <a href="?type=gratitude" class="snap-item btn-pill ${currentCat === 'gratitude' ? 'active' : ''}">Gratitude</a>
-                        <a href="?type=productivity" class="snap-item btn-pill ${currentCat === 'productivity' ? 'active' : ''}">Productivity</a>
-                        <a href="?type=confidence" class="snap-item btn-pill ${currentCat === 'confidence' ? 'active' : ''}">Confidence</a>
-                        <a href="?type=career" class="snap-item btn-pill ${currentCat === 'career' ? 'active' : ''}">Career</a>
-                        <a href="?type=healing" class="snap-item btn-pill ${currentCat === 'healing' ? 'active' : ''}">Healing</a>
-                    </div>
-                </div>
-            `;
+        modalPanArea.addEventListener('pointerdown', (e) => {
+            if (e.button !== 0 && e.pointerType === 'mouse') return;
+            if (e.target.closest('.modal-nav-arrow') || e.target.closest('.zoom-dock')) return;
+            e.preventDefault();
+            isDragging = true; hasMoved = false;
+            dragStartX = e.clientX; dragStartY = e.clientY;
+            startX = e.clientX - posX; startY = e.clientY - posY;
+        });
 
-            document.getElementById('main-filter-container').innerHTML = getHtml(false);
-            const dynamicFilter = document.getElementById('dynamic-filter-container');
-            if(dynamicFilter) dynamicFilter.innerHTML = getHtml(true);
-        }
+        window.addEventListener('pointermove', (e) => {
+            if (!isDragging || !isModalOpen) return;
+            if (Math.abs(e.clientX - dragStartX) > 8 || Math.abs(e.clientY - dragStartY) > 8) hasMoved = true;
 
-        function renderGrid() {
-            const grid = document.getElementById('content-grid');
-            const pagination = document.getElementById('pagination-container');
-            let html = '';
-
-            let filteredBlogs = (currentCat === 'all' || currentCat.includes('notebook'))
-                ? [...promptListData] 
-                : promptListData.filter(b => {
-                    if (!b.category) return false;
-                    const cats = b.category.split(',').map(c => c.trim().toLowerCase());
-                    return cats.includes(currentCat);
-                });
-
-            let remainingProducts = [...productsData];
-            if (priorityProduct) {
-                remainingProducts = remainingProducts.filter(p => p.groupId !== priorityProduct.groupId);
+            if (scale > 1) {
+                posX = e.clientX - startX;
+                posY = e.clientY - startY;
+                constrainBounds();
+                updateTransform(false);
             }
-            if (currentCat !== 'all' && !currentCat.includes('notebook')) {
-                remainingProducts = remainingProducts.filter(p => {
-                    if (!p.target_prompt) return true;
-                    const targets = p.target_prompt.split(',').map(t => t.trim().toLowerCase());
-                    return targets.includes(currentCat);
-                });
+        });
+
+        window.addEventListener('pointerup', (e) => {
+            if (!isDragging || !isModalOpen) return;
+            
+            if (scale === 1 && hasMoved) {
+                const diffX = e.clientX - dragStartX;
+                if (diffX > 50) slidePrev();
+                else if (diffX < -50) slideNext();
             }
 
-            // Logic 1: Priority Product dictates the flow
-            if (priorityProduct) {
-                html += `
-                    <div class="feed-card-wrapper">
-                        ${generateProductHtml(priorityProduct, urlRequestedType, true)}
-                    </div>
-                `;
-
-                if (currentCat === 'all' || currentCat.includes('notebook')) {
-                    if (remainingProducts.length > 0) {
-                        html += `<div class="feed-card-wrapper"><h4 class="font-serif fw-medium mb-4 mt-3" style="font-size: 1.5rem;">More Journals</h4></div>`;
-                        remainingProducts.forEach(prod => {
-                            html += `
-                                <div class="feed-card-wrapper">
-                                    ${generateProductHtml(prod, 'digital', false)}
-                                </div>
-                            `;
-                        });
-                    }
-                    if (filteredBlogs.length > 0) {
-                        html += `<div class="feed-card-wrapper"><h4 class="font-serif fw-medium mb-4 mt-5" style="font-size: 1.5rem;">Latest Prompt Lists</h4></div>`;
-                        filteredBlogs.forEach(blog => {
-                            html += `
-                                <div class="feed-card-wrapper">
-                                    ${generateBlogHtml(blog)}
-                                </div>
-                            `;
-                        });
-                    }
+            if (!hasMoved) {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTapTime;
+                if (tapLength > 0 && tapLength < 350) {
+                    handleDoubleTap(e);
+                    lastTapTime = 0;
                 } else {
-                    html += `<div class="feed-card-wrapper"><h4 class="font-serif fw-medium mb-4 mt-3" style="font-size: 1.5rem;">${currentCat.charAt(0).toUpperCase() + currentCat.slice(1)} Prompts</h4></div>`;
-                    filteredBlogs.forEach(blog => {
-                        html += `
-                            <div class="feed-card-wrapper">
-                                ${generateBlogHtml(blog)}
-                            </div>
-                        `;
-                    });
-                }
-                
-                grid.innerHTML = html;
-                pagination.innerHTML = ''; 
-
-                if (currentCat === 'all' || currentCat.includes('notebook')) {
-                    filteredBlogs.forEach(blog => fetchAndRenderBlog(blog));
-                } else {
-                    filteredBlogs.forEach(blog => fetchAndRenderBlog(blog));
-                }
-
-            } 
-            // Logic 2: Standard Feed View
-            else {
-                let combinedItems = [];
-                
-                if (currentCat === 'notebook' || currentCat === 'digital-notebook' || currentCat === 'kdp-notebook') {
-                    combinedItems = remainingProducts.map(p => ({ type: 'product', data: p }));
-                } else {
-                    let bIdx = 0, pIdx = 0;
-                    while (bIdx < filteredBlogs.length || pIdx < remainingProducts.length) {
-                        for(let i = 0; i < 3 && bIdx < filteredBlogs.length; i++) {
-                            combinedItems.push({ type: 'blog', data: filteredBlogs[bIdx++] });
-                        }
-                        if (pIdx < remainingProducts.length) {
-                            combinedItems.push({ type: 'product', data: remainingProducts[pIdx++] });
-                        }
-                    }
-                }
-
-                const totalPages = Math.ceil(combinedItems.length / itemsPerPage);
-                const indexOfLastItem = currentPage * itemsPerPage;
-                const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-                const currentItems = combinedItems.slice(indexOfFirstItem, indexOfLastItem);
-
-                currentItems.forEach(item => {
-                    if (item.type === 'blog') {
-                        html += `
-                            <div class="feed-card-wrapper">
-                                ${generateBlogHtml(item.data)}
-                            </div>
-                        `;
-                    } else if (item.type === 'product') {
-                        html += `
-                            <div class="feed-card-wrapper">
-                                ${generateProductHtml(item.data, urlRequestedType, false)}
-                            </div>
-                        `;
-                    }
-                });
-
-                grid.innerHTML = html;
-
-                currentItems.forEach(item => {
-                    if (item.type === 'blog') {
-                        fetchAndRenderBlog(item.data);
-                    }
-                });
-
-                if (totalPages > 1) {
-                    let paginationHtml = '';
-                    
-                    if (currentPage > 1) {
-                        paginationHtml += `
-                            <button onclick="changePage(${currentPage - 1})" class="btn-pagination">
-                                <i class="fa-solid fa-arrow-left"></i> Previous
-                            </button>
-                        `;
-                    }
-
-                    paginationHtml += `
-                        <span class="text-muted fw-bold px-3 d-none d-md-block" style="font-size: 13px; letter-spacing: 1px; text-transform: uppercase;">
-                            Page ${currentPage} of ${totalPages}
-                        </span>
-                    `;
-
-                    if (currentPage < totalPages) {
-                        paginationHtml += `
-                            <button onclick="changePage(${currentPage + 1})" class="btn-pagination">
-                                Next <i class="fa-solid fa-arrow-right"></i>
-                            </button>
-                        `;
-                    }
-
-                    pagination.innerHTML = paginationHtml;
+                    lastTapTime = currentTime;
                 }
             }
-        }
+            isDragging = false;
+        });
 
-        // ==========================================
-        // TEMPLATE GENERATORS
-        // ==========================================
-        
-        function generateBlogHtml(blog) {
-            const rawUrl = blog.url || '';
-            const safeQuery = rawUrl.split('+').map(part => encodeURIComponent(part)).join('+');
-            const dynamicUrl = `show.html?title=${safeQuery}`;
-            const safeId = rawUrl.replace(/[^a-zA-Z0-9]/g, '-');
-            
-            // Replaced outer custom-card wrapping to ensure inner dynamically fetched HTML/CSS renders exactly
-            return `
-                <a href="${dynamicUrl}" id="blog-card-${safeId}" class="text-dark text-decoration-none d-block overflow-visible" style="transition: transform 0.3s ease;">
-                    <div class="custom-card skeleton-bg w-100" style="min-height: 450px; display: flex; align-items: center; justify-content: center;">
-                        <span class="text-muted fw-semibold" style="opacity: 0.6; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">Loading Prompt UI...</span>
-                    </div>
-                </a>
-            `;
-        }
-
-        function generateProductHtml(product, defaultFormat, isTopPriority) {
-            const hasDigital = !!product.digital;
-            const hasKDP = !!product.kdp;
-
-            if (!cardFormats[product.groupId]) {
-                if (defaultFormat === 'kdp' && hasKDP) {
-                    cardFormats[product.groupId] = 'kdp';
-                } else if ((defaultFormat === 'digital' || defaultFormat === 'all' || !defaultFormat) && hasDigital) {
-                    cardFormats[product.groupId] = 'digital';
-                } else {
-                    cardFormats[product.groupId] = hasDigital ? 'digital' : 'kdp';
-                }
+        modalPanArea.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                initialDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                initialScale = scale;
             }
-            
-            let currentFormat = cardFormats[product.groupId];
-            if (currentFormat === 'kdp' && !hasKDP) {
-                currentFormat = 'digital';
-                cardFormats[product.groupId] = 'digital';
-            } else if (currentFormat === 'digital' && !hasDigital) {
-                currentFormat = 'kdp';
-                cardFormats[product.groupId] = 'kdp';
+        }, { passive: false });
+
+        modalPanArea.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2 && initialDistance) {
+                e.preventDefault();
+                const currentDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                scale = Math.min(Math.max(initialScale * (currentDist / initialDistance), 0.5), 3);
+                constrainBounds();
+                updateTransform(false);
             }
+        }, { passive: false });
+        modalPanArea.addEventListener('touchend', () => { initialDistance = null; });
 
-            let isKDP = currentFormat === 'kdp';
-            let data = product[currentFormat];
-            
-            let html = `
-                <div class="custom-card position-relative ${isTopPriority ? 'border-brand shadow-sm' : ''}" style="${isTopPriority ? 'padding: 1rem; border-width: 2px;' : 'padding: 0.75rem;'}">
-            `;
+        const stickyNav = document.getElementById('stickyNav');
+        const mainHeader = document.getElementById('mainHeader');
+        window.addEventListener('scroll', () => {
+            const headerRect = mainHeader.getBoundingClientRect();
+            stickyNav.classList.toggle('visible', headerRect.bottom < -50);
+        });
 
-            if (isTopPriority) {
-                html += `<div class="position-absolute bg-brand text-white fw-bold rounded-pill shadow-sm" style="top: -12px; left: 24px; font-size: 10px; padding: 6px 12px; letter-spacing: 1px; text-transform: uppercase; z-index: 20;">Selected Journal</div>`;
-            }
+        renderProducts();
 
-            html += `<div class="d-flex border-bottom mx-1 mb-4">`;
-            
-            if (hasDigital) {
-                html += `<button onclick="setCardFormat('${product.groupId}', 'digital')" class="flex-fill format-toggle ${!isKDP ? 'active' : ''}" ${!hasKDP ? 'style="cursor: default;"' : ''}>Goodnotes PDF</button>`;
-            }
-            
-            if (hasKDP) {
-                html += `<button onclick="setCardFormat('${product.groupId}', 'kdp')" class="flex-fill format-toggle ${isKDP ? 'active' : ''}" ${!hasDigital ? 'style="cursor: default;"' : ''}>Amazon KDP</button>`;
-            }
-            
-            html += `</div>`;
-
-            let carouselId = `carousel-${product.groupId}-grid`;
-            html += `
-                <div class="carousel-wrapper mb-4 px-1">
-                    <div id="${carouselId}" class="d-flex overflow-x-auto hide-scrollbar snap-container" style="gap: 12px; padding-bottom: 4px;">
-            `;
-            
-            product.images.forEach((src, idx) => {
-                html += `
-                    <div class="snap-item carousel-item-img border">
-                        ${isKDP ? `<div class="kdp-spine-overlay"></div>` : ''}
-                        <img src="${src}" alt="Preview" loading="lazy">
-                    </div>
-                `;
-            });
-
-            html += `
-                    </div>
-                    <button onclick="scrollCarousel('${carouselId}', 'left')" class="scroll-arrow left"><i class="fa-solid fa-chevron-left small"></i></button>
-                    <button onclick="scrollCarousel('${carouselId}', 'right')" class="scroll-arrow right"><i class="fa-solid fa-chevron-right small"></i></button>
-                </div>
-            `;
-
-            html += `
-                <div class="d-flex flex-column px-2 pb-2">
-                    <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
-                        <h3 class="font-serif fw-medium m-0" style="font-size: 1.3rem; line-height: 1.2;">${product.title}</h3>
-                        <span class="fw-semibold m-0" style="font-size: 1.25rem;">${data.price}</span>
-                    </div>
-                    <p class="text-muted fw-semibold mb-3" style="font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">${data.pages}</p>
-                    <p class="text-muted mb-4" style="font-size: 14px; line-height: 1.6;">${data.desc}</p>
-                    
-                    <div class="d-flex flex-column gap-3 mt-auto pt-2">
-                        <div class="d-flex gap-2">
-                            <a href="#preview-${data.id}" class="flex-fill btn-action btn-outline-custom py-3" style="font-size:13px;">Preview</a>
-                            ${!isKDP ? `<a href="#sample-${data.id}" class="flex-fill btn-action btn-outline-brand py-3" style="font-size:13px;">Free Sample</a>` : ''}
-                        </div>
-                        
-                        ${!isKDP ? `
-                            <a href="#buy-${data.id}" class="btn-action btn-dark-action py-3" style="font-size: 14px;"><i class="fa-solid fa-cart-shopping"></i> Purchase PDF</a>
-                        ` : `
-                            <a href="#amazon-${data.id}" class="btn-action btn-amazon py-3" style="font-size: 14px;"><i class="fa-solid fa-book"></i> Amazon KDP</a>
-                        `}
-                    </div>
-                </div>
-            </div>`;
-
-            return html;
-        }
-
-        // ==========================================
-        // ASYNC JSON UI FETCHER FOR BLOGS
-        // ==========================================
-        async function fetchAndRenderBlog(blog) {
-            const rawUrl = blog.url || '';
-            const safeId = rawUrl.replace(/[^a-zA-Z0-9]/g, '-');
-            
-            try {
-                const safePath = rawUrl.replace(/\+/g, '%2B');
-                const response = await fetch(`data/list/${safePath}.json`);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                
-                const rawData = await response.json();
-                const data = Array.isArray(rawData) ? rawData[0] : rawData;
-
-                if (!data || !data.css || !data.html) {
-                    throw new Error('JSON is missing required css or html keys');
-                }
-                
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(data.html, 'text/html');
-                
-                const descContainer = doc.querySelector('.description-container');
-                if (descContainer) {
-                    descContainer.remove();
-                }
-
-                const promptItems = doc.querySelectorAll('.prompt-item');
-                let remaining = 0;
-                promptItems.forEach((item, index) => {
-                    if (index >= 3) {
-                        item.remove();
-                        remaining++;
-                    }
-                });
-                
-                if (remaining > 0) {
-                    const promptList = doc.querySelector('.prompt-list');
-                    if (promptList) {
-                        const textContainer = doc.createElement('div');
-                        textContainer.className = 'text-center mt-3 pb-2';
-                        textContainer.innerHTML = `<span style="color: #6c757d; font-size: 1.05rem; font-style: italic; font-weight: 500;">+ ${remaining} more prompts. Click to read the full list.</span>`;
-                        promptList.appendChild(textContainer);
-                    }
-                }
-                
-                if (!document.getElementById(`css-${safeId}`)) {
-                    const style = document.createElement('style');
-                    style.id = `css-${safeId}`;
-                    
-                    // Smart CSS scoping: target both #dynamic-content AND .prompt-card base classes to prevent global bleeding
-                    let scopedCss = data.css.replace(/#dynamic-content/g, `#blog-card-${safeId}`);
-                    // Only scope .prompt-card if it's the root definition to avoid double prefixing
-                    if (!scopedCss.includes(`#blog-card-${safeId}`)) {
-                         scopedCss = scopedCss.replace(/\.prompt-card/g, `#blog-card-${safeId} .prompt-card`);
-                    }
-                    
-                    style.innerHTML = scopedCss;
-                    document.head.appendChild(style);
-                }
-                
-                const container = document.getElementById(`blog-card-${safeId}`);
-                if (container) {
-                    container.innerHTML = doc.body.innerHTML;
-                    
-                    container.addEventListener('mouseenter', () => {
-                        const card = container.querySelector('.prompt-card');
-                        if (card) {
-                            card.style.transform = 'scale(1.02)';
-                            card.style.transition = 'transform 0.3s ease';
-                        }
-                    });
-                    container.addEventListener('mouseleave', () => {
-                        const card = container.querySelector('.prompt-card');
-                        if (card) card.style.transform = 'scale(1)';
-                    });
-                }
-            } catch (error) {
-                console.error("Failed to load JSON UI for blog:", rawUrl, error);
-                
-                const container = document.getElementById(`blog-card-${safeId}`);
-                if (container) {
-                    const fallbackTitle = rawUrl.replace(/\+/g, ' ');
-                    container.innerHTML = `
-                        <div class="custom-card w-100 p-5 text-center" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px; background: #fff;">
-                            <h3 class="font-serif fw-medium mb-4 text-capitalize" style="font-size: 1.5rem; line-height: 1.3;">${fallbackTitle}</h3>
-                            <span class="btn-pill active" style="font-size: 13px;">Read Prompts <i class="fa-solid fa-arrow-right ms-2"></i></span>
-                        </div>
-                    `;
-                }
-            }
-        }
-
-        // ==========================================
-        // INTERACTION HANDLERS
-        // ==========================================
-
-        function setCardFormat(groupId, format) {
-            cardFormats[groupId] = format;
-            renderGrid();
-        }
-
-        function scrollCarousel(id, direction) {
-            const el = document.getElementById(id);
-            if (el) {
-                const scrollAmount = el.clientWidth * 0.8;
-                el.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
-            }
-        }
-
-        function changePage(page) {
-            currentPage = page;
-            const url = new URL(window.location);
-            url.searchParams.set('page', page);
-            window.history.pushState({}, '', url);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            renderGrid();
-        }
-
-        function setupScrollListener() {
-            const heroSearch = document.getElementById('hero-search');
-            const stickyActions = document.getElementById('sticky-actions-container');
-            const stickyFilterBtn = document.getElementById('sticky-filter-btn');
-
-            window.addEventListener('scroll', () => {
-                const searchRect = heroSearch.getBoundingClientRect();
-                
-                if (searchRect.bottom < 72) {
-                    stickyActions.classList.remove('opacity-0', 'pointer-events-none');
-                    stickyFilterBtn.classList.remove('opacity-0', 'pointer-events-none');
-                } else {
-                    stickyActions.classList.add('opacity-0', 'pointer-events-none');
-                    stickyFilterBtn.classList.add('opacity-0', 'pointer-events-none');
-                    closeFilter();
-                }
-            });
-        }
-
-        // Boot up
-        window.onload = init;
     </script>
 </body>
+
 </html>
