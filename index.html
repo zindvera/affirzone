@@ -95,9 +95,17 @@
             font-family: 'Dancing Script', cursive;
         }
 
-        .text-rose-500 { color: #f43f5e !important; }
-        .text-emerald-500 { color: #10b981 !important; }
-        .text-indigo-500 { color: #6366f1 !important; }
+        .text-rose-500 {
+            color: #f43f5e !important;
+        }
+
+        .text-emerald-500 {
+            color: #10b981 !important;
+        }
+
+        .text-indigo-500 {
+            color: #6366f1 !important;
+        }
 
         .bg-glass {
             background-color: rgba(255, 255, 255, 0.6);
@@ -105,7 +113,9 @@
             border: 1px solid rgba(229, 231, 235, 0.8);
         }
 
-        .fw-black { font-weight: 900 !important; }
+        .fw-black {
+            font-weight: 900 !important;
+        }
 
         .app-highlight {
             font-weight: 700;
@@ -184,17 +194,41 @@
 
         /* Responsive Sizing Rules */
         @media (max-width: 767px) {
-            .image-scroll-row { gap: 1rem; padding: 1rem 1rem 2rem 1rem; }
-            .page-card { width: 82vw; }
-            .scroll-fade-left, .scroll-fade-right { width: 20px; }
+            .image-scroll-row {
+                gap: 1rem;
+                padding: 1rem 1rem 2rem 1rem;
+            }
+
+            .page-card {
+                width: 82vw;
+            }
+
+            .scroll-fade-left,
+            .scroll-fade-right {
+                width: 20px;
+            }
         }
+
         @media (min-width: 768px) and (max-width: 1023px) {
-            .image-scroll-row { gap: 1.5rem; padding: 1rem 1rem 2rem 1rem; }
-            .page-card { width: calc((100% - 3rem) / 2.3); }
+            .image-scroll-row {
+                gap: 1.5rem;
+                padding: 1rem 1rem 2rem 1rem;
+            }
+
+            .page-card {
+                width: calc((100% - 3rem) / 2.3);
+            }
         }
+
         @media (min-width: 1024px) {
-            .image-scroll-row { gap: 1.5rem; padding: 1rem 2rem 2rem 2rem; }
-            .page-card { width: calc((100% - 4.5rem) / 3.1); }
+            .image-scroll-row {
+                gap: 1.5rem;
+                padding: 1rem 2rem 2rem 2rem;
+            }
+
+            .page-card {
+                width: calc((100% - 4.5rem) / 3.1);
+            }
         }
 
         /* Desktop Scroll Arrows */
@@ -212,13 +246,23 @@
             justify-content: center;
             cursor: pointer;
             z-index: 20;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.2s ease, opacity 0.3s ease;
             color: #111827;
         }
-        .scroll-arrow:hover { background: #f8fafc; box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
-        .scroll-arrow.left { left: -1.5rem; }
-        .scroll-arrow.right { right: -1.5rem; }
+
+        .scroll-arrow:hover {
+            background: #f8fafc;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .scroll-arrow.left {
+            left: -1.5rem;
+        }
+
+        .scroll-arrow.right {
+            right: -1.5rem;
+        }
 
         /* Custom Size Pills */
         .size-pills {
@@ -242,116 +286,309 @@
             transition: all 0.2s ease;
         }
 
-        .size-pill.active { 
-            background: #212529; 
-            color: white; 
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+        .size-pill.active {
+            background: #212529;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
         /* Tooltip Styles */
-        .preview-btn-wrapper { position: relative; display: flex; flex-grow: 1; }
-        
-        .custom-tooltip {
-            position: absolute; bottom: calc(100% + 14px); left: 50%; transform: translateX(-50%);
-            background: #1f2937; color: white; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem;
-            font-weight: 500; white-space: normal; width: 220px; text-align: center;
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3); z-index: 50;
-            animation: bounceTooltip 2s infinite ease-in-out; transition: opacity 0.5s ease;
+        .preview-btn-wrapper {
+            position: relative;
+            display: flex;
+            flex-grow: 1;
         }
+
+        .custom-tooltip {
+            position: absolute;
+            bottom: calc(100% + 14px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2937;
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            white-space: normal;
+            width: 220px;
+            text-align: center;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+            z-index: 50;
+            animation: bounceTooltip 2s infinite ease-in-out;
+            transition: opacity 0.5s ease;
+        }
+
         .custom-tooltip::after {
-            content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px;
-            border-width: 6px; border-style: solid; border-color: #1f2937 transparent transparent transparent;
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -6px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: #1f2937 transparent transparent transparent;
         }
 
         /* New Format Tooltip Styles (Indigo color) */
         .format-tooltip {
-            position: absolute; bottom: calc(100% + 14px); left: 50%; transform: translateX(-50%);
-            background: #4338ca; color: white; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem;
-            font-weight: 500; white-space: normal; width: 190px; text-align: center;
-            box-shadow: 0 10px 20px -5px rgba(67, 56, 202, 0.4); z-index: 50;
-            animation: bounceTooltip 2s infinite ease-in-out; transition: opacity 0.5s ease;
+            position: absolute;
+            bottom: calc(100% + 14px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4338ca;
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            white-space: normal;
+            width: 190px;
+            text-align: center;
+            box-shadow: 0 10px 20px -5px rgba(67, 56, 202, 0.4);
+            z-index: 50;
+            animation: bounceTooltip 2s infinite ease-in-out;
+            transition: opacity 0.5s ease;
         }
+
         .format-tooltip::after {
-            content: ''; position: absolute; top: 100%; left: 50%; margin-left: -6px;
-            border-width: 6px; border-style: solid; border-color: #4338ca transparent transparent transparent;
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -6px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: #4338ca transparent transparent transparent;
         }
 
         .tooltip-close {
-            position: absolute; top: 2px; right: 4px; background: none; border: none; color: #9ca3af;
-            font-size: 1.2rem; cursor: pointer; line-height: 1; padding: 2px 6px;
+            position: absolute;
+            top: 2px;
+            right: 4px;
+            background: none;
+            border: none;
+            color: #9ca3af;
+            font-size: 1.2rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 2px 6px;
         }
-        .tooltip-close:hover { color: white; }
-        .opacity-0 { opacity: 0 !important; pointer-events: none; }
-        
+
+        .tooltip-close:hover {
+            color: white;
+        }
+
+        .opacity-0 {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
         @keyframes bounceTooltip {
-            0%, 100% { transform: translate(-50%, 0); }
-            50% { transform: translate(-50%, -4px); }
+
+            0%,
+            100% {
+                transform: translate(-50%, 0);
+            }
+
+            50% {
+                transform: translate(-50%, -4px);
+            }
+        }
+
+        /* CTA Subtext Style */
+        .cta-subtext {
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #6b7280;
+            margin-top: 1rem;
         }
 
         /* Modal Styles */
         #imageModal {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(8px);
-            z-index: 1060; display: none; align-items: center; justify-content: center; overflow: hidden;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 1060;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-        #imageModal.show { display: flex; }
 
-        .modal-controls { position: absolute; top: 1rem; right: 1rem; z-index: 1070; }
-        .modal-close-btn {
-            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: white;
-            border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center;
-            justify-content: center; cursor: pointer; transition: background 0.2s;
+        #imageModal.show {
+            display: flex;
         }
-        .modal-close-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+        .modal-controls {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1070;
+        }
+
+        .modal-close-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
         .modal-nav-arrow {
-            position: absolute; top: 50%; transform: translateY(-50%); background: none; border: none;
-            color: rgba(255, 255, 255, 0.5); z-index: 1070; padding: 1.5rem; cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            z-index: 1070;
+            padding: 1.5rem;
+            cursor: pointer;
             transition: color 0.2s, opacity 0.2s;
         }
-        .modal-nav-arrow:hover { color: white; }
-        .modal-nav-arrow:disabled { opacity: 0; cursor: default; }
-        .modal-nav-arrow.left { left: 1rem; }
-        .modal-nav-arrow.right { right: 1rem; }
-        .modal-nav-arrow svg { width: 36px; height: 36px; }
+
+        .modal-nav-arrow:hover {
+            color: white;
+        }
+
+        .modal-nav-arrow:disabled {
+            opacity: 0;
+            cursor: default;
+        }
+
+        .modal-nav-arrow.left {
+            left: 1rem;
+        }
+
+        .modal-nav-arrow.right {
+            right: 1rem;
+        }
+
+        .modal-nav-arrow svg {
+            width: 36px;
+            height: 36px;
+        }
 
         .zoom-dock {
-            position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white; padding: 0.5rem 1.25rem; border-radius: 50rem; display: flex; align-items: center;
-            gap: 1.5rem; font-family: monospace; z-index: 1070; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-family: monospace;
+            z-index: 1070;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
-        .zoom-dock button { background: none; border: none; color: white; cursor: pointer; padding: 4px; transition: color 0.2s; }
-        .zoom-dock button:hover { color: #d1d5db; }
+
+        .zoom-dock button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .zoom-dock button:hover {
+            color: #d1d5db;
+        }
 
         #modalPanArea {
-            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; 
-            cursor: grab; touch-action: none;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            touch-action: none;
         }
-        #modalPanArea:active { cursor: grabbing; }
+
+        #modalPanArea:active {
+            cursor: grabbing;
+        }
 
         #modalImage {
-            width: 85vw; max-width: 500px; object-fit: contain; background: white; border-radius: 4px; 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); pointer-events: none; 
+            width: 85vw;
+            max-width: 500px;
+            object-fit: contain;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            pointer-events: none;
             transform-origin: center center;
         }
 
         /* --- Breakpoints --- */
-        .app-highlight { font-size: 1.1rem; }
-        .hero-title { font-size: 2.25rem; }
-        .minimalist-offer { font-size: 0.8rem; padding: 0.4rem 1rem; }
-        .cta-price { font-size: 1.5rem; }
+        .app-highlight {
+            font-size: 1.1rem;
+        }
+
+        .hero-title {
+            font-size: 2.25rem;
+        }
+
+        .minimalist-offer {
+            font-size: 0.8rem;
+            padding: 0.4rem 1rem;
+        }
+
+        .cta-price {
+            font-size: 1.5rem;
+        }
 
         @media (min-width: 768px) {
-            .app-highlight { font-size: 1.35rem; }
-            .hero-title { font-size: 3.5rem; }
-            .minimalist-offer { font-size: 0.95rem; padding: 0.5rem 1.5rem; }
-            .cta-price { font-size: 1.75rem; }
+            .app-highlight {
+                font-size: 1.35rem;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .minimalist-offer {
+                font-size: 0.95rem;
+                padding: 0.5rem 1.5rem;
+            }
+
+            .cta-price {
+                font-size: 1.75rem;
+            }
         }
 
         @media (min-width: 1024px) {
-            .app-highlight { font-size: 1.5rem; }
-            .hero-title { font-size: 4rem; }
-            .cta-price { font-size: 2rem; }
+            .app-highlight {
+                font-size: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 4rem;
+            }
+
+            .cta-price {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -362,11 +599,15 @@
     <div id="stickyNav">
         <div class="container pt-2 pb-2">
             <div class="d-flex justify-content-between align-items-center mb-2">
-                <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" style="height: 28px; object-fit: contain;">
-                
-                <a href="prompts.html" target="_blank" class="text-decoration-none fw-semibold d-flex align-items-center gap-1 text-dark" style="font-size: 0.95rem;">
+                <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo"
+                    style="height: 28px; object-fit: contain;">
+
+                <a href="prompts.html" target="_blank"
+                    class="text-decoration-none fw-semibold d-flex align-items-center gap-1 text-dark"
+                    style="font-size: 0.95rem;">
                     <span>Prompts</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <line x1="7" y1="17" x2="17" y2="7"></line>
                         <polyline points="7 7 17 7 17 17"></polyline>
                     </svg>
@@ -374,7 +615,8 @@
             </div>
             <div class="text-center">
                 <div class="minimalist-offer" style="transform: scale(0.9); transform-origin: top;">
-                    <span>The first 100 people will get the PDF <strong style="color: var(--brand-green);">100% FREE</strong></span>
+                    <span>The first 100 people will get the PDF <strong style="color: var(--brand-green);">100%
+                            FREE</strong></span>
                 </div>
             </div>
         </div>
@@ -383,11 +625,14 @@
     <!-- Static Top Nav -->
     <nav class="container pt-4 pb-2">
         <div class="d-flex justify-content-between align-items-center">
-            <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" style="height: 36px; object-fit: contain;">
-            
-            <a href="prompts.html" target="_blank" class="text-decoration-none fw-semibold d-flex align-items-center gap-1 text-dark">
+            <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo"
+                style="height: 36px; object-fit: contain;">
+
+            <a href="prompts.html" target="_blank"
+                class="text-decoration-none fw-semibold d-flex align-items-center gap-1 text-dark">
                 <span>Prompts</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <line x1="7" y1="17" x2="17" y2="7"></line>
                     <polyline points="7 7 17 7 17 17"></polyline>
                 </svg>
@@ -399,14 +644,16 @@
     <header id="mainHeader" class="container text-center py-5 mb-3">
         <div class="text-center mb-5">
             <div class="minimalist-offer shadow-sm py-2 px-4">
-                <span>The first 100 people will get the PDF <strong style="color: var(--brand-green);">100% FREE</strong></span>
+                <span>The first 100 people will get the PDF <strong style="color: var(--brand-green);">100%
+                        FREE</strong></span>
             </div>
         </div>
         <h1 class="hero-title fw-bolder mb-5" style="letter-spacing: -0.02em; line-height: 1.2;">
             Minimalist Journals for <br class="d-none d-sm-block">
             <span class="brand-gradient-text mt-2">Digital Annotation</span>
         </h1>
-        <p class="lead text-secondary mx-auto mb-4 lh-lg" style="max-width: 48rem; font-weight: 500; font-size: 1.15rem;">
+        <p class="lead text-secondary mx-auto mb-4 lh-lg"
+            style="max-width: 48rem; font-weight: 500; font-size: 1.15rem;">
             Beautifully crafted PDF prompts designed to build positivity. Ready to import instantly into
             <span class="app-highlight px-1">GoodNotes</span>,
             <span class="app-highlight px-1">Notability</span>,
@@ -419,8 +666,10 @@
 
     <footer class="text-center text-muted py-5 mt-5">
         <div class="d-flex flex-column align-items-center gap-3">
-            <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo" style="height: 24px; filter: grayscale(100%); opacity: 0.4;">
-            <p class="text-uppercase fw-semibold mb-0" style="font-size: 0.75rem; letter-spacing: 0.1em;">© <span id="year"></span> Affirzone. All rights reserved.</p>
+            <img src="https://affirzone.store/media/Affirzone-logo.png" alt="Affirzone Logo"
+                style="height: 24px; filter: grayscale(100%); opacity: 0.4;">
+            <p class="text-uppercase fw-semibold mb-0" style="font-size: 0.75rem; letter-spacing: 0.1em;">© <span
+                    id="year"></span> Affirzone. All rights reserved.</p>
         </div>
     </footer>
 
@@ -428,24 +677,45 @@
     <div id="imageModal">
         <div class="modal-controls">
             <button class="modal-close-btn" onclick="closeModal()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
             </button>
         </div>
 
         <button id="modalLeftArrow" class="modal-nav-arrow left d-none d-lg-block" onclick="slidePrev()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
         </button>
         <button id="modalRightArrow" class="modal-nav-arrow right d-none d-lg-block" onclick="slideNext()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
         </button>
 
         <div class="zoom-dock">
             <button onclick="handleZoomOut()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                </svg>
             </button>
             <span id="zoomLevelText" style="width: 48px; text-align: center; font-weight: bold;">100%</span>
             <button onclick="handleZoomIn()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                </svg>
             </button>
         </div>
 
@@ -461,12 +731,72 @@
 
         // --- DATA STRUCTURE ---
         const productsData = [
-            { id: '30-cursive', count: '30', countColor: 'text-rose-500', type: 'Cursive', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 3.99, pages: ['media/journal/30 cursive/01-Journal-Cover.png', 'media/journal/30 cursive/02-Prompt-Showcase.png', 'media/journal/30 cursive/03-Writing-Space-Zoom.png', 'media/journal/30 cursive/04-Categories-Fan.png', 'media/journal/30 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/30 cursive/08-App-Compatibility.png', 'media/journal/30 cursive/05-When-to-Use.png', 'media/journal/30 cursive/06-How-to-Use.png'] },
-            { id: '30-normal', count: '30', countColor: 'text-rose-500', type: 'Normal', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 3.99, pages: ['media/journal/30 normal/01-Journal-Cover.png', 'media/journal/30 normal/02-Prompt-Showcase.png', 'media/journal/30 normal/03-Writing-Space-Zoom.png', 'media/journal/30 normal/04-Categories-Fan.png', 'media/journal/30 normal/07-Complete-Bundle-Showcase.png', 'media/journal/30 normal/08-App-Compatibility.png', 'media/journal/30 normal/05-When-to-Use.png', 'media/journal/30 normal/06-How-to-Use.png'] },
-            { id: '60-cursive', count: '60', countColor: 'text-emerald-500', type: 'Cursive', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 5.99, pages: ['media/journal/60 cursive/01-Journal-Cover.png', 'media/journal/60 cursive/02-Prompt-Showcase.png', 'media/journal/60 cursive/03-Writing-Space-Zoom.png', 'media/journal/60 cursive/04-Categories-Fan.png', 'media/journal/60 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/60 cursive/08-App-Compatibility.png', 'media/journal/60 cursive/05-When-to-Use.png', 'media/journal/60 cursive/06-How-to-Use.png'] },
-            { id: '60-normal', count: '60', countColor: 'text-emerald-500', type: 'Normal', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 5.99, pages: ['media/journal/60 normal/01-Journal-Cover.png', 'media/journal/60 normal/02-Prompt-Showcase.png', 'media/journal/60 normal/03-Writing-Space-Zoom.png', 'media/journal/60 normal/04-Categories-Fan.png', 'media/journal/60 normal/07-Complete-Bundle-Showcase.png', 'media/journal/60 normal/08-App-Compatibility.png', 'media/journal/60 normal/05-When-to-Use.png', 'media/journal/60 normal/06-How-to-Use.png'] },
-            { id: '90-cursive', count: '90', countColor: 'text-indigo-500', type: 'Cursive', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 7.99, pages: ['media/journal/90 cursive/01-Journal-Cover.png', 'media/journal/90 cursive/02-Prompt-Showcase.png', 'media/journal/90 cursive/03-Writing-Space-Zoom.png', 'media/journal/90 cursive/04-Categories-Fan.png', 'media/journal/90 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/90 cursive/08-App-Compatibility.png', 'media/journal/90 cursive/05-When-to-Use.png', 'media/journal/90 cursive/06-How-to-Use.png'] },
-            { id: '90-normal', count: '90', countColor: 'text-indigo-500', type: 'Normal', titleSuffix: 'Affirmations & Journal Prompts PDF', price: 7.99, pages: ['media/journal/90 normal/01-Journal-Cover.png', 'media/journal/90 normal/02-Prompt-Showcase.png', 'media/journal/90 normal/03-Writing-Space-Zoom.png', 'media/journal/90 normal/04-Categories-Fan.png', 'media/journal/90 normal/07-Complete-Bundle-Showcase.png', 'media/journal/90 normal/08-App-Compatibility.png', 'media/journal/90 normal/05-When-to-Use.png', 'media/journal/90 normal/06-How-to-Use.png'] }
+            {
+                id: '30-cursive',
+                count: '30',
+                countColor: 'text-rose-500',
+                type: 'Cursive',
+                titleSuffix: 'Affirmations & Journal Prompts PDF',
+                price: 3.99,
+                linkLetter: 'https://affirzone.gumroad.com/l/30-affirmations-journal-cursive-minimalist-black-letter-pdf/FIRST100',
+                linkA4: 'https://affirzone.gumroad.com/l/30-affirmations-journal-cursive-minimalist-black-A4-pdf/FIRST100',
+                pages: ['media/journal/30 cursive/01-Journal-Cover.png', 'media/journal/30 cursive/02-Prompt-Showcase.png', 'media/journal/30 cursive/03-Writing-Space-Zoom.png', 'media/journal/30 cursive/04-Categories-Fan.png', 'media/journal/30 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/30 cursive/08-App-Compatibility.png', 'media/journal/30 cursive/05-When-to-Use.png', 'media/journal/30 cursive/06-How-to-Use.png']
+            },
+            {
+                id: '30-normal',
+                count: '30',
+                countColor: 'text-rose-500',
+                type: 'Normal',
+                titleSuffix: 'Affirmations & Journal Prompts PDF',
+                price: 3.99,
+                linkLetter: 'https://affirzone.gumroad.com/l/30-affirmations-journal-minimalist-black-letter-pdf/FIRST100',
+                linkA4: 'https://affirzone.gumroad.com/l/30-affirmations-journal-minimalist-black-A4-pdf/FIRST100',
+                pages: ['media/journal/30 normal/01-Journal-Cover.png', 'media/journal/30 normal/02-Prompt-Showcase.png', 'media/journal/30 normal/03-Writing-Space-Zoom.png', 'media/journal/30 normal/04-Categories-Fan.png', 'media/journal/30 normal/07-Complete-Bundle-Showcase.png', 'media/journal/30 normal/08-App-Compatibility.png', 'media/journal/30 normal/05-When-to-Use.png', 'media/journal/30 normal/06-How-to-Use.png']
+            },
+            {
+                id: '60-cursive',
+                count: '60',
+                countColor: 'text-emerald-500',
+                type: 'Cursive',
+                titleSuffix: 'Affirmations & Journal Prompts PDF',
+                price: 5.99,
+                linkLetter: 'https://affirzone.gumroad.com/l/60-affirmations-journal-cursive-minimalist-black-letter-pdf',
+                linkA4: 'https://affirzone.gumroad.com/l/60-affirmations-journal-cursive-minimalist-black-A4-pdf',
+                pages: ['media/journal/60 cursive/01-Journal-Cover.png', 'media/journal/60 cursive/02-Prompt-Showcase.png', 'media/journal/60 cursive/03-Writing-Space-Zoom.png', 'media/journal/60 cursive/04-Categories-Fan.png', 'media/journal/60 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/60 cursive/08-App-Compatibility.png', 'media/journal/60 cursive/05-When-to-Use.png', 'media/journal/60 cursive/06-How-to-Use.png']
+            },
+            {
+                id: '60-normal',
+                count: '60',
+                countColor: 'text-emerald-500',
+                type: 'Normal',
+                titleSuffix: 'Affirmations & Journal Prompts PDF',
+                price: 5.99,
+                linkLetter: 'https://affirzone.gumroad.com/l/60-affirmations-journal-minimalist-black-letter-pdf',
+                linkA4: 'https://affirzone.gumroad.com/l/60-affirmations-journal-minimalist-black-A4-pdf',
+                pages: ['media/journal/60 normal/01-Journal-Cover.png', 'media/journal/60 normal/02-Prompt-Showcase.png', 'media/journal/60 normal/03-Writing-Space-Zoom.png', 'media/journal/60 normal/04-Categories-Fan.png', 'media/journal/60 normal/07-Complete-Bundle-Showcase.png', 'media/journal/60 normal/08-App-Compatibility.png', 'media/journal/60 normal/05-When-to-Use.png', 'media/journal/60 normal/06-How-to-Use.png']
+            },
+            {
+                id: '90-cursive',
+                count: '90',
+                countColor: 'text-indigo-500',
+                type: 'Cursive',
+                titleSuffix: 'Affirmations & Journal Prompts PDF',
+                price: 7.99,
+                linkLetter: 'https://affirzone.gumroad.com/l/90-affirmations-journal-cursive-minimalist-black-letter-pdf',
+                linkA4: 'https://affirzone.gumroad.com/l/90-affirmations-journal-cursive-minimalist-black-A4-pdf',
+                pages: ['media/journal/90 cursive/01-Journal-Cover.png', 'media/journal/90 cursive/02-Prompt-Showcase.png', 'media/journal/90 cursive/03-Writing-Space-Zoom.png', 'media/journal/90 cursive/04-Categories-Fan.png', 'media/journal/90 cursive/07-Complete-Bundle-Showcase.png', 'media/journal/90 cursive/08-App-Compatibility.png', 'media/journal/90 cursive/05-When-to-Use.png', 'media/journal/90 cursive/06-How-to-Use.png']
+            },
+            {
+                id: '90-normal',
+                count: '90',
+                countColor: 'text-indigo-500',
+                type: 'Normal',
+                titleSuffix: 'Affirmations & Journal Prompts PDF',
+                price: 7.99,
+                linkLetter: 'https://affirzone.gumroad.com/l/90-affirmations-journal-minimalist-black-letter-pdf',
+                linkA4: 'https://affirzone.gumroad.com/l/90-affirmations-journal-minimalist-black-A4-pdf',
+                pages: ['media/journal/90 normal/01-Journal-Cover.png', 'media/journal/90 normal/02-Prompt-Showcase.png', 'media/journal/90 normal/03-Writing-Space-Zoom.png', 'media/journal/90 normal/04-Categories-Fan.png', 'media/journal/90 normal/07-Complete-Bundle-Showcase.png', 'media/journal/90 normal/08-App-Compatibility.png', 'media/journal/90 normal/05-When-to-Use.png', 'media/journal/90 normal/06-How-to-Use.png']
+            }
         ];
 
         // --- URL LOGIC ---
@@ -491,7 +821,7 @@
         }
 
         // --- CAROUSEL LOGIC (MAIN PAGE) ---
-        window.scrollCarousel = function(btn, direction) {
+        window.scrollCarousel = function (btn, direction) {
             const wrapper = btn.closest('.scroll-container-wrapper');
             const row = wrapper.querySelector('.image-scroll-row');
             const cardWidth = row.querySelector('.page-card').offsetWidth;
@@ -503,16 +833,16 @@
             const row = wrapper.querySelector('.image-scroll-row');
             const leftBtn = wrapper.querySelector('.scroll-arrow.left');
             const rightBtn = wrapper.querySelector('.scroll-arrow.right');
-            
+
             if (row.scrollLeft <= 5) leftBtn.classList.add('opacity-0', 'pe-none');
             else leftBtn.classList.remove('opacity-0', 'pe-none');
-            
+
             if (row.scrollLeft + row.clientWidth >= row.scrollWidth - 5) rightBtn.classList.add('opacity-0', 'pe-none');
             else rightBtn.classList.remove('opacity-0', 'pe-none');
         }
 
         // --- PDF PREVIEW ---
-        window.openPreview = function(productId, btnElement) {
+        window.openPreview = function (productId, btnElement) {
             const container = btnElement.closest('.py-5');
             const activeSizePill = container.querySelector('.size-pill.active').textContent;
             const sizeKey = activeSizePill.includes('A4') ? 'A4' : 'letter';
@@ -529,6 +859,9 @@
                 const isCursive = product.type === 'Cursive';
                 const typeClasses = isCursive ? "font-cursive fw-bold text-decoration-underline" : "fw-bolder text-dark";
                 const typeStyle = isCursive ? "text-underline-offset: 6px; text-decoration-thickness: 2px;" : "";
+                
+                // Check if this is a 30-affirmation product
+                const isFreeOffer = product.id.startsWith('30');
 
                 let imagesHtml = '';
                 product.pages.forEach((imgUrl, iIndex) => {
@@ -565,7 +898,11 @@
                                 </div>
                             </div>
                             
+                            <!-- MAIN BUTTON CARD -->
                             <div class="bg-glass rounded-4 p-3 p-md-5 mx-3 mx-md-0 d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 gap-md-5">
+                                
+                                <!-- DYNAMIC PRICING BLOCK -->
+                                ${isFreeOffer ? `
                                 <div class="text-center text-md-end d-flex flex-column align-items-center align-items-md-end">
                                     <span class="text-uppercase fw-bold text-muted mb-1" style="font-size: 11px; letter-spacing: 1px;">Launch Offer</span>
                                     <div class="d-flex align-items-center gap-3">
@@ -573,6 +910,15 @@
                                         <span class="display-5 fw-black text-dark lh-1">FREE</span>
                                     </div>
                                 </div>
+                                ` : `
+                                <div class="text-center text-md-end d-flex flex-column align-items-center align-items-md-end">
+                                    <span class="text-uppercase fw-bold text-muted mb-1" style="font-size: 11px; letter-spacing: 1px;">Instant Download</span>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="display-5 fw-black text-dark lh-1">$${product.price}</span>
+                                    </div>
+                                </div>
+                                `}
+
                                 <div class="d-none d-md-block border-end border-2" style="height: 50px; border-color: rgba(0,0,0,0.05) !important;"></div>
                                 <div class="d-flex gap-2 gap-md-3 w-100 justify-content-center" style="max-width: 400px;">
                                     <div class="preview-btn-wrapper">
@@ -581,11 +927,17 @@
                                         </button>
                                         ${pIndex === 0 ? `<div id="preview-tooltip" class="custom-tooltip opacity-0 d-none"><button class="tooltip-close" aria-label="Dismiss">&times;</button><div class="pt-1 pb-1">Take a peek inside the PDF before downloading!</div></div>` : ''}
                                     </div>
-                                    <a id="gumroad-link-${product.id}" href="https://affirzone.gumroad.com/l/${product.id}/FIRST100" target="_blank" class="btn btn-dark fw-bold py-2 py-md-3 px-2 px-md-4 flex-grow-1 d-flex align-items-center justify-content-center gap-2 text-nowrap">
+                                    <a id="gumroad-link-${product.id}" href="${product.linkLetter}" target="_blank" class="btn btn-dark fw-bold py-2 py-md-3 px-2 px-md-4 flex-grow-1 d-flex align-items-center justify-content-center gap-2 text-nowrap">
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Get PDF
                                     </a>
                                 </div>
                             </div>
+                            
+                            <!-- CENTERED SUB-TEXT DIRECTLY UNDER THE CONTAINER CARD -->
+                            <div class="text-center cta-subtext">
+                                Available on Gumroad
+                            </div>
+                            
                         </div>
                     </div>`;
             });
@@ -596,7 +948,7 @@
                 row.addEventListener('scroll', () => updateCarouselArrows(row.closest('.scroll-container-wrapper')));
                 updateCarouselArrows(row.closest('.scroll-container-wrapper')); // Init
             });
-            
+
             initTooltips();
         }
 
@@ -608,15 +960,19 @@
             const productCard = document.getElementById(`product-card-${productId}`);
             if (productCard) { productCard.setAttribute('data-size', sizeFormat); }
 
+            // Find the correct product data object using its unique ID
+            const product = productsData.find(p => p.id === productId);
             const gumroadLink = document.getElementById(`gumroad-link-${productId}`);
-            if (gumroadLink) {
+
+            if (gumroadLink && product) {
                 if (sizeFormat === 'a4') {
-                    gumroadLink.href = `https://affirzone.gumroad.com/l/${productId}-a4/FIRST100`;
+                    gumroadLink.href = product.linkA4;
                 } else {
-                    gumroadLink.href = `https://affirzone.gumroad.com/l/${productId}/FIRST100`;
+                    gumroadLink.href = product.linkLetter;
                 }
             }
         }
+
 
         // --- TOOLTIP LOGIC ---
         function initTooltips() {
@@ -690,38 +1046,38 @@
             modalImage.src = currentModalImages[currentModalIndex];
             scale = 1; posX = 0; posY = 0;
             updateTransform(false);
-            
+
             modalLeftArrow.disabled = currentModalIndex === 0;
             modalRightArrow.disabled = currentModalIndex === currentModalImages.length - 1;
         }
 
-        window.slideNext = function() {
+        window.slideNext = function () {
             if (currentModalIndex < currentModalImages.length - 1) { currentModalIndex++; loadModalImage(); }
         }
-        window.slidePrev = function() {
+        window.slidePrev = function () {
             if (currentModalIndex > 0) { currentModalIndex--; loadModalImage(); }
         }
 
-        window.openModal = function(productId, index) {
+        window.openModal = function (productId, index) {
             const product = productsData.find(p => p.id === productId);
             currentModalImages = product.pages;
             currentModalIndex = index;
             loadModalImage();
-            
+
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
-            
+
             if (!isModalOpen) {
                 history.pushState({ modalOpen: true }, "");
                 isModalOpen = true;
             }
         }
 
-        window.closeModal = function(fromHistory = false) {
+        window.closeModal = function (fromHistory = false) {
             modal.classList.remove('show');
             document.body.style.overflow = '';
             setTimeout(() => { modalImage.src = ''; }, 200);
-            
+
             if (isModalOpen && !fromHistory) history.back();
             isModalOpen = false;
         }
@@ -738,7 +1094,7 @@
 
         function constrainBounds() {
             if (scale === 1) { posX = 0; posY = 0; return; }
-            
+
             const imgW = modalImage.clientWidth * scale;
             const imgH = modalImage.clientHeight * scale;
             const vW = window.innerWidth;
@@ -759,7 +1115,7 @@
                 const rect = modalImage.getBoundingClientRect();
                 const imgCenterX = rect.left + rect.width / 2;
                 const imgCenterY = rect.top + rect.height / 2;
-                
+
                 posX = -(e.clientX - imgCenterX) * (ZOOM_MAX - 1);
                 posY = -(e.clientY - imgCenterY) * (ZOOM_MAX - 1);
             }
@@ -767,8 +1123,8 @@
             updateTransform(true);
         }
 
-        window.handleZoomIn = function() { scale = Math.min(scale + 0.2, 3); constrainBounds(); updateTransform(true); }
-        window.handleZoomOut = function() { scale = Math.max(scale - 0.2, 0.5); constrainBounds(); updateTransform(true); }
+        window.handleZoomIn = function () { scale = Math.min(scale + 0.2, 3); constrainBounds(); updateTransform(true); }
+        window.handleZoomOut = function () { scale = Math.max(scale - 0.2, 0.5); constrainBounds(); updateTransform(true); }
 
         modalPanArea.addEventListener('pointerdown', (e) => {
             if (e.button !== 0 && e.pointerType === 'mouse') return;
@@ -793,7 +1149,7 @@
 
         window.addEventListener('pointerup', (e) => {
             if (!isDragging || !isModalOpen) return;
-            
+
             if (scale === 1 && hasMoved) {
                 const diffX = e.clientX - dragStartX;
                 if (diffX > 50) slidePrev();
